@@ -1,0 +1,40 @@
+package me.mmckenna.halogen.sample
+
+import halogen.HalogenDefaults
+import halogen.engine.Halogen
+import halogen.engine.HalogenEngine
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import me.mmckenna.halogen.sample.llms.openai.OpenAiProvider
+
+class HalogenDemoState(
+    val engine: HalogenEngine,
+    val scope: CoroutineScope,
+) {
+    private val _darkOverride = MutableStateFlow<Boolean?>(null)
+    val darkOverride: StateFlow<Boolean?> = _darkOverride.asStateFlow()
+
+    fun toggleDarkMode(currentIsDark: Boolean) {
+        _darkOverride.value = !currentIsDark
+    }
+
+    companion object {
+        fun create(scope: CoroutineScope, openAiApiKey: String? = null): HalogenDemoState {
+            val builder = Halogen.Builder()
+                .defaultTheme(HalogenDefaults.materialYou())
+                .scope(scope)
+                .tokenBudget(Int.MAX_VALUE)
+
+            if (!openAiApiKey.isNullOrBlank()) {
+                builder.provider(OpenAiProvider(openAiApiKey))
+                builder.fallbackProvider(DemoProvider())
+            } else {
+                builder.provider(DemoProvider())
+            }
+
+            return HalogenDemoState(engine = builder.build(), scope = scope)
+        }
+    }
+}

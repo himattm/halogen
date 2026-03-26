@@ -1,0 +1,282 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <me.mmckenna.halogen:halogen-engine>
+final enum class halogen.engine/ThemeSource : kotlin/Enum<halogen.engine/ThemeSource> { // halogen.engine/ThemeSource|null[0]
+    enum entry LLM // halogen.engine/ThemeSource.LLM|null[0]
+    enum entry MANUAL // halogen.engine/ThemeSource.MANUAL|null[0]
+    enum entry SERVER // halogen.engine/ThemeSource.SERVER|null[0]
+
+    final val entries // halogen.engine/ThemeSource.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<halogen.engine/ThemeSource> // halogen.engine/ThemeSource.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): halogen.engine/ThemeSource // halogen.engine/ThemeSource.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<halogen.engine/ThemeSource> // halogen.engine/ThemeSource.values|values#static(){}[0]
+}
+
+abstract fun interface halogen.engine/HalogenServerProvider { // halogen.engine/HalogenServerProvider|null[0]
+    abstract suspend fun fetchTheme(kotlin/String): halogen/HalogenThemeSpec? // halogen.engine/HalogenServerProvider.fetchTheme|fetchTheme(kotlin.String){}[0]
+}
+
+abstract interface halogen.engine/ThemeCache { // halogen.engine/ThemeCache|null[0]
+    abstract fun observeChanges(): kotlinx.coroutines.flow/Flow<halogen.engine/CacheEvent> // halogen.engine/ThemeCache.observeChanges|observeChanges(){}[0]
+    abstract suspend fun clear() // halogen.engine/ThemeCache.clear|clear(){}[0]
+    abstract suspend fun contains(kotlin/String): kotlin/Boolean // halogen.engine/ThemeCache.contains|contains(kotlin.String){}[0]
+    abstract suspend fun entries(): kotlin.collections/List<halogen.engine/ThemeCacheEntry> // halogen.engine/ThemeCache.entries|entries(){}[0]
+    abstract suspend fun evict(kotlin.collections/Set<kotlin/String>) // halogen.engine/ThemeCache.evict|evict(kotlin.collections.Set<kotlin.String>){}[0]
+    abstract suspend fun evict(kotlin/String) // halogen.engine/ThemeCache.evict|evict(kotlin.String){}[0]
+    abstract suspend fun get(kotlin/String): halogen/HalogenThemeSpec? // halogen.engine/ThemeCache.get|get(kotlin.String){}[0]
+    abstract suspend fun keys(): kotlin.collections/Set<kotlin/String> // halogen.engine/ThemeCache.keys|keys(){}[0]
+    abstract suspend fun put(kotlin/String, halogen/HalogenThemeSpec, halogen.engine/ThemeSource = ...) // halogen.engine/ThemeCache.put|put(kotlin.String;halogen.HalogenThemeSpec;halogen.engine.ThemeSource){}[0]
+    abstract suspend fun size(): kotlin/Int // halogen.engine/ThemeCache.size|size(){}[0]
+}
+
+final class halogen.engine/CacheStats { // halogen.engine/CacheStats|null[0]
+    constructor <init>(kotlin/Int = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Float = ..., kotlin.collections/Map<halogen.engine/ThemeSource, kotlin/Int> = ...) // halogen.engine/CacheStats.<init>|<init>(kotlin.Int;kotlin.Long;kotlin.Long;kotlin.Long;kotlin.Float;kotlin.collections.Map<halogen.engine.ThemeSource,kotlin.Int>){}[0]
+
+    final val entriesBySource // halogen.engine/CacheStats.entriesBySource|{}entriesBySource[0]
+        final fun <get-entriesBySource>(): kotlin.collections/Map<halogen.engine/ThemeSource, kotlin/Int> // halogen.engine/CacheStats.entriesBySource.<get-entriesBySource>|<get-entriesBySource>(){}[0]
+    final val hitCount // halogen.engine/CacheStats.hitCount|{}hitCount[0]
+        final fun <get-hitCount>(): kotlin/Long // halogen.engine/CacheStats.hitCount.<get-hitCount>|<get-hitCount>(){}[0]
+    final val hitRate // halogen.engine/CacheStats.hitRate|{}hitRate[0]
+        final fun <get-hitRate>(): kotlin/Float // halogen.engine/CacheStats.hitRate.<get-hitRate>|<get-hitRate>(){}[0]
+    final val missCount // halogen.engine/CacheStats.missCount|{}missCount[0]
+        final fun <get-missCount>(): kotlin/Long // halogen.engine/CacheStats.missCount.<get-missCount>|<get-missCount>(){}[0]
+    final val totalEntries // halogen.engine/CacheStats.totalEntries|{}totalEntries[0]
+        final fun <get-totalEntries>(): kotlin/Int // halogen.engine/CacheStats.totalEntries.<get-totalEntries>|<get-totalEntries>(){}[0]
+    final val totalSizeBytes // halogen.engine/CacheStats.totalSizeBytes|{}totalSizeBytes[0]
+        final fun <get-totalSizeBytes>(): kotlin/Long // halogen.engine/CacheStats.totalSizeBytes.<get-totalSizeBytes>|<get-totalSizeBytes>(){}[0]
+
+    final fun component1(): kotlin/Int // halogen.engine/CacheStats.component1|component1(){}[0]
+    final fun component2(): kotlin/Long // halogen.engine/CacheStats.component2|component2(){}[0]
+    final fun component3(): kotlin/Long // halogen.engine/CacheStats.component3|component3(){}[0]
+    final fun component4(): kotlin/Long // halogen.engine/CacheStats.component4|component4(){}[0]
+    final fun component5(): kotlin/Float // halogen.engine/CacheStats.component5|component5(){}[0]
+    final fun component6(): kotlin.collections/Map<halogen.engine/ThemeSource, kotlin/Int> // halogen.engine/CacheStats.component6|component6(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Float = ..., kotlin.collections/Map<halogen.engine/ThemeSource, kotlin/Int> = ...): halogen.engine/CacheStats // halogen.engine/CacheStats.copy|copy(kotlin.Int;kotlin.Long;kotlin.Long;kotlin.Long;kotlin.Float;kotlin.collections.Map<halogen.engine.ThemeSource,kotlin.Int>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/CacheStats.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // halogen.engine/CacheStats.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // halogen.engine/CacheStats.toString|toString(){}[0]
+}
+
+final class halogen.engine/Halogen { // halogen.engine/Halogen|null[0]
+    final class Builder { // halogen.engine/Halogen.Builder|null[0]
+        constructor <init>() // halogen.engine/Halogen.Builder.<init>|<init>(){}[0]
+
+        final fun build(): halogen.engine/HalogenEngine // halogen.engine/Halogen.Builder.build|build(){}[0]
+        final fun cache(halogen.engine/ThemeCache): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.cache|cache(halogen.engine.ThemeCache){}[0]
+        final fun config(halogen/HalogenConfig): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.config|config(halogen.HalogenConfig){}[0]
+        final fun defaultTheme(halogen/HalogenThemeSpec): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.defaultTheme|defaultTheme(halogen.HalogenThemeSpec){}[0]
+        final fun extensions(kotlin/Array<out halogen/HalogenExtension>...): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.extensions|extensions(kotlin.Array<out|halogen.HalogenExtension>...){}[0]
+        final fun fallbackProvider(halogen/HalogenLlmProvider): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.fallbackProvider|fallbackProvider(halogen.HalogenLlmProvider){}[0]
+        final fun promptExamples(kotlin/Array<out kotlin/Pair<kotlin/String, kotlin/String>>...): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.promptExamples|promptExamples(kotlin.Array<out|kotlin.Pair<kotlin.String,kotlin.String>>...){}[0]
+        final fun promptInstructions(kotlin/String): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.promptInstructions|promptInstructions(kotlin.String){}[0]
+        final fun provider(halogen/HalogenLlmProvider): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.provider|provider(halogen.HalogenLlmProvider){}[0]
+        final fun scope(kotlinx.coroutines/CoroutineScope): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.scope|scope(kotlinx.coroutines.CoroutineScope){}[0]
+        final fun serverProvider(halogen.engine/HalogenServerProvider): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.serverProvider|serverProvider(halogen.engine.HalogenServerProvider){}[0]
+        final fun tokenBudget(kotlin/Int): halogen.engine/Halogen.Builder // halogen.engine/Halogen.Builder.tokenBudget|tokenBudget(kotlin.Int){}[0]
+
+        final object Companion { // halogen.engine/Halogen.Builder.Companion|null[0]
+            final const val DEFAULT_TOKEN_BUDGET // halogen.engine/Halogen.Builder.Companion.DEFAULT_TOKEN_BUDGET|{}DEFAULT_TOKEN_BUDGET[0]
+                final fun <get-DEFAULT_TOKEN_BUDGET>(): kotlin/Int // halogen.engine/Halogen.Builder.Companion.DEFAULT_TOKEN_BUDGET.<get-DEFAULT_TOKEN_BUDGET>|<get-DEFAULT_TOKEN_BUDGET>(){}[0]
+        }
+    }
+}
+
+final class halogen.engine/HalogenEngine { // halogen.engine/HalogenEngine|null[0]
+    final val activeKey // halogen.engine/HalogenEngine.activeKey|{}activeKey[0]
+        final fun <get-activeKey>(): kotlinx.coroutines.flow/StateFlow<kotlin/String?> // halogen.engine/HalogenEngine.activeKey.<get-activeKey>|<get-activeKey>(){}[0]
+    final val activeTheme // halogen.engine/HalogenEngine.activeTheme|{}activeTheme[0]
+        final fun <get-activeTheme>(): kotlinx.coroutines.flow/StateFlow<halogen/HalogenThemeSpec?> // halogen.engine/HalogenEngine.activeTheme.<get-activeTheme>|<get-activeTheme>(){}[0]
+
+    final var cachingEnabled // halogen.engine/HalogenEngine.cachingEnabled|{}cachingEnabled[0]
+        final fun <get-cachingEnabled>(): kotlin/Boolean // halogen.engine/HalogenEngine.cachingEnabled.<get-cachingEnabled>|<get-cachingEnabled>(){}[0]
+        final fun <set-cachingEnabled>(kotlin/Boolean) // halogen.engine/HalogenEngine.cachingEnabled.<set-cachingEnabled>|<set-cachingEnabled>(kotlin.Boolean){}[0]
+    final var config // halogen.engine/HalogenEngine.config|{}config[0]
+        final fun <get-config>(): halogen/HalogenConfig // halogen.engine/HalogenEngine.config.<get-config>|<get-config>(){}[0]
+        final fun <set-config>(halogen/HalogenConfig) // halogen.engine/HalogenEngine.config.<set-config>|<set-config>(halogen.HalogenConfig){}[0]
+
+    final fun applyDefault() // halogen.engine/HalogenEngine.applyDefault|applyDefault(){}[0]
+    final suspend fun apply(kotlin/String, halogen/HalogenThemeSpec) // halogen.engine/HalogenEngine.apply|apply(kotlin.String;halogen.HalogenThemeSpec){}[0]
+    final suspend fun clearCache() // halogen.engine/HalogenEngine.clearCache|clearCache(){}[0]
+    final suspend fun evict(kotlin.collections/Set<kotlin/String>) // halogen.engine/HalogenEngine.evict|evict(kotlin.collections.Set<kotlin.String>){}[0]
+    final suspend fun evict(kotlin/String) // halogen.engine/HalogenEngine.evict|evict(kotlin.String){}[0]
+    final suspend fun prefetch(kotlin/String, kotlin/String? = ...): halogen.engine/HalogenResult // halogen.engine/HalogenEngine.prefetch|prefetch(kotlin.String;kotlin.String?){}[0]
+    final suspend fun refresh(kotlin/String, kotlin/String? = ...): halogen.engine/HalogenResult // halogen.engine/HalogenEngine.refresh|refresh(kotlin.String;kotlin.String?){}[0]
+    final suspend fun regenerate(kotlin/String, kotlin/String): halogen.engine/HalogenResult // halogen.engine/HalogenEngine.regenerate|regenerate(kotlin.String;kotlin.String){}[0]
+    final suspend fun resolve(kotlin/String, kotlin/String? = ...): halogen.engine/HalogenResult // halogen.engine/HalogenEngine.resolve|resolve(kotlin.String;kotlin.String?){}[0]
+}
+
+final class halogen.engine/ThemeCacheEntry { // halogen.engine/ThemeCacheEntry|null[0]
+    constructor <init>(kotlin/String, halogen.engine/ThemeSource, kotlin/Long, kotlin/Long, kotlin/Int) // halogen.engine/ThemeCacheEntry.<init>|<init>(kotlin.String;halogen.engine.ThemeSource;kotlin.Long;kotlin.Long;kotlin.Int){}[0]
+
+    final val createdAt // halogen.engine/ThemeCacheEntry.createdAt|{}createdAt[0]
+        final fun <get-createdAt>(): kotlin/Long // halogen.engine/ThemeCacheEntry.createdAt.<get-createdAt>|<get-createdAt>(){}[0]
+    final val key // halogen.engine/ThemeCacheEntry.key|{}key[0]
+        final fun <get-key>(): kotlin/String // halogen.engine/ThemeCacheEntry.key.<get-key>|<get-key>(){}[0]
+    final val lastAccessedAt // halogen.engine/ThemeCacheEntry.lastAccessedAt|{}lastAccessedAt[0]
+        final fun <get-lastAccessedAt>(): kotlin/Long // halogen.engine/ThemeCacheEntry.lastAccessedAt.<get-lastAccessedAt>|<get-lastAccessedAt>(){}[0]
+    final val sizeBytes // halogen.engine/ThemeCacheEntry.sizeBytes|{}sizeBytes[0]
+        final fun <get-sizeBytes>(): kotlin/Int // halogen.engine/ThemeCacheEntry.sizeBytes.<get-sizeBytes>|<get-sizeBytes>(){}[0]
+    final val source // halogen.engine/ThemeCacheEntry.source|{}source[0]
+        final fun <get-source>(): halogen.engine/ThemeSource // halogen.engine/ThemeCacheEntry.source.<get-source>|<get-source>(){}[0]
+
+    final fun component1(): kotlin/String // halogen.engine/ThemeCacheEntry.component1|component1(){}[0]
+    final fun component2(): halogen.engine/ThemeSource // halogen.engine/ThemeCacheEntry.component2|component2(){}[0]
+    final fun component3(): kotlin/Long // halogen.engine/ThemeCacheEntry.component3|component3(){}[0]
+    final fun component4(): kotlin/Long // halogen.engine/ThemeCacheEntry.component4|component4(){}[0]
+    final fun component5(): kotlin/Int // halogen.engine/ThemeCacheEntry.component5|component5(){}[0]
+    final fun copy(kotlin/String = ..., halogen.engine/ThemeSource = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Int = ...): halogen.engine/ThemeCacheEntry // halogen.engine/ThemeCacheEntry.copy|copy(kotlin.String;halogen.engine.ThemeSource;kotlin.Long;kotlin.Long;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/ThemeCacheEntry.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // halogen.engine/ThemeCacheEntry.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // halogen.engine/ThemeCacheEntry.toString|toString(){}[0]
+}
+
+sealed class halogen.engine/CacheEvent { // halogen.engine/CacheEvent|null[0]
+    final class Evicted : halogen.engine/CacheEvent { // halogen.engine/CacheEvent.Evicted|null[0]
+        constructor <init>(kotlin/String) // halogen.engine/CacheEvent.Evicted.<init>|<init>(kotlin.String){}[0]
+
+        final val key // halogen.engine/CacheEvent.Evicted.key|{}key[0]
+            final fun <get-key>(): kotlin/String // halogen.engine/CacheEvent.Evicted.key.<get-key>|<get-key>(){}[0]
+
+        final fun component1(): kotlin/String // halogen.engine/CacheEvent.Evicted.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): halogen.engine/CacheEvent.Evicted // halogen.engine/CacheEvent.Evicted.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/CacheEvent.Evicted.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/CacheEvent.Evicted.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/CacheEvent.Evicted.toString|toString(){}[0]
+    }
+
+    final class EvictedBatch : halogen.engine/CacheEvent { // halogen.engine/CacheEvent.EvictedBatch|null[0]
+        constructor <init>(kotlin.collections/Set<kotlin/String>) // halogen.engine/CacheEvent.EvictedBatch.<init>|<init>(kotlin.collections.Set<kotlin.String>){}[0]
+
+        final val keys // halogen.engine/CacheEvent.EvictedBatch.keys|{}keys[0]
+            final fun <get-keys>(): kotlin.collections/Set<kotlin/String> // halogen.engine/CacheEvent.EvictedBatch.keys.<get-keys>|<get-keys>(){}[0]
+
+        final fun component1(): kotlin.collections/Set<kotlin/String> // halogen.engine/CacheEvent.EvictedBatch.component1|component1(){}[0]
+        final fun copy(kotlin.collections/Set<kotlin/String> = ...): halogen.engine/CacheEvent.EvictedBatch // halogen.engine/CacheEvent.EvictedBatch.copy|copy(kotlin.collections.Set<kotlin.String>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/CacheEvent.EvictedBatch.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/CacheEvent.EvictedBatch.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/CacheEvent.EvictedBatch.toString|toString(){}[0]
+    }
+
+    final class Inserted : halogen.engine/CacheEvent { // halogen.engine/CacheEvent.Inserted|null[0]
+        constructor <init>(kotlin/String, halogen.engine/ThemeSource) // halogen.engine/CacheEvent.Inserted.<init>|<init>(kotlin.String;halogen.engine.ThemeSource){}[0]
+
+        final val key // halogen.engine/CacheEvent.Inserted.key|{}key[0]
+            final fun <get-key>(): kotlin/String // halogen.engine/CacheEvent.Inserted.key.<get-key>|<get-key>(){}[0]
+        final val source // halogen.engine/CacheEvent.Inserted.source|{}source[0]
+            final fun <get-source>(): halogen.engine/ThemeSource // halogen.engine/CacheEvent.Inserted.source.<get-source>|<get-source>(){}[0]
+
+        final fun component1(): kotlin/String // halogen.engine/CacheEvent.Inserted.component1|component1(){}[0]
+        final fun component2(): halogen.engine/ThemeSource // halogen.engine/CacheEvent.Inserted.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., halogen.engine/ThemeSource = ...): halogen.engine/CacheEvent.Inserted // halogen.engine/CacheEvent.Inserted.copy|copy(kotlin.String;halogen.engine.ThemeSource){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/CacheEvent.Inserted.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/CacheEvent.Inserted.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/CacheEvent.Inserted.toString|toString(){}[0]
+    }
+
+    final object Cleared : halogen.engine/CacheEvent { // halogen.engine/CacheEvent.Cleared|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/CacheEvent.Cleared.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/CacheEvent.Cleared.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/CacheEvent.Cleared.toString|toString(){}[0]
+    }
+}
+
+sealed class halogen.engine/HalogenResult { // halogen.engine/HalogenResult|null[0]
+    final val isSuccess // halogen.engine/HalogenResult.isSuccess|{}isSuccess[0]
+        final fun <get-isSuccess>(): kotlin/Boolean // halogen.engine/HalogenResult.isSuccess.<get-isSuccess>|<get-isSuccess>(){}[0]
+    final val themeSpec // halogen.engine/HalogenResult.themeSpec|{}themeSpec[0]
+        final fun <get-themeSpec>(): halogen/HalogenThemeSpec? // halogen.engine/HalogenResult.themeSpec.<get-themeSpec>|<get-themeSpec>(){}[0]
+
+    final class Cached : halogen.engine/HalogenResult { // halogen.engine/HalogenResult.Cached|null[0]
+        constructor <init>(halogen/HalogenThemeSpec) // halogen.engine/HalogenResult.Cached.<init>|<init>(halogen.HalogenThemeSpec){}[0]
+
+        final val spec // halogen.engine/HalogenResult.Cached.spec|{}spec[0]
+            final fun <get-spec>(): halogen/HalogenThemeSpec // halogen.engine/HalogenResult.Cached.spec.<get-spec>|<get-spec>(){}[0]
+
+        final fun component1(): halogen/HalogenThemeSpec // halogen.engine/HalogenResult.Cached.component1|component1(){}[0]
+        final fun copy(halogen/HalogenThemeSpec = ...): halogen.engine/HalogenResult.Cached // halogen.engine/HalogenResult.Cached.copy|copy(halogen.HalogenThemeSpec){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/HalogenResult.Cached.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/HalogenResult.Cached.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/HalogenResult.Cached.toString|toString(){}[0]
+    }
+
+    final class FromServer : halogen.engine/HalogenResult { // halogen.engine/HalogenResult.FromServer|null[0]
+        constructor <init>(halogen/HalogenThemeSpec) // halogen.engine/HalogenResult.FromServer.<init>|<init>(halogen.HalogenThemeSpec){}[0]
+
+        final val spec // halogen.engine/HalogenResult.FromServer.spec|{}spec[0]
+            final fun <get-spec>(): halogen/HalogenThemeSpec // halogen.engine/HalogenResult.FromServer.spec.<get-spec>|<get-spec>(){}[0]
+
+        final fun component1(): halogen/HalogenThemeSpec // halogen.engine/HalogenResult.FromServer.component1|component1(){}[0]
+        final fun copy(halogen/HalogenThemeSpec = ...): halogen.engine/HalogenResult.FromServer // halogen.engine/HalogenResult.FromServer.copy|copy(halogen.HalogenThemeSpec){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/HalogenResult.FromServer.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/HalogenResult.FromServer.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/HalogenResult.FromServer.toString|toString(){}[0]
+    }
+
+    final class ParseError : halogen.engine/HalogenResult { // halogen.engine/HalogenResult.ParseError|null[0]
+        constructor <init>(kotlin/String, kotlin/String? = ...) // halogen.engine/HalogenResult.ParseError.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+        final val message // halogen.engine/HalogenResult.ParseError.message|{}message[0]
+            final fun <get-message>(): kotlin/String // halogen.engine/HalogenResult.ParseError.message.<get-message>|<get-message>(){}[0]
+        final val rawResponse // halogen.engine/HalogenResult.ParseError.rawResponse|{}rawResponse[0]
+            final fun <get-rawResponse>(): kotlin/String? // halogen.engine/HalogenResult.ParseError.rawResponse.<get-rawResponse>|<get-rawResponse>(){}[0]
+
+        final fun component1(): kotlin/String // halogen.engine/HalogenResult.ParseError.component1|component1(){}[0]
+        final fun component2(): kotlin/String? // halogen.engine/HalogenResult.ParseError.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String? = ...): halogen.engine/HalogenResult.ParseError // halogen.engine/HalogenResult.ParseError.copy|copy(kotlin.String;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/HalogenResult.ParseError.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/HalogenResult.ParseError.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/HalogenResult.ParseError.toString|toString(){}[0]
+    }
+
+    final class Success : halogen.engine/HalogenResult { // halogen.engine/HalogenResult.Success|null[0]
+        constructor <init>(halogen/HalogenThemeSpec) // halogen.engine/HalogenResult.Success.<init>|<init>(halogen.HalogenThemeSpec){}[0]
+
+        final val spec // halogen.engine/HalogenResult.Success.spec|{}spec[0]
+            final fun <get-spec>(): halogen/HalogenThemeSpec // halogen.engine/HalogenResult.Success.spec.<get-spec>|<get-spec>(){}[0]
+
+        final fun component1(): halogen/HalogenThemeSpec // halogen.engine/HalogenResult.Success.component1|component1(){}[0]
+        final fun copy(halogen/HalogenThemeSpec = ...): halogen.engine/HalogenResult.Success // halogen.engine/HalogenResult.Success.copy|copy(halogen.HalogenThemeSpec){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/HalogenResult.Success.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/HalogenResult.Success.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/HalogenResult.Success.toString|toString(){}[0]
+    }
+
+    final object QuotaExceeded : halogen.engine/HalogenResult { // halogen.engine/HalogenResult.QuotaExceeded|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/HalogenResult.QuotaExceeded.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/HalogenResult.QuotaExceeded.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/HalogenResult.QuotaExceeded.toString|toString(){}[0]
+    }
+
+    final object Unavailable : halogen.engine/HalogenResult { // halogen.engine/HalogenResult.Unavailable|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // halogen.engine/HalogenResult.Unavailable.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // halogen.engine/HalogenResult.Unavailable.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // halogen.engine/HalogenResult.Unavailable.toString|toString(){}[0]
+    }
+}
+
+final object halogen.engine/HalogenCache { // halogen.engine/HalogenCache|null[0]
+    final fun memory(kotlin/Int = ...): halogen.engine/ThemeCache // halogen.engine/HalogenCache.memory|memory(kotlin.Int){}[0]
+    final fun none(): halogen.engine/ThemeCache // halogen.engine/HalogenCache.none|none(){}[0]
+}
+
+// Targets: [wasmJs]
+final class halogen.engine/LocalStorageThemeCache : halogen.engine/ThemeCache { // halogen.engine/LocalStorageThemeCache|null[0]
+    constructor <init>(kotlin/String = ...) // halogen.engine/LocalStorageThemeCache.<init>|<init>(kotlin.String){}[0]
+
+    final fun observeChanges(): kotlinx.coroutines.flow/Flow<halogen.engine/CacheEvent> // halogen.engine/LocalStorageThemeCache.observeChanges|observeChanges(){}[0]
+    final suspend fun clear() // halogen.engine/LocalStorageThemeCache.clear|clear(){}[0]
+    final suspend fun contains(kotlin/String): kotlin/Boolean // halogen.engine/LocalStorageThemeCache.contains|contains(kotlin.String){}[0]
+    final suspend fun entries(): kotlin.collections/List<halogen.engine/ThemeCacheEntry> // halogen.engine/LocalStorageThemeCache.entries|entries(){}[0]
+    final suspend fun evict(kotlin.collections/Set<kotlin/String>) // halogen.engine/LocalStorageThemeCache.evict|evict(kotlin.collections.Set<kotlin.String>){}[0]
+    final suspend fun evict(kotlin/String) // halogen.engine/LocalStorageThemeCache.evict|evict(kotlin.String){}[0]
+    final suspend fun get(kotlin/String): halogen/HalogenThemeSpec? // halogen.engine/LocalStorageThemeCache.get|get(kotlin.String){}[0]
+    final suspend fun keys(): kotlin.collections/Set<kotlin/String> // halogen.engine/LocalStorageThemeCache.keys|keys(){}[0]
+    final suspend fun put(kotlin/String, halogen/HalogenThemeSpec, halogen.engine/ThemeSource) // halogen.engine/LocalStorageThemeCache.put|put(kotlin.String;halogen.HalogenThemeSpec;halogen.engine.ThemeSource){}[0]
+    final suspend fun size(): kotlin/Int // halogen.engine/LocalStorageThemeCache.size|size(){}[0]
+}

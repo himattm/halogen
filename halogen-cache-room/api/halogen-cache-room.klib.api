@@ -1,0 +1,52 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, wasmJs]
+// Alias: ios => [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <me.mmckenna.halogen:halogen-cache-room>
+final class halogen.cache.room/RoomThemeCacheConfig { // halogen.cache.room/RoomThemeCacheConfig|null[0]
+    constructor <init>(kotlin/Int = ..., kotlin.time/Duration? = ...) // halogen.cache.room/RoomThemeCacheConfig.<init>|<init>(kotlin.Int;kotlin.time.Duration?){}[0]
+
+    final val maxAge // halogen.cache.room/RoomThemeCacheConfig.maxAge|{}maxAge[0]
+        final fun <get-maxAge>(): kotlin.time/Duration? // halogen.cache.room/RoomThemeCacheConfig.maxAge.<get-maxAge>|<get-maxAge>(){}[0]
+    final val maxEntries // halogen.cache.room/RoomThemeCacheConfig.maxEntries|{}maxEntries[0]
+        final fun <get-maxEntries>(): kotlin/Int // halogen.cache.room/RoomThemeCacheConfig.maxEntries.<get-maxEntries>|<get-maxEntries>(){}[0]
+
+    final fun component1(): kotlin/Int // halogen.cache.room/RoomThemeCacheConfig.component1|component1(){}[0]
+    final fun component2(): kotlin.time/Duration? // halogen.cache.room/RoomThemeCacheConfig.component2|component2(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin.time/Duration? = ...): halogen.cache.room/RoomThemeCacheConfig // halogen.cache.room/RoomThemeCacheConfig.copy|copy(kotlin.Int;kotlin.time.Duration?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // halogen.cache.room/RoomThemeCacheConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // halogen.cache.room/RoomThemeCacheConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // halogen.cache.room/RoomThemeCacheConfig.toString|toString(){}[0]
+
+    final object Companion { // halogen.cache.room/RoomThemeCacheConfig.Companion|null[0]
+        final val Default // halogen.cache.room/RoomThemeCacheConfig.Companion.Default|{}Default[0]
+            final fun <get-Default>(): halogen.cache.room/RoomThemeCacheConfig // halogen.cache.room/RoomThemeCacheConfig.Companion.Default.<get-Default>|<get-Default>(){}[0]
+
+        final fun withExpiry(kotlin.time/Duration): halogen.cache.room/RoomThemeCacheConfig // halogen.cache.room/RoomThemeCacheConfig.Companion.withExpiry|withExpiry(kotlin.time.Duration){}[0]
+        final fun withLimit(kotlin/Int): halogen.cache.room/RoomThemeCacheConfig // halogen.cache.room/RoomThemeCacheConfig.Companion.withLimit|withLimit(kotlin.Int){}[0]
+    }
+}
+
+// Targets: [ios]
+final class halogen.cache.room/RoomThemeCache : halogen.engine/ThemeCache { // halogen.cache.room/RoomThemeCache|null[0]
+    final fun observeChanges(): kotlinx.coroutines.flow/Flow<halogen.engine/CacheEvent> // halogen.cache.room/RoomThemeCache.observeChanges|observeChanges(){}[0]
+    final suspend fun clear() // halogen.cache.room/RoomThemeCache.clear|clear(){}[0]
+    final suspend fun contains(kotlin/String): kotlin/Boolean // halogen.cache.room/RoomThemeCache.contains|contains(kotlin.String){}[0]
+    final suspend fun entries(): kotlin.collections/List<halogen.engine/ThemeCacheEntry> // halogen.cache.room/RoomThemeCache.entries|entries(){}[0]
+    final suspend fun evict(kotlin.collections/Set<kotlin/String>) // halogen.cache.room/RoomThemeCache.evict|evict(kotlin.collections.Set<kotlin.String>){}[0]
+    final suspend fun evict(kotlin/String) // halogen.cache.room/RoomThemeCache.evict|evict(kotlin.String){}[0]
+    final suspend fun evictOlderThan(kotlin/Long) // halogen.cache.room/RoomThemeCache.evictOlderThan|evictOlderThan(kotlin.Long){}[0]
+    final suspend fun get(kotlin/String): halogen/HalogenThemeSpec? // halogen.cache.room/RoomThemeCache.get|get(kotlin.String){}[0]
+    final suspend fun keys(): kotlin.collections/Set<kotlin/String> // halogen.cache.room/RoomThemeCache.keys|keys(){}[0]
+    final suspend fun put(kotlin/String, halogen/HalogenThemeSpec, halogen.engine/ThemeSource) // halogen.cache.room/RoomThemeCache.put|put(kotlin.String;halogen.HalogenThemeSpec;halogen.engine.ThemeSource){}[0]
+    final suspend fun size(): kotlin/Int // halogen.cache.room/RoomThemeCache.size|size(){}[0]
+}
+
+// Targets: [ios]
+final object halogen.cache.room/HalogenRoomCache { // halogen.cache.room/HalogenRoomCache|null[0]
+    final fun create(kotlin/String = ..., halogen.cache.room/RoomThemeCacheConfig = ...): halogen.engine/ThemeCache // halogen.cache.room/HalogenRoomCache.create|create(kotlin.String;halogen.cache.room.RoomThemeCacheConfig){}[0]
+}

@@ -1,0 +1,17 @@
+public final class halogen/provider/nano/GeminiNanoProvider : halogen/HalogenLlmProvider {
+	public fun <init> ()V
+	public fun <init> (FILjava/lang/Float;)V
+	public synthetic fun <init> (FILjava/lang/Float;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun availability (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun close ()V
+	public final fun downloadModel ()Lkotlinx/coroutines/flow/Flow;
+	public fun generate (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getTemperature ()F
+	public final fun getTopK ()I
+	public final fun getTopP ()Ljava/lang/Float;
+	public final fun setTemperature (F)V
+	public final fun setTopK (I)V
+	public final fun setTopP (Ljava/lang/Float;)V
+	public final fun warmup (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

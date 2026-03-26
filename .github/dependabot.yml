@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      gradle-actions:
+        patterns:
+          - "gradle/*"
+
+  - package-ecosystem: "pip"
+    directory: "/.github/workflows"
+    schedule:
+      interval: "monthly"
+    groups:
+      mkdocs:
+        patterns:
+          - "mkdocs*"
+          - "pymdown*"
+          - "mike"
+          - "Pygments"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

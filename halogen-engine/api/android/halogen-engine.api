@@ -1,0 +1,236 @@
+public abstract class halogen/engine/CacheEvent {
+}
+
+public final class halogen/engine/CacheEvent$Cleared : halogen/engine/CacheEvent {
+	public static final field INSTANCE Lhalogen/engine/CacheEvent$Cleared;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/CacheEvent$Evicted : halogen/engine/CacheEvent {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lhalogen/engine/CacheEvent$Evicted;
+	public static synthetic fun copy$default (Lhalogen/engine/CacheEvent$Evicted;Ljava/lang/String;ILjava/lang/Object;)Lhalogen/engine/CacheEvent$Evicted;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/CacheEvent$EvictedBatch : halogen/engine/CacheEvent {
+	public fun <init> (Ljava/util/Set;)V
+	public final fun component1 ()Ljava/util/Set;
+	public final fun copy (Ljava/util/Set;)Lhalogen/engine/CacheEvent$EvictedBatch;
+	public static synthetic fun copy$default (Lhalogen/engine/CacheEvent$EvictedBatch;Ljava/util/Set;ILjava/lang/Object;)Lhalogen/engine/CacheEvent$EvictedBatch;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKeys ()Ljava/util/Set;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/CacheEvent$Inserted : halogen/engine/CacheEvent {
+	public fun <init> (Ljava/lang/String;Lhalogen/engine/ThemeSource;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lhalogen/engine/ThemeSource;
+	public final fun copy (Ljava/lang/String;Lhalogen/engine/ThemeSource;)Lhalogen/engine/CacheEvent$Inserted;
+	public static synthetic fun copy$default (Lhalogen/engine/CacheEvent$Inserted;Ljava/lang/String;Lhalogen/engine/ThemeSource;ILjava/lang/Object;)Lhalogen/engine/CacheEvent$Inserted;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getSource ()Lhalogen/engine/ThemeSource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/CacheStats {
+	public fun <init> ()V
+	public fun <init> (IJJJFLjava/util/Map;)V
+	public synthetic fun <init> (IJJJFLjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()J
+	public final fun component3 ()J
+	public final fun component4 ()J
+	public final fun component5 ()F
+	public final fun component6 ()Ljava/util/Map;
+	public final fun copy (IJJJFLjava/util/Map;)Lhalogen/engine/CacheStats;
+	public static synthetic fun copy$default (Lhalogen/engine/CacheStats;IJJJFLjava/util/Map;ILjava/lang/Object;)Lhalogen/engine/CacheStats;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntriesBySource ()Ljava/util/Map;
+	public final fun getHitCount ()J
+	public final fun getHitRate ()F
+	public final fun getMissCount ()J
+	public final fun getTotalEntries ()I
+	public final fun getTotalSizeBytes ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/Halogen {
+}
+
+public final class halogen/engine/Halogen$Builder {
+	public static final field Companion Lhalogen/engine/Halogen$Builder$Companion;
+	public static final field DEFAULT_TOKEN_BUDGET I
+	public fun <init> ()V
+	public final fun build ()Lhalogen/engine/HalogenEngine;
+	public final fun cache (Lhalogen/engine/ThemeCache;)Lhalogen/engine/Halogen$Builder;
+	public final fun config (Lhalogen/HalogenConfig;)Lhalogen/engine/Halogen$Builder;
+	public final fun defaultTheme (Lhalogen/HalogenThemeSpec;)Lhalogen/engine/Halogen$Builder;
+	public final fun extensions ([Lhalogen/HalogenExtension;)Lhalogen/engine/Halogen$Builder;
+	public final fun fallbackProvider (Lhalogen/HalogenLlmProvider;)Lhalogen/engine/Halogen$Builder;
+	public final fun promptExamples ([Lkotlin/Pair;)Lhalogen/engine/Halogen$Builder;
+	public final fun promptInstructions (Ljava/lang/String;)Lhalogen/engine/Halogen$Builder;
+	public final fun provider (Lhalogen/HalogenLlmProvider;)Lhalogen/engine/Halogen$Builder;
+	public final fun scope (Lkotlinx/coroutines/CoroutineScope;)Lhalogen/engine/Halogen$Builder;
+	public final fun serverProvider (Lhalogen/engine/HalogenServerProvider;)Lhalogen/engine/Halogen$Builder;
+	public final fun tokenBudget (I)Lhalogen/engine/Halogen$Builder;
+}
+
+public final class halogen/engine/Halogen$Builder$Companion {
+}
+
+public final class halogen/engine/HalogenCache {
+	public static final field INSTANCE Lhalogen/engine/HalogenCache;
+	public final fun memory (I)Lhalogen/engine/ThemeCache;
+	public static synthetic fun memory$default (Lhalogen/engine/HalogenCache;IILjava/lang/Object;)Lhalogen/engine/ThemeCache;
+	public final fun none ()Lhalogen/engine/ThemeCache;
+}
+
+public final class halogen/engine/HalogenEngine {
+	public final fun apply (Ljava/lang/String;Lhalogen/HalogenThemeSpec;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun applyDefault ()V
+	public final fun clearCache (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun evict (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun evict (Ljava/util/Set;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getActiveKey ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getActiveTheme ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getCachingEnabled ()Z
+	public final fun getConfig ()Lhalogen/HalogenConfig;
+	public final fun prefetch (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun prefetch$default (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun refresh (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun refresh$default (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun regenerate (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun resolve (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun resolve$default (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun setCachingEnabled (Z)V
+	public final fun setConfig (Lhalogen/HalogenConfig;)V
+}
+
+public abstract class halogen/engine/HalogenResult {
+	public final fun getThemeSpec ()Lhalogen/HalogenThemeSpec;
+	public final fun isSuccess ()Z
+}
+
+public final class halogen/engine/HalogenResult$Cached : halogen/engine/HalogenResult {
+	public fun <init> (Lhalogen/HalogenThemeSpec;)V
+	public final fun component1 ()Lhalogen/HalogenThemeSpec;
+	public final fun copy (Lhalogen/HalogenThemeSpec;)Lhalogen/engine/HalogenResult$Cached;
+	public static synthetic fun copy$default (Lhalogen/engine/HalogenResult$Cached;Lhalogen/HalogenThemeSpec;ILjava/lang/Object;)Lhalogen/engine/HalogenResult$Cached;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSpec ()Lhalogen/HalogenThemeSpec;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/HalogenResult$FromServer : halogen/engine/HalogenResult {
+	public fun <init> (Lhalogen/HalogenThemeSpec;)V
+	public final fun component1 ()Lhalogen/HalogenThemeSpec;
+	public final fun copy (Lhalogen/HalogenThemeSpec;)Lhalogen/engine/HalogenResult$FromServer;
+	public static synthetic fun copy$default (Lhalogen/engine/HalogenResult$FromServer;Lhalogen/HalogenThemeSpec;ILjava/lang/Object;)Lhalogen/engine/HalogenResult$FromServer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSpec ()Lhalogen/HalogenThemeSpec;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/HalogenResult$ParseError : halogen/engine/HalogenResult {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lhalogen/engine/HalogenResult$ParseError;
+	public static synthetic fun copy$default (Lhalogen/engine/HalogenResult$ParseError;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lhalogen/engine/HalogenResult$ParseError;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getRawResponse ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/HalogenResult$QuotaExceeded : halogen/engine/HalogenResult {
+	public static final field INSTANCE Lhalogen/engine/HalogenResult$QuotaExceeded;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/HalogenResult$Success : halogen/engine/HalogenResult {
+	public fun <init> (Lhalogen/HalogenThemeSpec;)V
+	public final fun component1 ()Lhalogen/HalogenThemeSpec;
+	public final fun copy (Lhalogen/HalogenThemeSpec;)Lhalogen/engine/HalogenResult$Success;
+	public static synthetic fun copy$default (Lhalogen/engine/HalogenResult$Success;Lhalogen/HalogenThemeSpec;ILjava/lang/Object;)Lhalogen/engine/HalogenResult$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSpec ()Lhalogen/HalogenThemeSpec;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/HalogenResult$Unavailable : halogen/engine/HalogenResult {
+	public static final field INSTANCE Lhalogen/engine/HalogenResult$Unavailable;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class halogen/engine/HalogenServerProvider {
+	public abstract fun fetchTheme (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class halogen/engine/ThemeCache {
+	public abstract fun clear (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun contains (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun entries (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun evict (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun evict (Ljava/util/Set;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun get (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun keys (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeChanges ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun put (Ljava/lang/String;Lhalogen/HalogenThemeSpec;Lhalogen/engine/ThemeSource;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun put$default (Lhalogen/engine/ThemeCache;Ljava/lang/String;Lhalogen/HalogenThemeSpec;Lhalogen/engine/ThemeSource;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public abstract fun size (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class halogen/engine/ThemeCache$DefaultImpls {
+	public static synthetic fun put$default (Lhalogen/engine/ThemeCache;Ljava/lang/String;Lhalogen/HalogenThemeSpec;Lhalogen/engine/ThemeSource;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class halogen/engine/ThemeCacheEntry {
+	public fun <init> (Ljava/lang/String;Lhalogen/engine/ThemeSource;JJI)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lhalogen/engine/ThemeSource;
+	public final fun component3 ()J
+	public final fun component4 ()J
+	public final fun component5 ()I
+	public final fun copy (Ljava/lang/String;Lhalogen/engine/ThemeSource;JJI)Lhalogen/engine/ThemeCacheEntry;
+	public static synthetic fun copy$default (Lhalogen/engine/ThemeCacheEntry;Ljava/lang/String;Lhalogen/engine/ThemeSource;JJIILjava/lang/Object;)Lhalogen/engine/ThemeCacheEntry;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCreatedAt ()J
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getLastAccessedAt ()J
+	public final fun getSizeBytes ()I
+	public final fun getSource ()Lhalogen/engine/ThemeSource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/engine/ThemeSource : java/lang/Enum {
+	public static final field LLM Lhalogen/engine/ThemeSource;
+	public static final field MANUAL Lhalogen/engine/ThemeSource;
+	public static final field SERVER Lhalogen/engine/ThemeSource;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lhalogen/engine/ThemeSource;
+	public static fun values ()[Lhalogen/engine/ThemeSource;
+}
+

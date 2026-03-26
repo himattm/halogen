@@ -1,0 +1,411 @@
+public final class halogen/ExpandedTheme {
+	public fun <init> (Lhalogen/HalogenPalette;Lhalogen/HalogenColorScheme;Lhalogen/HalogenColorScheme;Lhalogen/HalogenTypography;Lhalogen/HalogenShapes;)V
+	public final fun component1 ()Lhalogen/HalogenPalette;
+	public final fun component2 ()Lhalogen/HalogenColorScheme;
+	public final fun component3 ()Lhalogen/HalogenColorScheme;
+	public final fun component4 ()Lhalogen/HalogenTypography;
+	public final fun component5 ()Lhalogen/HalogenShapes;
+	public final fun copy (Lhalogen/HalogenPalette;Lhalogen/HalogenColorScheme;Lhalogen/HalogenColorScheme;Lhalogen/HalogenTypography;Lhalogen/HalogenShapes;)Lhalogen/ExpandedTheme;
+	public static synthetic fun copy$default (Lhalogen/ExpandedTheme;Lhalogen/HalogenPalette;Lhalogen/HalogenColorScheme;Lhalogen/HalogenColorScheme;Lhalogen/HalogenTypography;Lhalogen/HalogenShapes;ILjava/lang/Object;)Lhalogen/ExpandedTheme;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDarkColorScheme ()Lhalogen/HalogenColorScheme;
+	public final fun getLightColorScheme ()Lhalogen/HalogenColorScheme;
+	public final fun getPalette ()Lhalogen/HalogenPalette;
+	public final fun getShapes ()Lhalogen/HalogenShapes;
+	public final fun getTypography ()Lhalogen/HalogenTypography;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/HalogenColorScheme {
+	public fun <init> (IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII)V
+	public final fun component1 ()I
+	public final fun component10 ()I
+	public final fun component11 ()I
+	public final fun component12 ()I
+	public final fun component13 ()I
+	public final fun component14 ()I
+	public final fun component15 ()I
+	public final fun component16 ()I
+	public final fun component17 ()I
+	public final fun component18 ()I
+	public final fun component19 ()I
+	public final fun component2 ()I
+	public final fun component20 ()I
+	public final fun component21 ()I
+	public final fun component22 ()I
+	public final fun component23 ()I
+	public final fun component24 ()I
+	public final fun component25 ()I
+	public final fun component26 ()I
+	public final fun component27 ()I
+	public final fun component28 ()I
+	public final fun component29 ()I
+	public final fun component3 ()I
+	public final fun component30 ()I
+	public final fun component31 ()I
+	public final fun component32 ()I
+	public final fun component33 ()I
+	public final fun component34 ()I
+	public final fun component35 ()I
+	public final fun component36 ()I
+	public final fun component37 ()I
+	public final fun component38 ()I
+	public final fun component39 ()I
+	public final fun component4 ()I
+	public final fun component40 ()I
+	public final fun component41 ()I
+	public final fun component42 ()I
+	public final fun component43 ()I
+	public final fun component44 ()I
+	public final fun component45 ()I
+	public final fun component46 ()I
+	public final fun component47 ()I
+	public final fun component48 ()I
+	public final fun component5 ()I
+	public final fun component6 ()I
+	public final fun component7 ()I
+	public final fun component8 ()I
+	public final fun component9 ()I
+	public final fun copy (IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII)Lhalogen/HalogenColorScheme;
+	public static synthetic fun copy$default (Lhalogen/HalogenColorScheme;IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIILjava/lang/Object;)Lhalogen/HalogenColorScheme;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBackground ()I
+	public final fun getError ()I
+	public final fun getErrorContainer ()I
+	public final fun getInverseOnSurface ()I
+	public final fun getInversePrimary ()I
+	public final fun getInverseSurface ()I
+	public final fun getOnBackground ()I
+	public final fun getOnError ()I
+	public final fun getOnErrorContainer ()I
+	public final fun getOnPrimary ()I
+	public final fun getOnPrimaryContainer ()I
+	public final fun getOnPrimaryFixed ()I
+	public final fun getOnPrimaryFixedVariant ()I
+	public final fun getOnSecondary ()I
+	public final fun getOnSecondaryContainer ()I
+	public final fun getOnSecondaryFixed ()I
+	public final fun getOnSecondaryFixedVariant ()I
+	public final fun getOnSurface ()I
+	public final fun getOnSurfaceVariant ()I
+	public final fun getOnTertiary ()I
+	public final fun getOnTertiaryContainer ()I
+	public final fun getOnTertiaryFixed ()I
+	public final fun getOnTertiaryFixedVariant ()I
+	public final fun getOutline ()I
+	public final fun getOutlineVariant ()I
+	public final fun getPrimary ()I
+	public final fun getPrimaryContainer ()I
+	public final fun getPrimaryFixed ()I
+	public final fun getPrimaryFixedDim ()I
+	public final fun getScrim ()I
+	public final fun getSecondary ()I
+	public final fun getSecondaryContainer ()I
+	public final fun getSecondaryFixed ()I
+	public final fun getSecondaryFixedDim ()I
+	public final fun getSurface ()I
+	public final fun getSurfaceBright ()I
+	public final fun getSurfaceContainer ()I
+	public final fun getSurfaceContainerHigh ()I
+	public final fun getSurfaceContainerHighest ()I
+	public final fun getSurfaceContainerLow ()I
+	public final fun getSurfaceContainerLowest ()I
+	public final fun getSurfaceDim ()I
+	public final fun getSurfaceTint ()I
+	public final fun getSurfaceVariant ()I
+	public final fun getTertiary ()I
+	public final fun getTertiaryContainer ()I
+	public final fun getTertiaryFixed ()I
+	public final fun getTertiaryFixedDim ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/HalogenConfig {
+	public static final field Companion Lhalogen/HalogenConfig$Companion;
+	public static final field DEFAULT_ERROR_CHROMA D
+	public static final field DEFAULT_ERROR_HUE D
+	public static final field DEFAULT_NEUTRAL_CHROMA D
+	public static final field DEFAULT_NEUTRAL_VARIANT_CHROMA D
+	public static final field DEFAULT_PRIMARY_MAX_CHROMA D
+	public static final field DEFAULT_PRIMARY_MIN_CHROMA D
+	public static final field DEFAULT_SECONDARY_MAX_CHROMA D
+	public static final field DEFAULT_TERTIARY_MAX_CHROMA D
+	public fun <init> ()V
+	public fun <init> (DDDDDLjava/lang/Double;DZLjava/lang/String;Ljava/lang/String;D)V
+	public synthetic fun <init> (DDDDDLjava/lang/Double;DZLjava/lang/String;Ljava/lang/String;DILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()D
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()D
+	public final fun component2 ()D
+	public final fun component3 ()D
+	public final fun component4 ()D
+	public final fun component5 ()D
+	public final fun component6 ()Ljava/lang/Double;
+	public final fun component7 ()D
+	public final fun component8 ()Z
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (DDDDDLjava/lang/Double;DZLjava/lang/String;Ljava/lang/String;D)Lhalogen/HalogenConfig;
+	public static synthetic fun copy$default (Lhalogen/HalogenConfig;DDDDDLjava/lang/Double;DZLjava/lang/String;Ljava/lang/String;DILjava/lang/Object;)Lhalogen/HalogenConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getErrorChroma ()D
+	public final fun getErrorHue ()Ljava/lang/Double;
+	public final fun getNeutralChroma ()D
+	public final fun getNeutralVariantChroma ()D
+	public final fun getPrimaryMaxChroma ()D
+	public final fun getPrimaryMinChroma ()D
+	public final fun getPromptGuidance ()Ljava/lang/String;
+	public final fun getSecondaryMaxChroma ()D
+	public final fun getStyleName ()Ljava/lang/String;
+	public final fun getTertiaryMaxChroma ()D
+	public final fun getUseFixedError ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/HalogenConfig$Companion {
+	public final fun getDefault ()Lhalogen/HalogenConfig;
+	public final fun getEditorial ()Lhalogen/HalogenConfig;
+	public final fun getExpressive ()Lhalogen/HalogenConfig;
+	public final fun getMonochrome ()Lhalogen/HalogenConfig;
+	public final fun getMuted ()Lhalogen/HalogenConfig;
+	public final fun getPastel ()Lhalogen/HalogenConfig;
+	public final fun getPresets ()Ljava/util/Map;
+	public final fun getPunchy ()Lhalogen/HalogenConfig;
+	public final fun getVibrant ()Lhalogen/HalogenConfig;
+}
+
+public final class halogen/HalogenDefaults {
+	public static final field INSTANCE Lhalogen/HalogenDefaults;
+	public final fun light ()Lhalogen/HalogenThemeSpec;
+	public final fun materialYou ()Lhalogen/HalogenThemeSpec;
+}
+
+public final class halogen/HalogenExtension {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lhalogen/HalogenExtension;
+	public static synthetic fun copy$default (Lhalogen/HalogenExtension;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lhalogen/HalogenExtension;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getKey ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/HalogenExtensions {
+	public static final field Companion Lhalogen/HalogenExtensions$Companion;
+	public fun <init> (Ljava/util/Map;)V
+	public final fun get (Ljava/lang/String;)Ljava/lang/String;
+	public final fun isEmpty ()Z
+	public final fun keys ()Ljava/util/Set;
+	public final fun toMap ()Ljava/util/Map;
+}
+
+public final class halogen/HalogenExtensions$Companion {
+	public final fun empty ()Lhalogen/HalogenExtensions;
+}
+
+public final class halogen/HalogenLlmAvailability : java/lang/Enum {
+	public static final field INITIALIZING Lhalogen/HalogenLlmAvailability;
+	public static final field READY Lhalogen/HalogenLlmAvailability;
+	public static final field UNAVAILABLE Lhalogen/HalogenLlmAvailability;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lhalogen/HalogenLlmAvailability;
+	public static fun values ()[Lhalogen/HalogenLlmAvailability;
+}
+
+public final class halogen/HalogenLlmException : java/lang/Exception {
+	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;Z)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/Throwable;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun isRetryable ()Z
+}
+
+public abstract interface class halogen/HalogenLlmProvider {
+	public abstract fun availability (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun generate (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class halogen/HalogenPalette {
+	public fun <init> (Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;)V
+	public final fun component1 ()Lhalogen/color/TonalPalette;
+	public final fun component2 ()Lhalogen/color/TonalPalette;
+	public final fun component3 ()Lhalogen/color/TonalPalette;
+	public final fun component4 ()Lhalogen/color/TonalPalette;
+	public final fun component5 ()Lhalogen/color/TonalPalette;
+	public final fun component6 ()Lhalogen/color/TonalPalette;
+	public final fun copy (Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;)Lhalogen/HalogenPalette;
+	public static synthetic fun copy$default (Lhalogen/HalogenPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;Lhalogen/color/TonalPalette;ILjava/lang/Object;)Lhalogen/HalogenPalette;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Lhalogen/color/TonalPalette;
+	public final fun getNeutral ()Lhalogen/color/TonalPalette;
+	public final fun getNeutralVariant ()Lhalogen/color/TonalPalette;
+	public final fun getPrimary ()Lhalogen/color/TonalPalette;
+	public final fun getSecondary ()Lhalogen/color/TonalPalette;
+	public final fun getTertiary ()Lhalogen/color/TonalPalette;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/HalogenShapes {
+	public static final field Companion Lhalogen/HalogenShapes$Companion;
+	public fun <init> (FFFFF)V
+	public final fun component1 ()F
+	public final fun component2 ()F
+	public final fun component3 ()F
+	public final fun component4 ()F
+	public final fun component5 ()F
+	public final fun copy (FFFFF)Lhalogen/HalogenShapes;
+	public static synthetic fun copy$default (Lhalogen/HalogenShapes;FFFFFILjava/lang/Object;)Lhalogen/HalogenShapes;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getExtraLarge ()F
+	public final fun getExtraSmall ()F
+	public final fun getLarge ()F
+	public final fun getMedium ()F
+	public final fun getSmall ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/HalogenShapes$Companion {
+	public final fun fromSpec (Ljava/lang/String;F)Lhalogen/HalogenShapes;
+}
+
+public final class halogen/HalogenThemeSpec {
+	public static final field Companion Lhalogen/HalogenThemeSpec$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZLjava/lang/String;FLjava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZLjava/lang/String;FLjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Z
+	public final fun component11 ()Ljava/lang/String;
+	public final fun component12 ()F
+	public final fun component13 ()Ljava/util/Map;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()I
+	public final fun component9 ()I
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZLjava/lang/String;FLjava/util/Map;)Lhalogen/HalogenThemeSpec;
+	public static synthetic fun copy$default (Lhalogen/HalogenThemeSpec;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIZLjava/lang/String;FLjava/util/Map;ILjava/lang/Object;)Lhalogen/HalogenThemeSpec;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBodyWeight ()I
+	public final fun getCornerScale ()F
+	public final fun getCornerStyle ()Ljava/lang/String;
+	public final fun getError ()Ljava/lang/String;
+	public final fun getExtensions ()Ljava/util/Map;
+	public final fun getFontMood ()Ljava/lang/String;
+	public final fun getHeadingWeight ()I
+	public final fun getNeutralDark ()Ljava/lang/String;
+	public final fun getNeutralLight ()Ljava/lang/String;
+	public final fun getPrimary ()Ljava/lang/String;
+	public final fun getSecondary ()Ljava/lang/String;
+	public final fun getTertiary ()Ljava/lang/String;
+	public final fun getTightLetterSpacing ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final synthetic class halogen/HalogenThemeSpec$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lhalogen/HalogenThemeSpec$$serializer;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lhalogen/HalogenThemeSpec;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Lhalogen/HalogenThemeSpec;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class halogen/HalogenThemeSpec$Companion {
+	public final fun fromJson (Ljava/lang/String;)Lhalogen/HalogenThemeSpec;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public final fun toJson (Lhalogen/HalogenThemeSpec;)Ljava/lang/String;
+}
+
+public final class halogen/HalogenTypography {
+	public fun <init> (Ljava/lang/String;IIZ)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Z
+	public final fun copy (Ljava/lang/String;IIZ)Lhalogen/HalogenTypography;
+	public static synthetic fun copy$default (Lhalogen/HalogenTypography;Ljava/lang/String;IIZILjava/lang/Object;)Lhalogen/HalogenTypography;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun fontFamilyHint ()Ljava/lang/String;
+	public final fun getBodyWeight ()I
+	public final fun getFontMood ()Ljava/lang/String;
+	public final fun getHeadingWeight ()I
+	public final fun getTightLetterSpacing ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/PromptBuilder {
+	public static final field INSTANCE Lhalogen/PromptBuilder;
+	public final fun build (Ljava/lang/String;Ljava/util/List;Lhalogen/HalogenConfig;Ljava/lang/String;Ljava/util/List;)Ljava/lang/String;
+	public static synthetic fun build$default (Lhalogen/PromptBuilder;Ljava/lang/String;Ljava/util/List;Lhalogen/HalogenConfig;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Ljava/lang/String;
+	public final fun estimateTokenCount (Ljava/lang/String;)I
+	public final fun tokenBreakdown (Ljava/util/List;Lhalogen/HalogenConfig;Ljava/lang/String;Ljava/util/List;)Ljava/lang/String;
+	public static synthetic fun tokenBreakdown$default (Lhalogen/PromptBuilder;Ljava/util/List;Lhalogen/HalogenConfig;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Ljava/lang/String;
+}
+
+public final class halogen/SchemaParser {
+	public static final field INSTANCE Lhalogen/SchemaParser;
+	public final fun parse-IoAF18A (Ljava/lang/String;)Ljava/lang/Object;
+}
+
+public final class halogen/ThemeExpander {
+	public static final field INSTANCE Lhalogen/ThemeExpander;
+	public final fun argbToHex (I)Ljava/lang/String;
+	public final fun expand (Lhalogen/HalogenThemeSpec;Lhalogen/HalogenConfig;)Lhalogen/ExpandedTheme;
+	public static synthetic fun expand$default (Lhalogen/ThemeExpander;Lhalogen/HalogenThemeSpec;Lhalogen/HalogenConfig;ILjava/lang/Object;)Lhalogen/ExpandedTheme;
+	public final fun expandColors (Lhalogen/HalogenThemeSpec;ZLhalogen/HalogenConfig;)Lhalogen/HalogenColorScheme;
+	public static synthetic fun expandColors$default (Lhalogen/ThemeExpander;Lhalogen/HalogenThemeSpec;ZLhalogen/HalogenConfig;ILjava/lang/Object;)Lhalogen/HalogenColorScheme;
+	public final fun expandShapes (Lhalogen/HalogenThemeSpec;)Lhalogen/HalogenShapes;
+	public final fun expandTypography (Lhalogen/HalogenThemeSpec;)Lhalogen/HalogenTypography;
+}
+
+public final class halogen/color/Hct {
+	public static final field Companion Lhalogen/color/Hct$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChroma ()D
+	public final fun getHue ()D
+	public final fun getTone ()D
+	public fun hashCode ()I
+	public final fun setChroma (D)V
+	public final fun setHue (D)V
+	public final fun setTone (D)V
+	public final fun toInt ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/color/Hct$Companion {
+	public final fun from (DDD)Lhalogen/color/Hct;
+	public final fun fromInt (I)Lhalogen/color/Hct;
+}
+
+public final class halogen/color/TonalPalette {
+	public static final field Companion Lhalogen/color/TonalPalette$Companion;
+	public synthetic fun <init> (DDLkotlin/Lazy;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChroma ()D
+	public final fun getHct (D)Lhalogen/color/Hct;
+	public final fun getHue ()D
+	public final fun getKeyColor ()Lhalogen/color/Hct;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public final fun tone (I)I
+}
+
+public final class halogen/color/TonalPalette$Companion {
+	public final fun fromHct (Lhalogen/color/Hct;)Lhalogen/color/TonalPalette;
+	public final fun fromHueAndChroma (DD)Lhalogen/color/TonalPalette;
+	public final fun fromInt (I)Lhalogen/color/TonalPalette;
+}
+
