@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Lint, Unit Tests & API Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest :halogen-provider-nano:testDebugUnitTest apiCheck
+
+  ios-tests:
+    name: iOS Tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Compile all iOS targets
+        run: ./gradlew -q --console=plain :halogen-core:compileKotlinIosArm64 :halogen-core:compileKotlinIosSimulatorArm64 :halogen-engine:compileKotlinIosArm64 :halogen-engine:compileKotlinIosSimulatorArm64 :halogen-compose:compileKotlinIosArm64 :halogen-compose:compileKotlinIosSimulatorArm64
+      - name: Run iOS simulator tests
+        run: ./gradlew -q --console=plain :halogen-core:iosSimulatorArm64Test :halogen-engine:iosSimulatorArm64Test :halogen-compose:iosSimulatorArm64Test
+
+  wasm-tests:
+    name: WasmJs Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew -q --console=plain :halogen-core:wasmJsBrowserTest :halogen-engine:wasmJsBrowserTest :halogen-compose:wasmJsBrowserTest
