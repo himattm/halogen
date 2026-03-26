@@ -1,6 +1,6 @@
 [versions]
 agp = "8.13.2"
-kotlin = "2.2.20"
+kotlin = "2.3.20"
 composeMultiplatform = "1.10.1"
 kotlinxSerialization = "1.8.1"
 kotlinxCoroutines = "1.9.0"
