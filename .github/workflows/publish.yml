@@ -15,7 +15,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest :halogen-provider-nano:testDebugUnitTest apiCheck
 
   publish:
@@ -30,7 +30,7 @@ jobs:
           distribution: zulu
           java-version: 17
 
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
 
       - name: Publish halogen-core
         run: ./gradlew -q --console=plain :halogen-core:publishAndReleaseToMavenCentral --no-configuration-cache

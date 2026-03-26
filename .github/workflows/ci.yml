@@ -17,7 +17,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest :halogen-provider-nano:testDebugUnitTest apiCheck
 
   ios-tests:
@@ -29,7 +29,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Compile all iOS targets
         run: ./gradlew -q --console=plain :halogen-core:compileKotlinIosArm64 :halogen-core:compileKotlinIosSimulatorArm64 :halogen-engine:compileKotlinIosArm64 :halogen-engine:compileKotlinIosSimulatorArm64 :halogen-compose:compileKotlinIosArm64 :halogen-compose:compileKotlinIosSimulatorArm64
       - name: Run iOS simulator tests
@@ -44,5 +44,5 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew -q --console=plain :halogen-core:wasmJsBrowserTest :halogen-engine:wasmJsBrowserTest :halogen-compose:wasmJsBrowserTest
