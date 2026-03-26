@@ -1,0 +1,34 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <me.mmckenna.halogen:halogen-compose>
+final object halogen.compose/HalogenTheme { // halogen.compose/HalogenTheme|null[0]
+    final val extensions // halogen.compose/HalogenTheme.extensions|{}extensions[0]
+        final fun <get-extensions>(androidx.compose.runtime/Composer?, kotlin/Int): halogen/HalogenExtensions // halogen.compose/HalogenTheme.extensions.<get-extensions>|<get-extensions>(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+final object halogen.compose/HalogenThemeDefaults { // halogen.compose/HalogenThemeDefaults|null[0]
+    final val colorAnimation // halogen.compose/HalogenThemeDefaults.colorAnimation|{}colorAnimation[0]
+        final fun <get-colorAnimation>(): androidx.compose.animation.core/AnimationSpec<androidx.compose.ui.graphics/Color> // halogen.compose/HalogenThemeDefaults.colorAnimation.<get-colorAnimation>|<get-colorAnimation>(){}[0]
+    final val shapeAnimation // halogen.compose/HalogenThemeDefaults.shapeAnimation|{}shapeAnimation[0]
+        final fun <get-shapeAnimation>(): androidx.compose.animation.core/AnimationSpec<kotlin/Float> // halogen.compose/HalogenThemeDefaults.shapeAnimation.<get-shapeAnimation>|<get-shapeAnimation>(){}[0]
+}
+
+final val halogen.compose/LocalHalogenExtensions // halogen.compose/LocalHalogenExtensions|{}LocalHalogenExtensions[0]
+    final fun <get-LocalHalogenExtensions>(): androidx.compose.runtime/ProvidableCompositionLocal<halogen/HalogenExtensions> // halogen.compose/LocalHalogenExtensions.<get-LocalHalogenExtensions>|<get-LocalHalogenExtensions>(){}[0]
+final val halogen.compose/halogen_compose_HalogenTheme$stableprop // halogen.compose/halogen_compose_HalogenTheme$stableprop|#static{}halogen_compose_HalogenTheme$stableprop[0]
+final val halogen.compose/halogen_compose_HalogenThemeDefaults$stableprop // halogen.compose/halogen_compose_HalogenThemeDefaults$stableprop|#static{}halogen_compose_HalogenThemeDefaults$stableprop[0]
+
+final fun (halogen/HalogenColorScheme).halogen.compose/toMaterial3(): androidx.compose.material3/ColorScheme // halogen.compose/toMaterial3|toMaterial3@halogen.HalogenColorScheme(){}[0]
+final fun (halogen/HalogenShapes).halogen.compose/toMaterial3(): androidx.compose.material3/Shapes // halogen.compose/toMaterial3|toMaterial3@halogen.HalogenShapes(){}[0]
+final fun (halogen/HalogenTypography).halogen.compose/toMaterial3(): androidx.compose.material3/Typography // halogen.compose/toMaterial3|toMaterial3@halogen.HalogenTypography(){}[0]
+final fun halogen.compose/HalogenColorPreview(halogen/HalogenThemeSpec, androidx.compose.ui/Modifier?, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // halogen.compose/HalogenColorPreview|HalogenColorPreview(halogen.HalogenThemeSpec;androidx.compose.ui.Modifier?;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun halogen.compose/HalogenSettingsCard(kotlin/Function1<kotlin/String, kotlin/Unit>, kotlin/Boolean, halogen/HalogenThemeSpec?, androidx.compose.ui/Modifier?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // halogen.compose/HalogenSettingsCard|HalogenSettingsCard(kotlin.Function1<kotlin.String,kotlin.Unit>;kotlin.Boolean;halogen.HalogenThemeSpec?;androidx.compose.ui.Modifier?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun halogen.compose/HalogenTheme(halogen/HalogenThemeSpec?, kotlin/Boolean, halogen/HalogenConfig?, androidx.compose.animation.core/AnimationSpec<androidx.compose.ui.graphics/Color>?, androidx.compose.animation.core/AnimationSpec<kotlin/Float>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // halogen.compose/HalogenTheme|HalogenTheme(halogen.HalogenThemeSpec?;kotlin.Boolean;halogen.HalogenConfig?;androidx.compose.animation.core.AnimationSpec<androidx.compose.ui.graphics.Color>?;androidx.compose.animation.core.AnimationSpec<kotlin.Float>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun halogen.compose/HalogenTheme(halogen/HalogenThemeSpec?, kotlin/Boolean, halogen/HalogenConfig?, androidx.compose.animation.core/AnimationSpec<androidx.compose.ui.graphics/Color>?, androidx.compose.animation.core/AnimationSpec<kotlin/Float>?, kotlin/Function5<halogen/ExpandedTheme, kotlin/Boolean, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // halogen.compose/HalogenTheme|HalogenTheme(halogen.HalogenThemeSpec?;kotlin.Boolean;halogen.HalogenConfig?;androidx.compose.animation.core.AnimationSpec<androidx.compose.ui.graphics.Color>?;androidx.compose.animation.core.AnimationSpec<kotlin.Float>?;kotlin.Function5<halogen.ExpandedTheme,kotlin.Boolean,kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun halogen.compose/halogen_compose_HalogenTheme$stableprop_getter(): kotlin/Int // halogen.compose/halogen_compose_HalogenTheme$stableprop_getter|halogen_compose_HalogenTheme$stableprop_getter(){}[0]
+final fun halogen.compose/halogen_compose_HalogenThemeDefaults$stableprop_getter(): kotlin/Int // halogen.compose/halogen_compose_HalogenThemeDefaults$stableprop_getter|halogen_compose_HalogenThemeDefaults$stableprop_getter(){}[0]

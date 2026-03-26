@@ -1,0 +1,77 @@
+site_name: Halogen
+site_description: Runtime theme generation for Compose Multiplatform
+site_url: https://halogen.mmckenna.me
+repo_url: https://github.com/himattm/halogen
+repo_name: himattm/halogen
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+      accent: lime
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: lime
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    logo: material/atom-variant
+  favicon: assets/favicon.svg
+  font:
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - content.code.copy
+    - content.action.edit
+
+nav:
+  - Home: index.md
+  - Quick Start: quick-start.md
+  - Use Cases: use-cases.md
+  - Architecture: architecture.md
+  - Provider Guide: provider-guide.md
+  - Custom Extensions: custom-extensions.md
+  - Custom Theme Systems: custom-theme-systems.md
+  - API Reference: api-reference.md
+  - Design Decisions: design-decisions.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+  - attr_list
+
+plugins:
+  - mike
+
+exclude_docs: |
+  marketing/
+  superpowers/
+
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/himattm/halogen

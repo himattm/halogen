@@ -1,0 +1,41 @@
+public final class halogen/cache/room/HalogenRoomCache {
+	public static final field INSTANCE Lhalogen/cache/room/HalogenRoomCache;
+	public final fun create (Ljava/lang/String;Lhalogen/cache/room/RoomThemeCacheConfig;)Lhalogen/engine/ThemeCache;
+	public static synthetic fun create$default (Lhalogen/cache/room/HalogenRoomCache;Ljava/lang/String;Lhalogen/cache/room/RoomThemeCacheConfig;ILjava/lang/Object;)Lhalogen/engine/ThemeCache;
+}
+
+public final class halogen/cache/room/RoomThemeCache : halogen/engine/ThemeCache {
+	public fun clear (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun contains (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun entries (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun evict (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun evict (Ljava/util/Set;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun evictOlderThan (JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun keys (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observeChanges ()Lkotlinx/coroutines/flow/Flow;
+	public fun put (Ljava/lang/String;Lhalogen/HalogenThemeSpec;Lhalogen/engine/ThemeSource;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun size (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class halogen/cache/room/RoomThemeCacheConfig {
+	public static final field Companion Lhalogen/cache/room/RoomThemeCacheConfig$Companion;
+	public synthetic fun <init> (ILkotlin/time/Duration;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILkotlin/time/Duration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2-FghU774 ()Lkotlin/time/Duration;
+	public final fun copy-6Au4x4Y (ILkotlin/time/Duration;)Lhalogen/cache/room/RoomThemeCacheConfig;
+	public static synthetic fun copy-6Au4x4Y$default (Lhalogen/cache/room/RoomThemeCacheConfig;ILkotlin/time/Duration;ILjava/lang/Object;)Lhalogen/cache/room/RoomThemeCacheConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxAge-FghU774 ()Lkotlin/time/Duration;
+	public final fun getMaxEntries ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/cache/room/RoomThemeCacheConfig$Companion {
+	public final fun getDefault ()Lhalogen/cache/room/RoomThemeCacheConfig;
+	public final fun withExpiry-LRDsOJo (J)Lhalogen/cache/room/RoomThemeCacheConfig;
+	public final fun withLimit (I)Lhalogen/cache/room/RoomThemeCacheConfig;
+}
+

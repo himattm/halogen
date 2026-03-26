@@ -1,0 +1,56 @@
+name: Docs
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: docs
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install -r .github/workflows/mkdocs-requirements.txt
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Update docs version references
+        run: |
+          VERSION=$(grep '^version = ' build-logic/convention/src/main/kotlin/halogen.publishing.gradle.kts | sed 's/version = "\(.*\)"/\1/')
+          for file in docs/*.md README.md; do
+            sed -i "s/halogen-core:[0-9]\+\.[0-9]\+\.[0-9]\+/halogen-core:$VERSION/g" "$file"
+            sed -i "s/halogen-compose:[0-9]\+\.[0-9]\+\.[0-9]\+/halogen-compose:$VERSION/g" "$file"
+            sed -i "s/halogen-engine:[0-9]\+\.[0-9]\+\.[0-9]\+/halogen-engine:$VERSION/g" "$file"
+            sed -i "s/halogen-cache-room:[0-9]\+\.[0-9]\+\.[0-9]\+/halogen-cache-room:$VERSION/g" "$file"
+            sed -i "s/halogen-provider-nano:[0-9]\+\.[0-9]\+\.[0-9]\+/halogen-provider-nano:$VERSION/g" "$file"
+          done
+
+      - name: Deploy snapshot (main branch)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          VERSION=$(grep '^version = ' build-logic/convention/src/main/kotlin/halogen.publishing.gradle.kts | sed 's/version = "\(.*\)"/\1/')
+          mike deploy --update-aliases --push "${VERSION}-SNAPSHOT" snapshot
+
+      - name: Deploy release (tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          VERSION="${GITHUB_REF#refs/tags/v}"
+          mike deploy --update-aliases --push "$VERSION" latest
+          mike set-default --push latest

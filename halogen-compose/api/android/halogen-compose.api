@@ -1,0 +1,50 @@
+public final class halogen/compose/ColorSchemeExtKt {
+	public static final fun toMaterial3 (Lhalogen/HalogenColorScheme;)Landroidx/compose/material3/ColorScheme;
+}
+
+public final class halogen/compose/ComposableSingletons$HalogenSettingsCardKt {
+	public static final field INSTANCE Lhalogen/compose/ComposableSingletons$HalogenSettingsCardKt;
+	public fun <init> ()V
+	public final fun getLambda$-1704041768$halogen_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$-2023856930$halogen_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$1087184000$halogen_compose_release ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class halogen/compose/HalogenPreviewKt {
+	public static final fun HalogenColorPreview (Lhalogen/HalogenThemeSpec;Landroidx/compose/ui/Modifier;ZLandroidx/compose/runtime/Composer;II)V
+}
+
+public final class halogen/compose/HalogenSettingsCardKt {
+	public static final fun HalogenSettingsCard (Lkotlin/jvm/functions/Function1;ZLhalogen/HalogenThemeSpec;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class halogen/compose/HalogenTheme {
+	public static final field $stable I
+	public static final field INSTANCE Lhalogen/compose/HalogenTheme;
+	public final fun getExtensions (Landroidx/compose/runtime/Composer;I)Lhalogen/HalogenExtensions;
+}
+
+public final class halogen/compose/HalogenThemeDefaults {
+	public static final field $stable I
+	public static final field INSTANCE Lhalogen/compose/HalogenThemeDefaults;
+	public final fun getColorAnimation ()Landroidx/compose/animation/core/AnimationSpec;
+	public final fun getShapeAnimation ()Landroidx/compose/animation/core/AnimationSpec;
+}
+
+public final class halogen/compose/HalogenThemeKt {
+	public static final fun HalogenTheme (Lhalogen/HalogenThemeSpec;ZLhalogen/HalogenConfig;Landroidx/compose/animation/core/AnimationSpec;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun HalogenTheme (Lhalogen/HalogenThemeSpec;ZLhalogen/HalogenConfig;Landroidx/compose/animation/core/AnimationSpec;Landroidx/compose/animation/core/AnimationSpec;Lkotlin/jvm/functions/Function5;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class halogen/compose/LocalsKt {
+	public static final fun getLocalHalogenExtensions ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public final class halogen/compose/ShapesExtKt {
+	public static final fun toMaterial3 (Lhalogen/HalogenShapes;)Landroidx/compose/material3/Shapes;
+}
+
+public final class halogen/compose/TypographyExtKt {
+	public static final fun toMaterial3 (Lhalogen/HalogenTypography;)Landroidx/compose/material3/Typography;
+}
+

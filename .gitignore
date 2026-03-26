@@ -1,0 +1,22 @@
+*.iml
+.gradle
+/local.properties
+.idea/
+.DS_Store
+/build
+**/build/
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+.claude/
+.kotlin/
+
+# Build output
+site/
+
+# Playwright logs
+.playwright-mcp/
+
+# Video assets (hosted externally)
+assets/videos/

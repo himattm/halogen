@@ -1,0 +1,74 @@
+name: Bug Report
+description: Report a bug in Halogen
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the information below.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Configure Halogen with...
+        2. Call resolve with...
+        3. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      options:
+        - halogen-core
+        - halogen-engine
+        - halogen-compose
+        - halogen-provider-nano
+        - sample-app
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Halogen Version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Android
+        - iOS
+        - Desktop (JVM)
+        - Web (WasmJs)
+        - Multiple
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Kotlin version, Compose version, OS, device/emulator, etc.
+      placeholder: "Kotlin 2.2.20, Compose 1.10.1, Android 15, Pixel 9 Pro"
+    validations:
+      required: false

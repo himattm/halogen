@@ -1,0 +1,135 @@
+/*
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package halogen.color
+
+import kotlin.math.abs
+import kotlin.math.round
+
+/**
+ * A convenience class for retrieving colors that are constant in hue and chroma but vary in tone.
+ *
+ * This class can be instantiated in two ways:
+ * 1. [fromInt] or [fromHct] which keep the original color's exact hue and chroma.
+ * 2. [fromHueAndChroma] which takes a specific hue and chroma.
+ */
+public class TonalPalette private constructor(
+    /** The hue of the palette in degrees, from 0 to 360. */
+    public val hue: Double,
+    /** The chroma of the palette. */
+    public val chroma: Double,
+    /** Lazy provider for the key color to avoid eager computation when unused. */
+    private val keyColorProvider: Lazy<Hct>,
+) {
+    /** The key color is the color that best represents the hue and chroma of this palette. */
+    public val keyColor: Hct get() = keyColorProvider.value
+
+    private val cache: MutableMap<Int, Int> = mutableMapOf()
+
+    /**
+     * Returns the ARGB color for a given tone in this palette.
+     *
+     * @param tone 0 <= tone <= 100
+     * @return ARGB representation of a color with that tone.
+     */
+    public fun tone(tone: Int): Int {
+        return cache.getOrPut(tone) {
+            Hct.from(hue, chroma, tone.toDouble()).toInt()
+        }
+    }
+
+    /**
+     * Returns an HCT color for a given tone in this palette.
+     *
+     * @param tone 0.0 <= tone <= 100.0
+     * @return HCT representation of a color with that tone.
+     */
+    public fun getHct(tone: Double): Hct {
+        return Hct.from(hue, chroma, tone)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is TonalPalette) return false
+        return hue == other.hue && chroma == other.chroma
+    }
+
+    override fun hashCode(): Int {
+        var result = hue.hashCode()
+        result = 31 * result + chroma.hashCode()
+        return result
+    }
+
+    override fun toString(): String = "TonalPalette(hue=$hue, chroma=$chroma)"
+
+    public companion object {
+        /**
+         * Create a tonal palette from an ARGB color.
+         */
+        public fun fromInt(argb: Int): TonalPalette {
+            val hct = Hct.fromInt(argb)
+            return fromHct(hct)
+        }
+
+        /**
+         * Create a tonal palette from an HCT color.
+         */
+        public fun fromHct(hct: Hct): TonalPalette {
+            return TonalPalette(hct.hue, hct.chroma, lazyOf(hct))
+        }
+
+        /**
+         * Create a tonal palette from a hue and chroma.
+         * The key color is the color in the palette closest to [Hct.from] with
+         * the given hue and chroma at tone 50.
+         */
+        public fun fromHueAndChroma(hue: Double, chroma: Double): TonalPalette {
+            return TonalPalette(hue, chroma, lazy { createKeyColor(hue, chroma) })
+        }
+
+        /**
+         * The key color is the first tone, starting from T50, matching the
+         * palette's chroma, or the tone with the highest chroma if none match.
+         */
+        private fun createKeyColor(hue: Double, chroma: Double): Hct {
+            val startTone = 50.0
+            var smallestDeltaHct = Hct.from(hue, chroma, startTone)
+            var smallestDelta = abs(smallestDeltaHct.chroma - chroma)
+
+            // Starting from T50, check T49, T51, T48, T52, etc.
+            for (delta in 1..49) {
+                // Check lighter
+                if (round(startTone + delta) <= 100) {
+                    val hctAdd = Hct.from(hue, chroma, startTone + delta)
+                    val hctAddDelta = abs(hctAdd.chroma - chroma)
+                    if (hctAddDelta < smallestDelta) {
+                        smallestDelta = hctAddDelta
+                        smallestDeltaHct = hctAdd
+                    }
+                }
+                // Check darker
+                if (round(startTone - delta) >= 0) {
+                    val hctSubtract = Hct.from(hue, chroma, startTone - delta)
+                    val hctSubtractDelta = abs(hctSubtract.chroma - chroma)
+                    if (hctSubtractDelta < smallestDelta) {
+                        smallestDelta = hctSubtractDelta
+                        smallestDeltaHct = hctSubtract
+                    }
+                }
+            }
+            return smallestDeltaHct
+        }
+    }
+}
