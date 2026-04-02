@@ -1,0 +1,1301 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="LLM-generated Material 3 themes for Compose Multiplatform">
+      
+      
+      
+        <link rel="canonical" href="https://halogen.mmckenna.me/0.1.0-SNAPSHOT/superpowers/plans/2026-03-27-room-fix-and-animated-themes/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+    
+    
+      
+        <title>Room Cache Fix & Animated Theme Transitions — Implementation Plan - Halogen</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="lime">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#room-cache-fix-animated-theme-transitions-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Halogen" class="md-header__button md-logo" aria-label="Halogen" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.36 2.64c1.64 0 3 1.36 3 3 0 1.65-1.36 3-3 3-1.65 0-3-1.35-3-3 0-.3.05-.58.14-.84-1.07-.51-2.25-.8-3.5-.8a8 8 0 0 0-8 8l.04.84-1.99.21L2 12A10 10 0 0 1 12 2c1.69 0 3.28.42 4.67 1.16.49-.33 1.07-.52 1.69-.52m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1c.56 0 1-.45 1-1 0-.56-.44-1-1-1M5.64 15.36c1.65 0 3 1.35 3 3 0 .3-.05.58-.14.84 1.07.51 2.25.8 3.5.8a8 8 0 0 0 8-8l-.04-.84 1.99-.21L22 12a10 10 0 0 1-10 10c-1.69 0-3.28-.42-4.67-1.16-.49.33-1.07.52-1.69.52-1.64 0-3-1.36-3-3 0-1.65 1.36-3 3-3m0 2c-.56 0-1 .45-1 1 0 .56.44 1 1 1a1 1 0 0 0 1-1 1 1 0 0 0-1-1M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Halogen
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Room Cache Fix &amp; Animated Theme Transitions — Implementation Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/himattm/halogen" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../quick-start/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../use-cases/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Use Cases
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../architecture/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Architecture
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../provider-guide/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Provider Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../custom-extensions/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Custom Extensions
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../custom-theme-systems/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Custom Theme Systems
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../api-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  API Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../design-decisions/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Design Decisions
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Halogen" class="md-nav__button md-logo" aria-label="Halogen" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.36 2.64c1.64 0 3 1.36 3 3 0 1.65-1.36 3-3 3-1.65 0-3-1.35-3-3 0-.3.05-.58.14-.84-1.07-.51-2.25-.8-3.5-.8a8 8 0 0 0-8 8l.04.84-1.99.21L2 12A10 10 0 0 1 12 2c1.69 0 3.28.42 4.67 1.16.49-.33 1.07-.52 1.69-.52m0 2a1 1 0 0 0-1 1 1 1 0 0 0 1 1c.56 0 1-.45 1-1 0-.56-.44-1-1-1M5.64 15.36c1.65 0 3 1.35 3 3 0 .3-.05.58-.14.84 1.07.51 2.25.8 3.5.8a8 8 0 0 0 8-8l-.04-.84 1.99-.21L22 12a10 10 0 0 1-10 10c-1.69 0-3.28-.42-4.67-1.16-.49.33-1.07.52-1.69.52-1.64 0-3-1.36-3-3 0-1.65 1.36-3 3-3m0 2c-.56 0-1 .45-1 1 0 .56.44 1 1 1a1 1 0 0 0 1-1 1 1 0 0 0-1-1M12 8a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4"/></svg>
+
+    </a>
+    Halogen
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/himattm/halogen" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../provider-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Provider Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../custom-extensions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Extensions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../custom-theme-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Theme Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../design-decisions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-fix-room-cache-expect-object-declaration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 1: Fix Room Cache expect object Declaration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-add-halogenthemedefaults-and-animation-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 2: Add HalogenThemeDefaults and Animation Parameters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-implement-animatecolorscheme-helper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 3: Implement animateColorScheme Helper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-wire-animation-into-halogentheme-composables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 4: Wire Animation Into HalogenTheme Composables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-5-verify-full-build" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 5: Verify Full Build
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-6-update-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task 6: Update Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/himattm/halogen/edit/main/docs/superpowers/plans/2026-03-27-room-fix-and-animated-themes.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="room-cache-fix-animated-theme-transitions-implementation-plan">Room Cache Fix &amp; Animated Theme Transitions — Implementation Plan<a class="headerlink" href="#room-cache-fix-animated-theme-transitions-implementation-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Fix the Room KMP build failure and add smooth animated transitions when themes change in HalogenTheme.</p>
+<p><strong>Architecture:</strong> Two independent changes. (1) One-line fix to the Room <code>expect object</code> declaration so the intermediate source set metadata compiles. (2) Wrap the 49 M3 color roles and 5 shape radii in <code>animateColorAsState</code>/<code>animateFloatAsState</code> inside <code>HalogenTheme.kt</code>, with extensible <code>AnimationSpec</code> parameters defaulting to a 400ms tween.</p>
+<p><strong>Tech Stack:</strong> Kotlin Multiplatform, Compose Multiplatform (animation APIs), Room KMP 2.7.1, KSP</p>
+<hr />
+<h3 id="task-1-fix-room-cache-expect-object-declaration">Task 1: Fix Room Cache <code>expect object</code> Declaration<a class="headerlink" href="#task-1-fix-room-cache-expect-object-declaration" title="Permanent link">&para;</a></h3>
+<p><strong>Files:</strong>
+- Modify: <code>halogen-cache-room/src/roomMain/kotlin/halogen/cache/room/db/HalogenDatabase.kt</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Apply the fix</strong></li>
+</ul>
+<p>Replace the <code>expect object</code> declaration (lines 14-15) with the version that declares <code>initialize()</code>:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cm">/**</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cm"> * Room KMP database constructor.</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cm"> *</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="cm"> * The `actual` implementations are generated by Room&#39;s KSP processor</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cm"> * for each target (Android, JVM, iOS). The `@Suppress(&quot;NO_ACTUAL_FOR_EXPECT&quot;)`</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="cm"> * is required because the actuals are code-generated, not hand-written.</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="cm"> * The `initialize()` override must be declared here so that the intermediate</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="cm"> * `roomMain` source set&#39;s metadata compilation can type-check the interface</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="cm"> * contract before KSP runs.</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="cm"> */</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="nd">@Suppress</span><span class="p">(</span><span class="s">&quot;NO_ACTUAL_FOR_EXPECT&quot;</span><span class="p">)</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="kd">internal</span><span class="w"> </span><span class="kd">expect</span><span class="w"> </span><span class="kd">object</span><span class="w"> </span><span class="nc">HalogenDatabaseConstructor</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">RoomDatabaseConstructor</span><span class="o">&lt;</span><span class="n">HalogenDatabase</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">initialize</span><span class="p">():</span><span class="w"> </span><span class="n">HalogenDatabase</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Verify the metadata compilation passes</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-cache-room:compileRoomMainKotlinMetadata</code>
+Expected: Success (no output)</p>
+<ul>
+<li>[ ] <strong>Step 3: Verify full module build across all targets</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-cache-room:assemble</code>
+Expected: Success (no output)</p>
+<ul>
+<li>[ ] <strong>Step 4: Commit</strong></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>add<span class="w"> </span>halogen-cache-room/src/roomMain/kotlin/halogen/cache/room/db/HalogenDatabase.kt
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;fix(cache-room): add initialize() to expect object for metadata compilation</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="s2">The intermediate roomMain source set&#39;s metadata compiler needs the</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s2">method signature declared on the expect object to type-check the</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="s2">RoomDatabaseConstructor interface contract. KSP generates the actual</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s2">implementations unchanged.&quot;</span>
+</span></code></pre></div>
+<hr />
+<h3 id="task-2-add-halogenthemedefaults-and-animation-parameters">Task 2: Add <code>HalogenThemeDefaults</code> and Animation Parameters<a class="headerlink" href="#task-2-add-halogenthemedefaults-and-animation-parameters" title="Permanent link">&para;</a></h3>
+<p><strong>Files:</strong>
+- Modify: <code>halogen-compose/src/commonMain/kotlin/halogen/compose/HalogenTheme.kt</code>
+- Modify: <code>halogen-compose/build.gradle.kts</code> (add <code>compose.animation</code> dependency)</p>
+<ul>
+<li>[ ] <strong>Step 1: Add animation dependency</strong></li>
+</ul>
+<p>In <code>halogen-compose/build.gradle.kts</code>, add <code>compose.animation</code> to commonMain dependencies:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">commonMain</span><span class="p">.</span><span class="na">dependencies</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="n">project</span><span class="p">(</span><span class="s">&quot;:halogen-core&quot;</span><span class="p">))</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="n">compose</span><span class="p">.</span><span class="na">runtime</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="n">compose</span><span class="p">.</span><span class="na">foundation</span><span class="p">)</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="n">compose</span><span class="p">.</span><span class="na">material3</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="n">compose</span><span class="p">.</span><span class="na">animation</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="n">compose</span><span class="p">.</span><span class="na">ui</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Add <code>HalogenThemeDefaults</code> object</strong></li>
+</ul>
+<p>At the bottom of <code>HalogenTheme.kt</code> (before the closing of the file, after the <code>HalogenTheme</code> companion object), add:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cm">/**</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="cm"> * Default values for [HalogenTheme] animation parameters.</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="cm"> */</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kd">public</span><span class="w"> </span><span class="kd">object</span><span class="w"> </span><span class="nc">HalogenThemeDefaults</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="cm">/** Default color transition: smooth 400ms tween. */</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">colorAnimation</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tween</span><span class="p">(</span><span class="n">durationMillis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">400</span><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="cm">/** Default shape transition: smooth 400ms tween. */</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="nv">shapeAnimation</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tween</span><span class="p">(</span><span class="n">durationMillis</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">400</span><span class="p">)</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Add these imports to the top of the file:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.animation.core.AnimationSpec</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.animation.core.animateFloatAsState</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.animation.core.snap</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.animation.core.tween</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.animation.animateColorAsState</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.foundation.shape.RoundedCornerShape</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.material3.ColorScheme</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.runtime.mutableStateOf</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.runtime.setValue</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.ui.graphics.Color</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="k">import</span><span class="w"> </span><span class="nn">androidx.compose.ui.unit.dp</span>
+</span></code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Verify compilation</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-compose:compileKotlinJvm</code>
+Expected: Success</p>
+<ul>
+<li>[ ] <strong>Step 4: Commit</strong></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>add<span class="w"> </span>halogen-compose/build.gradle.kts<span class="w"> </span>halogen-compose/src/commonMain/kotlin/halogen/compose/HalogenTheme.kt
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(compose): add HalogenThemeDefaults with animation specs&quot;</span>
+</span></code></pre></div>
+<hr />
+<h3 id="task-3-implement-animatecolorscheme-helper">Task 3: Implement <code>animateColorScheme</code> Helper<a class="headerlink" href="#task-3-implement-animatecolorscheme-helper" title="Permanent link">&para;</a></h3>
+<p><strong>Files:</strong>
+- Modify: <code>halogen-compose/src/commonMain/kotlin/halogen/compose/HalogenTheme.kt</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add the <code>animateColorScheme</code> composable helper</strong></li>
+</ul>
+<p>Add this private helper function in <code>HalogenTheme.kt</code>, below the imports and above the <code>HalogenTheme</code> composable:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="cm">/**</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="cm"> * Animates all 49 color roles in a [ColorScheme] toward the [target] values.</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="cm"> *</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="cm"> * On [initialSnap] (first theme load), all colors snap instantly to avoid a</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="cm"> * fade-in from the default M3 palette.</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="cm"> */</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nd">@Composable</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">animateColorScheme</span><span class="p">(</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="n">target</span><span class="p">:</span><span class="w"> </span><span class="n">ColorScheme</span><span class="p">,</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="n">animationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="n">initialSnap</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="p">):</span><span class="w"> </span><span class="n">ColorScheme</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">initialSnap</span><span class="p">)</span><span class="w"> </span><span class="n">snap</span><span class="p">()</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">animationSpec</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ColorScheme</span><span class="p">(</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">        </span><span class="n">primary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">primary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">        </span><span class="n">onPrimary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onPrimary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">        </span><span class="n">primaryContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">primaryContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">        </span><span class="n">onPrimaryContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onPrimaryContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">        </span><span class="n">inversePrimary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">inversePrimary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">        </span><span class="n">primaryFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">primaryFixed</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">        </span><span class="n">primaryFixedDim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">primaryFixedDim</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">        </span><span class="n">onPrimaryFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onPrimaryFixed</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">        </span><span class="n">onPrimaryFixedVariant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onPrimaryFixedVariant</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">        </span><span class="n">secondary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">secondary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">        </span><span class="n">onSecondary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onSecondary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">        </span><span class="n">secondaryContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">secondaryContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">        </span><span class="n">onSecondaryContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onSecondaryContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">        </span><span class="n">secondaryFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">secondaryFixed</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">        </span><span class="n">secondaryFixedDim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">secondaryFixedDim</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">        </span><span class="n">onSecondaryFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onSecondaryFixed</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">        </span><span class="n">onSecondaryFixedVariant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onSecondaryFixedVariant</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a><span class="w">        </span><span class="n">tertiary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">tertiary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">        </span><span class="n">onTertiary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onTertiary</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">        </span><span class="n">tertiaryContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">tertiaryContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">        </span><span class="n">onTertiaryContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onTertiaryContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="w">        </span><span class="n">tertiaryFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">tertiaryFixed</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="w">        </span><span class="n">tertiaryFixedDim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">tertiaryFixedDim</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="w">        </span><span class="n">onTertiaryFixed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onTertiaryFixed</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="w">        </span><span class="n">onTertiaryFixedVariant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onTertiaryFixedVariant</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-40"><a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="w">        </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">error</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-41"><a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="w">        </span><span class="n">onError</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onError</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-42"><a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a><span class="w">        </span><span class="n">errorContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">errorContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-43"><a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a><span class="w">        </span><span class="n">onErrorContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onErrorContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-44"><a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="w">        </span><span class="n">surface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surface</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-45"><a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="w">        </span><span class="n">onSurface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onSurface</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-46"><a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a><span class="w">        </span><span class="n">surfaceVariant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceVariant</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-47"><a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="w">        </span><span class="n">onSurfaceVariant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onSurfaceVariant</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-48"><a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a><span class="w">        </span><span class="n">surfaceTint</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceTint</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-49"><a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="w">        </span><span class="n">surfaceBright</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceBright</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-50"><a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="w">        </span><span class="n">surfaceDim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceDim</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-51"><a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="w">        </span><span class="n">surfaceContainer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceContainer</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-52"><a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="w">        </span><span class="n">surfaceContainerHigh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceContainerHigh</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-53"><a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="w">        </span><span class="n">surfaceContainerHighest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceContainerHighest</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-54"><a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a><span class="w">        </span><span class="n">surfaceContainerLow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceContainerLow</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-55"><a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="w">        </span><span class="n">surfaceContainerLowest</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">surfaceContainerLowest</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-56"><a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="w">        </span><span class="n">background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">background</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-57"><a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a><span class="w">        </span><span class="n">onBackground</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">onBackground</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-58"><a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a><span class="w">        </span><span class="n">inverseSurface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">inverseSurface</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-59"><a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a><span class="w">        </span><span class="n">inverseOnSurface</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">inverseOnSurface</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-60"><a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a><span class="w">        </span><span class="n">outline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">outline</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-61"><a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a><span class="w">        </span><span class="n">outlineVariant</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">outlineVariant</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-62"><a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a><span class="w">        </span><span class="n">scrim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorAsState</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="na">scrim</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">).</span><span class="na">value</span><span class="p">,</span>
+</span><span id="__span-6-63"><a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a><span class="w">    </span><span class="p">)</span>
+</span><span id="__span-6-64"><a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Add the <code>animateShapes</code> composable helper</strong></li>
+</ul>
+<p>Add this private helper below <code>animateColorScheme</code>:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cm">/**</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cm"> * Animates the 5 corner radii in [Shapes] toward the [target] values.</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="cm"> *</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="cm"> * On [initialSnap] (first theme load), shapes snap instantly.</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="cm"> */</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nd">@Composable</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">animateShapes</span><span class="p">(</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="n">target</span><span class="p">:</span><span class="w"> </span><span class="n">Shapes</span><span class="p">,</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="n">defaultShapes</span><span class="p">:</span><span class="w"> </span><span class="n">Shapes</span><span class="p">,</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="n">animationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="n">initialSnap</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">):</span><span class="w"> </span><span class="n">Shapes</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">initialSnap</span><span class="p">)</span><span class="w"> </span><span class="n">snap</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">animationSpec</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="c1">// Extract corner radii from the target shapes. The toMaterial3() extension</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">    </span><span class="c1">// creates RoundedCornerShape(x.dp), so we read from the original HalogenShapes</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="c1">// via the Shapes objects passed in. We animate 5 values and rebuild Shapes.</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">    </span><span class="c1">// Since Shapes wraps CornerBasedShape and we can&#39;t easily extract the dp value</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="c1">// back out, we animate the full Shapes by comparing target vs default.</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="c1">// Instead, the caller will pass the raw float values. See Task 4 for integration.</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">target</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Actually, we need a different approach for shapes. Instead of trying to extract dp values from <code>Shapes</code>, we'll animate the raw <code>HalogenShapes</code> float values directly and build <code>Shapes</code> from the animated values. This is cleaner. Replace the above with:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cm">/**</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="cm"> * Animates 5 corner radii from [HalogenShapes] and returns the animated [Shapes].</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="cm"> *</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="cm"> * On [initialSnap] (first theme load), shapes snap instantly.</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="cm"> */</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nd">@Composable</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="kd">private</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">animateShapes</span><span class="p">(</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="n">targetShapes</span><span class="p">:</span><span class="w"> </span><span class="n">halogen</span><span class="p">.</span><span class="na">HalogenShapes</span><span class="o">?</span><span class="p">,</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="n">animationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="n">initialSnap</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">):</span><span class="w"> </span><span class="n">Shapes</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">targetShapes</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">Shapes</span><span class="p">()</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">initialSnap</span><span class="p">)</span><span class="w"> </span><span class="n">snap</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">animationSpec</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extraSmall</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">animateFloatAsState</span><span class="p">(</span><span class="n">targetShapes</span><span class="p">.</span><span class="na">extraSmall</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">)</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">small</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">animateFloatAsState</span><span class="p">(</span><span class="n">targetShapes</span><span class="p">.</span><span class="na">small</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">)</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">medium</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">animateFloatAsState</span><span class="p">(</span><span class="n">targetShapes</span><span class="p">.</span><span class="na">medium</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">)</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">large</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">animateFloatAsState</span><span class="p">(</span><span class="n">targetShapes</span><span class="p">.</span><span class="na">large</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">)</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extraLarge</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">animateFloatAsState</span><span class="p">(</span><span class="n">targetShapes</span><span class="p">.</span><span class="na">extraLarge</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">)</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Shapes</span><span class="p">(</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">        </span><span class="n">extraSmall</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">extraSmall</span><span class="p">.</span><span class="na">dp</span><span class="p">),</span>
+</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">        </span><span class="n">small</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">small</span><span class="p">.</span><span class="na">dp</span><span class="p">),</span>
+</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">        </span><span class="n">medium</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">medium</span><span class="p">.</span><span class="na">dp</span><span class="p">),</span>
+</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">        </span><span class="n">large</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">large</span><span class="p">.</span><span class="na">dp</span><span class="p">),</span>
+</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">        </span><span class="n">extraLarge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RoundedCornerShape</span><span class="p">(</span><span class="n">extraLarge</span><span class="p">.</span><span class="na">dp</span><span class="p">),</span>
+</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">    </span><span class="p">)</span>
+</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>[ ] <strong>Step 3: Verify compilation</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-compose:compileKotlinJvm</code>
+Expected: Success</p>
+<ul>
+<li>[ ] <strong>Step 4: Commit</strong></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>add<span class="w"> </span>halogen-compose/src/commonMain/kotlin/halogen/compose/HalogenTheme.kt
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(compose): add animateColorScheme and animateShapes helpers&quot;</span>
+</span></code></pre></div>
+<hr />
+<h3 id="task-4-wire-animation-into-halogentheme-composables">Task 4: Wire Animation Into <code>HalogenTheme</code> Composables<a class="headerlink" href="#task-4-wire-animation-into-halogentheme-composables" title="Permanent link">&para;</a></h3>
+<p><strong>Files:</strong>
+- Modify: <code>halogen-compose/src/commonMain/kotlin/halogen/compose/HalogenTheme.kt</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Update the primary <code>HalogenTheme</code> overload</strong></li>
+</ul>
+<p>Replace the entire primary <code>HalogenTheme</code> composable function (the first <code>@Composable public fun HalogenTheme</code> with <code>content</code> parameter) with:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cm">/**</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="cm"> * Applies a [HalogenThemeSpec] as a Material 3 theme to the given [content].</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="cm"> *</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="cm"> * Both light and dark color schemes are expanded upfront from the spec, so toggling</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="cm"> * system dark mode is instant — no re-expansion or LLM call needed.</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="cm"> *</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="cm"> * Color and shape transitions are animated by default with a smooth 400ms tween.</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="cm"> * Pass a custom [AnimationSpec] to change the transition style, or [snap] to disable.</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="cm"> *</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="cm"> * @param spec The compact theme specification produced by the LLM, or `null` for defaults.</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="cm"> * @param darkTheme Whether to use the dark variant of the color scheme.</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="cm"> * @param config Controls chroma levels and palette behavior. See [HalogenConfig].</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="cm"> * @param colorAnimationSpec Animation spec for color transitions. Default: 400ms tween.</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="cm"> * @param shapeAnimationSpec Animation spec for shape corner radius transitions. Default: 400ms tween.</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="cm"> * @param content The composable content to theme.</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="cm"> */</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="nd">@Composable</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="kd">public</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">HalogenTheme</span><span class="p">(</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">    </span><span class="n">spec</span><span class="p">:</span><span class="w"> </span><span class="n">HalogenThemeSpec? </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">    </span><span class="n">darkTheme</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">isSystemInDarkTheme</span><span class="p">(),</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">    </span><span class="n">config</span><span class="p">:</span><span class="w"> </span><span class="n">HalogenConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HalogenConfig</span><span class="p">.</span><span class="na">Default</span><span class="p">,</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">    </span><span class="n">colorAnimationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HalogenThemeDefaults</span><span class="p">.</span><span class="na">colorAnimation</span><span class="p">,</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">    </span><span class="n">shapeAnimationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HalogenThemeDefaults</span><span class="p">.</span><span class="na">shapeAnimation</span><span class="p">,</span>
+</span><span id="__span-10-24"><a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">    </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="nd">@Composable</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">,</span>
+</span><span id="__span-10-25"><a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-26"><a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">expandedTheme</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">produceState</span><span class="o">&lt;</span><span class="n">ExpandedTheme?&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-27"><a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">spec</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-28"><a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="w">            </span><span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">Default</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ThemeExpander</span><span class="p">.</span><span class="na">expand</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-29"><a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-30"><a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="w">            </span><span class="kc">null</span>
+</span><span id="__span-10-31"><a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-10-32"><a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-33"><a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>
+</span><span id="__span-10-34"><a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="w">    </span><span class="c1">// Track whether this is the first theme we&#39;ve seen. If so, snap instead of</span>
+</span><span id="__span-10-35"><a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="w">    </span><span class="c1">// animating to avoid a fade-in from the M3 default palette.</span>
+</span><span id="__span-10-36"><a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">hasSeenTheme</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">remember</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">mutableStateOf</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-37"><a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">initialSnap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">hasSeenTheme</span>
+</span><span id="__span-10-38"><a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">expandedTheme</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="n">hasSeenTheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-10-39"><a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a>
+</span><span id="__span-10-40"><a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">targetColorScheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remember</span><span class="p">(</span><span class="n">expandedTheme</span><span class="p">,</span><span class="w"> </span><span class="n">darkTheme</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-41"><a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expandedTheme</span>
+</span><span id="__span-10-42"><a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theme</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-43"><a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">darkTheme</span><span class="p">)</span><span class="w"> </span><span class="n">theme</span><span class="p">.</span><span class="na">darkColorScheme</span><span class="p">.</span><span class="na">toMaterial3</span><span class="p">()</span>
+</span><span id="__span-10-44"><a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a><span class="w">            </span><span class="k">else</span><span class="w"> </span><span class="n">theme</span><span class="p">.</span><span class="na">lightColorScheme</span><span class="p">.</span><span class="na">toMaterial3</span><span class="p">()</span>
+</span><span id="__span-10-45"><a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-46"><a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">darkTheme</span><span class="p">)</span><span class="w"> </span><span class="n">darkColorScheme</span><span class="p">()</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">lightColorScheme</span><span class="p">()</span>
+</span><span id="__span-10-47"><a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-10-48"><a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-49"><a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a>
+</span><span id="__span-10-50"><a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">colorScheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateColorScheme</span><span class="p">(</span><span class="n">targetColorScheme</span><span class="p">,</span><span class="w"> </span><span class="n">colorAnimationSpec</span><span class="p">,</span><span class="w"> </span><span class="n">initialSnap</span><span class="p">)</span>
+</span><span id="__span-10-51"><a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a>
+</span><span id="__span-10-52"><a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">typography</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remember</span><span class="p">(</span><span class="n">expandedTheme</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-53"><a id="__codelineno-10-53" name="__codelineno-10-53" href="#__codelineno-10-53"></a><span class="w">        </span><span class="n">expandedTheme</span><span class="o">?.</span><span class="na">typography</span><span class="o">?.</span><span class="na">toMaterial3</span><span class="p">()</span><span class="w"> </span><span class="o">?:</span><span class="w"> </span><span class="n">Typography</span><span class="p">()</span>
+</span><span id="__span-10-54"><a id="__codelineno-10-54" name="__codelineno-10-54" href="#__codelineno-10-54"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-55"><a id="__codelineno-10-55" name="__codelineno-10-55" href="#__codelineno-10-55"></a>
+</span><span id="__span-10-56"><a id="__codelineno-10-56" name="__codelineno-10-56" href="#__codelineno-10-56"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">shapes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animateShapes</span><span class="p">(</span><span class="n">expandedTheme</span><span class="o">?.</span><span class="na">shapes</span><span class="p">,</span><span class="w"> </span><span class="n">shapeAnimationSpec</span><span class="p">,</span><span class="w"> </span><span class="n">initialSnap</span><span class="p">)</span>
+</span><span id="__span-10-57"><a id="__codelineno-10-57" name="__codelineno-10-57" href="#__codelineno-10-57"></a>
+</span><span id="__span-10-58"><a id="__codelineno-10-58" name="__codelineno-10-58" href="#__codelineno-10-58"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remember</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-59"><a id="__codelineno-10-59" name="__codelineno-10-59" href="#__codelineno-10-59"></a><span class="w">        </span><span class="n">spec</span><span class="o">?.</span><span class="na">extensions</span><span class="o">?.</span><span class="na">let</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">HalogenExtensions</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-10-60"><a id="__codelineno-10-60" name="__codelineno-10-60" href="#__codelineno-10-60"></a><span class="w">            </span><span class="o">?:</span><span class="w"> </span><span class="n">HalogenExtensions</span><span class="p">.</span><span class="na">empty</span><span class="p">()</span>
+</span><span id="__span-10-61"><a id="__codelineno-10-61" name="__codelineno-10-61" href="#__codelineno-10-61"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-62"><a id="__codelineno-10-62" name="__codelineno-10-62" href="#__codelineno-10-62"></a>
+</span><span id="__span-10-63"><a id="__codelineno-10-63" name="__codelineno-10-63" href="#__codelineno-10-63"></a><span class="w">    </span><span class="n">CompositionLocalProvider</span><span class="p">(</span>
+</span><span id="__span-10-64"><a id="__codelineno-10-64" name="__codelineno-10-64" href="#__codelineno-10-64"></a><span class="w">        </span><span class="n">LocalHalogenExtensions</span><span class="w"> </span><span class="n">provides</span><span class="w"> </span><span class="n">extensions</span><span class="p">,</span>
+</span><span id="__span-10-65"><a id="__codelineno-10-65" name="__codelineno-10-65" href="#__codelineno-10-65"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-66"><a id="__codelineno-10-66" name="__codelineno-10-66" href="#__codelineno-10-66"></a><span class="w">        </span><span class="n">MaterialTheme</span><span class="p">(</span>
+</span><span id="__span-10-67"><a id="__codelineno-10-67" name="__codelineno-10-67" href="#__codelineno-10-67"></a><span class="w">            </span><span class="n">colorScheme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colorScheme</span><span class="p">,</span>
+</span><span id="__span-10-68"><a id="__codelineno-10-68" name="__codelineno-10-68" href="#__codelineno-10-68"></a><span class="w">            </span><span class="n">typography</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">typography</span><span class="p">,</span>
+</span><span id="__span-10-69"><a id="__codelineno-10-69" name="__codelineno-10-69" href="#__codelineno-10-69"></a><span class="w">            </span><span class="n">shapes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">shapes</span><span class="p">,</span>
+</span><span id="__span-10-70"><a id="__codelineno-10-70" name="__codelineno-10-70" href="#__codelineno-10-70"></a><span class="w">            </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">content</span><span class="p">,</span>
+</span><span id="__span-10-71"><a id="__codelineno-10-71" name="__codelineno-10-71" href="#__codelineno-10-71"></a><span class="w">        </span><span class="p">)</span>
+</span><span id="__span-10-72"><a id="__codelineno-10-72" name="__codelineno-10-72" href="#__codelineno-10-72"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-73"><a id="__codelineno-10-73" name="__codelineno-10-73" href="#__codelineno-10-73"></a><span class="p">}</span>
+</span></code></pre></div>
+<ul>
+<li>[ ] <strong>Step 2: Update the secondary <code>HalogenTheme</code> overload (custom themeWrapper)</strong></li>
+</ul>
+<p>Replace the second <code>HalogenTheme</code> overload with:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cm">/**</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="cm"> * Applies a [HalogenThemeSpec] using a custom theme wrapper instead of Material 3.</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="cm"> *</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="cm"> * Use this overload to integrate Halogen with non-Material design systems.</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="cm"> * The [themeWrapper] receives the [ExpandedTheme] and is responsible for</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="cm"> * providing the appropriate theme to [content].</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="cm"> *</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="cm"> * @param spec The compact theme specification produced by the LLM, or `null` for no theme.</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="cm"> * @param darkTheme Whether to use the dark variant.</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="cm"> * @param config Controls chroma levels and palette behavior. See [HalogenConfig].</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="cm"> * @param colorAnimationSpec Animation spec for color transitions. Default: 400ms tween.</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="cm"> * @param shapeAnimationSpec Animation spec for shape corner radius transitions. Default: 400ms tween.</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="cm"> * @param themeWrapper A composable that receives the expanded theme, dark mode flag,</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="cm"> *   and content. It should apply your custom theme and call [content].</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="cm"> * @param content The composable content to theme.</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="cm"> */</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="nd">@Composable</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="kd">public</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">HalogenTheme</span><span class="p">(</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="n">spec</span><span class="p">:</span><span class="w"> </span><span class="n">HalogenThemeSpec?,</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">    </span><span class="n">darkTheme</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">isSystemInDarkTheme</span><span class="p">(),</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span><span class="n">config</span><span class="p">:</span><span class="w"> </span><span class="n">HalogenConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HalogenConfig</span><span class="p">.</span><span class="na">Default</span><span class="p">,</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">    </span><span class="n">colorAnimationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="n">Color</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HalogenThemeDefaults</span><span class="p">.</span><span class="na">colorAnimation</span><span class="p">,</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">    </span><span class="n">shapeAnimationSpec</span><span class="p">:</span><span class="w"> </span><span class="n">AnimationSpec</span><span class="o">&lt;</span><span class="kt">Float</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HalogenThemeDefaults</span><span class="p">.</span><span class="na">shapeAnimation</span><span class="p">,</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">    </span><span class="n">themeWrapper</span><span class="p">:</span><span class="w"> </span><span class="nd">@Composable</span><span class="w"> </span><span class="p">(</span><span class="n">theme</span><span class="p">:</span><span class="w"> </span><span class="n">ExpandedTheme</span><span class="p">,</span><span class="w"> </span><span class="n">isDark</span><span class="p">:</span><span class="w"> </span><span class="kt">Boolean</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="nd">@Composable</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">,</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">    </span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="nd">@Composable</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Unit</span><span class="p">,</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">expandedTheme</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">produceState</span><span class="o">&lt;</span><span class="n">ExpandedTheme?&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="n">spec</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">spec</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">            </span><span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">Default</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">ThemeExpander</span><span class="p">.</span><span class="na">expand</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="w">            </span><span class="kc">null</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">extensions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">remember</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="w">        </span><span class="n">spec</span><span class="o">?.</span><span class="na">extensions</span><span class="o">?.</span><span class="na">let</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">HalogenExtensions</span><span class="p">(</span><span class="nb">it</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="w">            </span><span class="o">?:</span><span class="w"> </span><span class="n">HalogenExtensions</span><span class="p">.</span><span class="na">empty</span><span class="p">()</span>
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a>
+</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="w">    </span><span class="n">CompositionLocalProvider</span><span class="p">(</span>
+</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a><span class="w">        </span><span class="n">LocalHalogenExtensions</span><span class="w"> </span><span class="n">provides</span><span class="w"> </span><span class="n">extensions</span><span class="p">,</span>
+</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a><span class="w">        </span><span class="kd">val</span><span class="w"> </span><span class="nv">theme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">expandedTheme</span>
+</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">theme</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-45"><a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="w">            </span><span class="n">themeWrapper</span><span class="p">(</span><span class="n">theme</span><span class="p">,</span><span class="w"> </span><span class="n">darkTheme</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
+</span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-47"><a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="w">            </span><span class="n">content</span><span class="p">()</span>
+</span><span id="__span-11-48"><a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-11-49"><a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-50"><a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>Note: The custom themeWrapper overload passes <code>colorAnimationSpec</code> and <code>shapeAnimationSpec</code> through its signature for API consistency, but the wrapper itself controls theme application. Developers using custom wrappers can use <code>animateColorAsState</code> directly with the spec they pass.</p>
+<ul>
+<li>[ ] <strong>Step 3: Verify compilation across all targets</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-compose:assemble</code>
+Expected: Success</p>
+<ul>
+<li>[ ] <strong>Step 4: Commit</strong></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>add<span class="w"> </span>halogen-compose/src/commonMain/kotlin/halogen/compose/HalogenTheme.kt
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(compose): wire animated color and shape transitions into HalogenTheme</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="s2">Colors (49 roles) and shapes (5 radii) animate with a 400ms tween</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="s2">by default. First composition snaps instantly. Developers can pass</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="s2">custom AnimationSpec or snap() to disable.&quot;</span>
+</span></code></pre></div>
+<hr />
+<h3 id="task-5-verify-full-build">Task 5: Verify Full Build<a class="headerlink" href="#task-5-verify-full-build" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <strong>Step 1: Run all tests</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:allTests</code>
+Expected: All pass (no output)</p>
+<ul>
+<li>[ ] <strong>Step 2: Build all non-Room modules</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :halogen-core:assemble :halogen-engine:assemble :halogen-compose:assemble :halogen-cache-room:assemble</code>
+Expected: Success</p>
+<ul>
+<li>[ ] <strong>Step 3: Build sample-shared</strong></li>
+</ul>
+<p>Run: <code>./gradlew -q --console=plain :sample-shared:compileKotlinJvm :sample-shared:compileKotlinWasmJs</code>
+Expected: Success</p>
+<hr />
+<h3 id="task-6-update-documentation">Task 6: Update Documentation<a class="headerlink" href="#task-6-update-documentation" title="Permanent link">&para;</a></h3>
+<p><strong>Files:</strong>
+- Modify: <code>docs/quick-start.md</code>
+- Modify: <code>docs/architecture.md</code></p>
+<ul>
+<li>[ ] <strong>Step 1: Add animation section to quick-start.md</strong></li>
+</ul>
+<p>After the existing <code>HalogenTheme</code> usage section (around line 102), add:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="gu">### Animated Transitions</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Theme changes animate smoothly by default — all 49 M3 color roles and shape corner radii transition with a 400ms tween. No extra code needed.
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>To customize the animation:
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>```kotlin
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>// Custom spring animation
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>HalogenTheme(
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>    spec = spec,
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>    colorAnimationSpec = spring(stiffness = Spring.StiffnessLow),
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    shapeAnimationSpec = spring(stiffness = Spring.StiffnessMedium),
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>) {
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    MyApp()
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>}
+</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>// Disable animation (instant snap)
+</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>HalogenTheme(
+</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>    spec = spec,
+</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>    colorAnimationSpec = snap(),
+</span><span id="__span-13-21"><a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>    shapeAnimationSpec = snap(),
+</span><span id="__span-13-22"><a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>) {
+</span><span id="__span-13-23"><a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>    MyApp()
+</span><span id="__span-13-24"><a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>}
+</span></code></pre></div>
+<p>Typography (font family, weight, letter spacing) snaps instantly to avoid text reflow during transitions.
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>- [ ] **Step 2: Add compose animation section to architecture.md**
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>After the existing halogen-compose description, add:
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>```markdown
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>### Theme Animation
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>`HalogenTheme` animates color and shape transitions using Compose animation primitives:
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>- **Colors:** Each of the 49 M3 color roles uses `animateColorAsState` with a configurable `AnimationSpec&lt;Color&gt;`.
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>- **Shapes:** The 5 corner radii (`extraSmall` through `extraLarge`) use `animateFloatAsState` with a configurable `AnimationSpec&lt;Float&gt;`.
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>- **Typography:** Snaps instantly (font family, weight, and spacing changes would cause text reflow).
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>- **First composition:** The initial theme always snaps — no fade-in from default colors.
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>Defaults are defined in `HalogenThemeDefaults` (400ms tween for both colors and shapes). Pass `snap()` to either parameter to disable animation. Pass any Compose `AnimationSpec` (spring, tween, keyframes) to customize.
+</span></code></pre></div></p>
+<ul>
+<li>[ ] <strong>Step 3: Commit</strong></li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>add<span class="w"> </span>docs/quick-start.md<span class="w"> </span>docs/architecture.md
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;docs: add animated theme transition documentation&quot;</span>
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/himattm/halogen" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
