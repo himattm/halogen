@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `halogen-engine`: Prompt construction with system prompt, few-shot examples, and extension injection
 - `halogen-compose`: HalogenTheme composable wrapping MaterialTheme
 - `halogen-compose`: HalogenSettingsCard drop-in settings UI component
-- `halogen-compose`: LocalHalogenEngine and LocalHalogenExtensions composition locals
+- `halogen-compose`: LocalHalogenExtensions composition local
 - `halogen-provider-nano`: GeminiNanoProvider for on-device inference via ML Kit
 - Custom extensions system for developer-defined theme tokens
 - Keyed theme cache with eviction, refresh, and observability APIs
