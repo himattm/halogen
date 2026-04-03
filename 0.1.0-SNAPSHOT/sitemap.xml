@@ -2,54 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/api-reference/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/architecture/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/custom-extensions/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/custom-theme-systems/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/design-decisions/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/provider-guide/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/quick-start/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/use-cases/</loc>
-         <lastmod>2026-04-02</lastmod>
-    </url>
-    <url>
-         <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/superpowers/plans/2026-03-26-room-cache-module-and-playground-app/</loc>
-         <lastmod>2026-04-02</lastmod>
-    </url>
-    <url>
-         <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/superpowers/plans/2026-03-27-room-fix-and-animated-themes/</loc>
-         <lastmod>2026-04-02</lastmod>
-    </url>
-    <url>
-         <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/superpowers/specs/2026-03-26-custom-prompt-instructions-design/</loc>
-         <lastmod>2026-04-02</lastmod>
-    </url>
-    <url>
-         <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/superpowers/specs/2026-03-27-room-fix-and-animated-themes-design/</loc>
-         <lastmod>2026-04-02</lastmod>
+         <lastmod>2026-04-03</lastmod>
     </url>
 </urlset>
