@@ -866,7 +866,7 @@
 <hr />
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Pluggable LLM providers</strong> - Ship with Gemini Nano on-device, add OpenAI/Claude as a fallback, or write your own. The engine chains providers with automatic failover.</li>
+<li><strong>Pluggable LLM providers</strong> - Ship with Gemini Nano on-device, or use OpenAI/Claude for cloud, or write your own. Set one provider per engine instance.</li>
 <li><strong>Keyed contextual themes</strong> - Any string maps to a cached theme. A subreddit, a route, a category, a brand - each gets its own generated look and feel.</li>
 <li><strong>Full Material 3 coverage</strong> - 49 color roles, 15 typography styles, 5 shape sizes. The LLM generates 6 seeds + hints; the library expands them using <a href="https://material.io/blog/science-of-color-design">HCT</a> tonal palettes.</li>
 <li><strong>In-memory caching</strong> - LRU cache with configurable max entries. Themes resolve in nanoseconds after first generation. The LLM is never called twice for the same key. Optional persistent caching via <code>halogen-cache-room</code> (backed by <a href="https://developer.android.com/kotlin/multiplatform/room">Room KMP</a>) survives process death and app restarts.</li>
@@ -888,7 +888,7 @@
 <tbody>
 <tr>
 <td>Android</td>
-<td>Gemini Nano (on-device) + cloud fallback</td>
+<td>Gemini Nano (on-device) or cloud</td>
 <td>Memory (LRU)</td>
 <td>Yes (optional)</td>
 <td>Material 3</td>

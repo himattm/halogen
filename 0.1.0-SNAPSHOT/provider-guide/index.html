@@ -696,10 +696,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#provider-chaining-fallback" class="md-nav__link">
+  <a href="#single-provider-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Provider Chaining (Fallback)
+        Single Provider Model
       
     </span>
   </a>
@@ -999,10 +999,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#provider-chaining-fallback" class="md-nav__link">
+  <a href="#single-provider-model" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Provider Chaining (Fallback)
+        Single Provider Model
       
     </span>
   </a>
@@ -1063,7 +1063,7 @@
 
 
 <h1 id="provider-guide">Provider Guide<a class="headerlink" href="#provider-guide" title="Permanent link">&para;</a></h1>
-<p>How to use built-in providers, implement cloud providers, and chain them with fallback.</p>
+<p>How to use built-in providers and implement cloud providers.</p>
 <hr />
 <h2 id="halogenllmprovider-interface">HalogenLlmProvider Interface<a class="headerlink" href="#halogenllmprovider-interface" title="Permanent link">&para;</a></h2>
 <p>Every LLM provider implements a single interface from <code>halogen-core</code>:</p>
@@ -1115,7 +1115,7 @@
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="p">}</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="n">HalogenLlmAvailability</span><span class="p">.</span><span class="na">UNAVAILABLE</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="c1">// Device doesn&#39;t support Nano — use a cloud fallback</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="c1">// Device doesn&#39;t support Nano — consider using a cloud provider instead</span>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="p">}</span>
 </span></code></pre></div>
@@ -1203,52 +1203,54 @@
 </span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="p">}</span>
 </span></code></pre></div>
 <hr />
-<h2 id="provider-chaining-fallback">Provider Chaining (Fallback)<a class="headerlink" href="#provider-chaining-fallback" title="Permanent link">&para;</a></h2>
-<p>The engine supports a prioritized list of providers. If the first is unavailable or fails, it tries the next:</p>
-<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">val</span><span class="w"> </span><span class="nv">halogen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">GeminiNanoProvider</span><span class="p">())</span><span class="w">                                     </span><span class="c1">// Try on-device first</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="p">.</span><span class="na">fallbackProvider</span><span class="p">(</span><span class="n">OpenAiProvider</span><span class="p">(</span><span class="n">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BuildConfig</span><span class="p">.</span><span class="na">OPENAI_KEY</span><span class="p">))</span><span class="w">  </span><span class="c1">// Cloud fallback</span>
+<h2 id="single-provider-model">Single Provider Model<a class="headerlink" href="#single-provider-model" title="Permanent link">&para;</a></h2>
+<p>The engine uses a single <code>HalogenLlmProvider</code>. There is no provider chaining or fallback - pick the provider that fits your use case:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// On-device with Gemini Nano (Android)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kd">val</span><span class="w"> </span><span class="nv">halogen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">GeminiNanoProvider</span><span class="p">())</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">.</span><span class="na">cache</span><span class="p">(</span><span class="n">HalogenCache</span><span class="p">.</span><span class="na">memory</span><span class="p">())</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">// Cloud provider (cross-platform)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="kd">val</span><span class="w"> </span><span class="nv">halogen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">OpenAiProvider</span><span class="p">(</span><span class="n">apiKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BuildConfig</span><span class="p">.</span><span class="na">OPENAI_KEY</span><span class="p">))</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="p">.</span><span class="na">cache</span><span class="p">(</span><span class="n">HalogenCache</span><span class="p">.</span><span class="na">memory</span><span class="p">())</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
 </span></code></pre></div>
-<p>Resolve flow with fallback:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>cache MISS -&gt; serverProvider MISS -&gt;
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    provider[0] (Nano) -&gt; UNAVAILABLE -&gt;
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    provider[1] (OpenAI) -&gt; generate -&gt; parse -&gt; cache -&gt; apply
-</span></code></pre></div>
-<p>The engine checks <code>availability()</code> before calling <code>generate()</code>. If a provider throws <code>HalogenLlmException</code> with <code>isRetryable = true</code>, the engine retries once before moving to the next provider.</p>
+<p>The resolve chain is: <strong>cache -&gt; remoteThemes -&gt; LLM provider -&gt; default</strong>.</p>
+<p>The engine checks <code>availability()</code> before calling <code>generate()</code>. If the provider throws <code>HalogenLlmException</code> with <code>isRetryable = true</code>, the engine retries once before returning the default theme.</p>
 <hr />
 <h2 id="writing-your-own-provider">Writing Your Own Provider<a class="headerlink" href="#writing-your-own-provider" title="Permanent link">&para;</a></h2>
 <p>Implement <code>HalogenLlmProvider</code> and you're done. The contract is minimal:</p>
 <ol>
 <li><strong><code>generate(prompt)</code></strong> - Send the prompt string to your LLM, return the raw response. The engine handles JSON extraction and parsing.</li>
-<li><strong><code>availability()</code></strong> - Return <code>READY</code>, <code>INITIALIZING</code>, or <code>UNAVAILABLE</code>. The engine uses this to skip unavailable providers in the chain.</li>
+<li><strong><code>availability()</code></strong> - Return <code>READY</code>, <code>INITIALIZING</code>, or <code>UNAVAILABLE</code>. The engine checks this before calling <code>generate()</code>.</li>
 </ol>
 <div class="admonition tip">
 <p class="admonition-title">Keep providers simple</p>
 <p>The provider should be a thin pipe to the LLM. Don't parse JSON, validate colors, or manage caching in the provider - the engine does all of that.</p>
 </div>
-<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">class</span><span class="w"> </span><span class="nc">MyCustomProvider</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">HalogenLlmProvider</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">        </span><span class="c1">// 1. Send prompt to your LLM</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">        </span><span class="c1">// 2. Return the raw text response</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="c1">// The engine will extract and parse the JSON</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">availability</span><span class="p">():</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">        </span><span class="c1">// Return READY if the provider can generate right now</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="p">.</span><span class="na">READY</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kd">class</span><span class="w"> </span><span class="nc">MyCustomProvider</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">HalogenLlmProvider</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="c1">// 1. Send prompt to your LLM</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="c1">// 2. Return the raw text response</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="c1">// The engine will extract and parse the JSON</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">availability</span><span class="p">():</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="c1">// Return READY if the provider can generate right now</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="p">.</span><span class="na">READY</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
 <p>Throw <code>HalogenLlmException</code> for failures:</p>
-<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">throw</span><span class="w"> </span><span class="n">HalogenLlmException</span><span class="p">(</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;API returned 429&quot;</span><span class="p">,</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="n">cause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpException</span><span class="p">,</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="n">isRetryable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c1">// Engine will retry once, then fall back</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">)</span>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">throw</span><span class="w"> </span><span class="n">HalogenLlmException</span><span class="p">(</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;API returned 429&quot;</span><span class="p">,</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">cause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpException</span><span class="p">,</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">isRetryable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c1">// Engine will retry once, then return default theme</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">)</span>
 </span></code></pre></div>
 
 

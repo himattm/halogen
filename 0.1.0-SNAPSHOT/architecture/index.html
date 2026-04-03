@@ -1054,11 +1054,11 @@
 <p>How Halogen transforms a natural language prompt into a full <a href="https://m3.material.io">Material 3</a> theme.</p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>The resolve chain follows a strict priority order: cache, server, LLM, default.</p>
+<p>The resolve chain follows a strict priority order: cache, remote themes, LLM provider, default.</p>
 <pre class="mermaid"><code>flowchart TD
     A["engine.resolve(key, hint)"] --&gt; B{Cache: Memory LRU}
     B --&gt;|HIT| C[Return nanoseconds]
-    B --&gt;|MISS| F{ServerProvider?}
+    B --&gt;|MISS| F{RemoteThemes?}
     F --&gt;|HIT| G[Write cache, return]
     F --&gt;|MISS| H[HalogenEngine]
     H --&gt; I[Build prompt]
@@ -1071,7 +1071,7 @@
 <ol>
 <li><strong>The LLM generates seeds, not the full palette.</strong> 6 seed colors + typography/shape hints. The library expands seeds into 49 color roles using HCT tonal palettes.</li>
 <li><strong>Themes are keyed.</strong> Any string, a route, a category, a brand, maps to a cached theme. The LLM is called once per key, ever.</li>
-<li><strong>Server themes take priority over LLM.</strong> If you have a backend that defines themes, those are used first. The LLM is the fallback for unknown contexts.</li>
+<li><strong>Remote themes take priority over LLM.</strong> If you have a backend that defines pre-built themes, those are used first. The LLM provider handles unknown contexts.</li>
 <li><strong>The LLM is pluggable.</strong> <code>HalogenLlmProvider</code> is an interface. No hard dependency on any LLM SDK.</li>
 </ol>
 <hr />
@@ -1088,7 +1088,7 @@
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  +-- HalogenEngine, Halogen.Builder
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  +-- In-memory LRU cache
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  +-- Prompt construction, JSON parsing
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  +-- Provider chaining and fallback
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  +-- Single provider + optional remote themes
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  |
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>halogen-compose       (depends on core)
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  |
