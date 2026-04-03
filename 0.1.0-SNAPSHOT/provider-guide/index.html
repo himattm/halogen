@@ -704,6 +704,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Single Provider Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-when-the-provider-is-unavailable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens when the provider is unavailable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolve chain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1007,6 +1035,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Single Provider Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-when-the-provider-is-unavailable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens when the provider is unavailable?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolve chain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1204,7 +1260,7 @@
 </span></code></pre></div>
 <hr />
 <h2 id="single-provider-model">Single Provider Model<a class="headerlink" href="#single-provider-model" title="Permanent link">&para;</a></h2>
-<p>The engine uses a single <code>HalogenLlmProvider</code>. There is no provider chaining or fallback - pick the provider that fits your use case:</p>
+<p>The engine uses a single <code>HalogenLlmProvider</code>. Pick the one that fits your use case:</p>
 <div class="language-kotlin highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// On-device with Gemini Nano (Android)</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kd">val</span><span class="w"> </span><span class="nv">halogen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">GeminiNanoProvider</span><span class="p">())</span>
@@ -1217,8 +1273,60 @@
 </span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="p">.</span><span class="na">cache</span><span class="p">(</span><span class="n">HalogenCache</span><span class="p">.</span><span class="na">memory</span><span class="p">())</span>
 </span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
 </span></code></pre></div>
-<p>The resolve chain is: <strong>cache -&gt; remoteThemes -&gt; LLM provider -&gt; default</strong>.</p>
-<p>The engine checks <code>availability()</code> before calling <code>generate()</code>. If the provider throws <code>HalogenLlmException</code> with <code>isRetryable = true</code>, the engine retries once before returning the default theme.</p>
+<h3 id="what-happens-when-the-provider-is-unavailable">What happens when the provider is unavailable?<a class="headerlink" href="#what-happens-when-the-provider-is-unavailable" title="Permanent link">&para;</a></h3>
+<p>The engine calls <code>availability()</code> before every <code>generate()</code> call. With a single provider, there's no fallback chain:</p>
+<table>
+<thead>
+<tr>
+<th><code>availability()</code> returns</th>
+<th>Engine behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>READY</code></td>
+<td>Calls <code>generate()</code> normally</td>
+</tr>
+<tr>
+<td><code>INITIALIZING</code></td>
+<td>Waits up to 2 minutes, polling every 2 seconds. If it becomes <code>READY</code>, proceeds. If it times out, returns <code>HalogenResult.Unavailable</code>.</td>
+</tr>
+<tr>
+<td><code>UNAVAILABLE</code></td>
+<td>Returns <code>HalogenResult.Unavailable</code> immediately</td>
+</tr>
+</tbody>
+</table>
+<p>If <code>generate()</code> throws a <code>HalogenLlmException</code>, the engine returns <code>HalogenResult.Unavailable</code>. Your app should handle this gracefully, for example by showing the <code>defaultTheme</code> or a retry button.</p>
+<div class="admonition tip">
+<p class="admonition-title">Always set a default theme</p>
+<p>Call <code>.defaultTheme(HalogenDefaults.light())</code> on the Builder so your app has a usable theme even when the provider is unavailable.</p>
+</div>
+<h3 id="resolve-chain">Resolve chain<a class="headerlink" href="#resolve-chain" title="Permanent link">&para;</a></h3>
+<p>When you call <code>resolve(key, hint)</code>, the engine tries each source in order:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>1. Cache         - instant, no network
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>2. Remote themes - pre-built themes from your backend (if configured)
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>3. LLM provider  - generates a new theme from the hint
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>4. Default theme  - static fallback (if configured)
+</span></code></pre></div>
+<p>Remote themes and the LLM provider serve different purposes. Remote themes fetch pre-built themes by key (no LLM involved). The LLM provider generates new themes from natural language. If you configure both, remote themes are checked first - this lets you curate themes for popular keys while the LLM handles everything else.</p>
+<p>You can configure either or both:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">// LLM only</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">GeminiNanoProvider</span><span class="p">())</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1">// Remote themes only (no LLM, no generation)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="p">.</span><span class="na">remoteThemes</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">api</span><span class="p">.</span><span class="na">fetchTheme</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1">// Both: remote themes for known keys, LLM for the rest</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="n">Halogen</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="p">.</span><span class="na">provider</span><span class="p">(</span><span class="n">OpenAiProvider</span><span class="p">(</span><span class="n">apiKey</span><span class="p">))</span>
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="p">.</span><span class="na">remoteThemes</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">api</span><span class="p">.</span><span class="na">fetchTheme</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">}</span>
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</span></code></pre></div>
 <hr />
 <h2 id="writing-your-own-provider">Writing Your Own Provider<a class="headerlink" href="#writing-your-own-provider" title="Permanent link">&para;</a></h2>
 <p>Implement <code>HalogenLlmProvider</code> and you're done. The contract is minimal:</p>
@@ -1230,27 +1338,27 @@
 <p class="admonition-title">Keep providers simple</p>
 <p>The provider should be a thin pipe to the LLM. Don't parse JSON, validate colors, or manage caching in the provider - the engine does all of that.</p>
 </div>
-<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kd">class</span><span class="w"> </span><span class="nc">MyCustomProvider</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">HalogenLlmProvider</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="c1">// 1. Send prompt to your LLM</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="c1">// 2. Return the raw text response</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="c1">// The engine will extract and parse the JSON</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">availability</span><span class="p">():</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="c1">// Return READY if the provider can generate right now</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="p">.</span><span class="na">READY</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="p">}</span>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">class</span><span class="w"> </span><span class="nc">MyCustomProvider</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">HalogenLlmProvider</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">prompt</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">):</span><span class="w"> </span><span class="kt">String</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">        </span><span class="c1">// 1. Send prompt to your LLM</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">        </span><span class="c1">// 2. Return the raw text response</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="c1">// The engine will extract and parse the JSON</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="kd">override</span><span class="w"> </span><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">availability</span><span class="p">():</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">        </span><span class="c1">// Return READY if the provider can generate right now</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">HalogenLlmAvailability</span><span class="p">.</span><span class="na">READY</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="error-handling">Error handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
 <p>Throw <code>HalogenLlmException</code> for failures:</p>
-<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">throw</span><span class="w"> </span><span class="n">HalogenLlmException</span><span class="p">(</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;API returned 429&quot;</span><span class="p">,</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">cause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpException</span><span class="p">,</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">isRetryable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c1">// Engine will retry once, then return default theme</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">)</span>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">throw</span><span class="w"> </span><span class="n">HalogenLlmException</span><span class="p">(</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">message</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;API returned 429&quot;</span><span class="p">,</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">cause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">httpException</span><span class="p">,</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">isRetryable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="w">  </span><span class="c1">// Engine will retry once, then return default theme</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">)</span>
 </span></code></pre></div>
 
 
