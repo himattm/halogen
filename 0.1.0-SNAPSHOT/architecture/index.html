@@ -1051,7 +1051,7 @@
 
 
 <h1 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h1>
-<p>How Halogen transforms a natural language prompt into a full Material 3 theme.</p>
+<p>How Halogen transforms a natural language prompt into a full <a href="https://m3.material.io">Material 3</a> theme.</p>
 <hr />
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>The resolve chain follows a strict priority order: cache, server, LLM, default.</p>
@@ -1070,7 +1070,7 @@
 <p>Key principles:</p>
 <ol>
 <li><strong>The LLM generates seeds, not the full palette.</strong> 6 seed colors + typography/shape hints. The library expands seeds into 49 color roles using HCT tonal palettes.</li>
-<li><strong>Themes are keyed.</strong> Any string — a route, a category, a brand — maps to a cached theme. The LLM is called once per key, ever.</li>
+<li><strong>Themes are keyed.</strong> Any string, a route, a category, a brand, maps to a cached theme. The LLM is called once per key, ever.</li>
 <li><strong>Server themes take priority over LLM.</strong> If you have a backend that defines themes, those are used first. The LLM is the fallback for unknown contexts.</li>
 <li><strong>The LLM is pluggable.</strong> <code>HalogenLlmProvider</code> is an interface. No hard dependency on any LLM SDK.</li>
 </ol>
@@ -1101,7 +1101,7 @@
 </span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  +-- GeminiNanoProvider
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  +-- ML Kit integration
 </span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  |
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>halogen-cache-room    (depends on engine, optional — Android, iOS, JVM)
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>halogen-cache-room    (depends on engine, optional - Android, iOS, JVM)
 </span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>  |
 </span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>  +-- HalogenRoomCache factory
 </span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>  +-- RoomThemeCache (Room KMP persistence)
@@ -1110,7 +1110,7 @@
 <p>The key architectural decision: <code>halogen-core</code> and <code>halogen-engine</code> have <strong>zero LLM imports</strong>. The Nano provider is a separate artifact. A developer using only cloud LLMs never pulls ML Kit.</p>
 <hr />
 <h2 id="custom-theme-systems">Custom Theme Systems<a class="headerlink" href="#custom-theme-systems" title="Permanent link">&para;</a></h2>
-<p><code>halogen-core</code> is intentionally decoupled from Material 3. The <code>HalogenColorScheme</code>, <code>HalogenTypography</code>, and <code>HalogenShapes</code> types are pure data — ARGB integers, font weights, and dp values. They carry no Material 3 imports or dependencies.</p>
+<p><code>halogen-core</code> is intentionally decoupled from Material 3. The <code>HalogenColorScheme</code>, <code>HalogenTypography</code>, and <code>HalogenShapes</code> types are pure data: ARGB integers, font weights, and dp values. They carry no Material 3 imports or dependencies.</p>
 <p>This means you can use Halogen with any design system:</p>
 <ol>
 <li>Use <code>ThemeExpander.expand(spec, config)</code> to get an <code>ExpandedTheme</code></li>
@@ -1125,13 +1125,13 @@
 <li><strong>Colors:</strong> Each of the 49 M3 color roles uses <code>animateColorAsState</code> with a configurable <code>AnimationSpec&lt;Color&gt;</code>.</li>
 <li><strong>Shapes:</strong> The 5 corner radii (<code>extraSmall</code> through <code>extraLarge</code>) use <code>animateFloatAsState</code> with a configurable <code>AnimationSpec&lt;Float&gt;</code>.</li>
 <li><strong>Typography:</strong> Snaps instantly (font family, weight, and spacing changes would cause text reflow).</li>
-<li><strong>First composition:</strong> The initial theme always snaps — no fade-in from default colors.</li>
+<li><strong>First composition:</strong> The initial theme always snaps - no fade-in from default colors.</li>
 </ul>
 <p>Defaults are defined in <code>HalogenThemeDefaults</code> (400ms tween for both colors and shapes). Pass <code>snap()</code> to either parameter to disable animation. Pass any Compose <code>AnimationSpec</code> (spring, tween, keyframes) to customize.</p>
 <hr />
 <h2 id="color-science">Color Science<a class="headerlink" href="#color-science" title="Permanent link">&para;</a></h2>
 <h3 id="from-6-seeds-to-49-roles">From 6 Seeds to 49 Roles<a class="headerlink" href="#from-6-seeds-to-49-roles" title="Permanent link">&para;</a></h3>
-<p>The LLM generates 6 seed colors: primary, secondary, tertiary, neutral-light, neutral-dark, and error. Each seed is converted to HCT (Hue-Chroma-Tone) color space and expanded into a tonal palette with 13 tone levels.</p>
+<p>The LLM generates 6 seed colors: primary, secondary, tertiary, neutral-light, neutral-dark, and error. Each seed is converted to <a href="https://material.io/blog/science-of-color-design">HCT (Hue-Chroma-Tone)</a> color space and expanded into a tonal palette with 13 tone levels.</p>
 <pre class="mermaid"><code>flowchart LR
     A[6 seed hex colors] --&gt; B[Parse to ARGB]
     B --&gt; C[Convert to HCT]
@@ -1169,7 +1169,7 @@
 </tr>
 </tbody>
 </table>
-<p>In dark mode, the tones flip — <code>primary</code> maps to tone 80, <code>onPrimary</code> to tone 20, etc. This is why one LLM call produces both light and dark themes: the same hue and chroma are shared, only the tone mapping changes.</p>
+<p>In dark mode, the tones flip: <code>primary</code> maps to tone 80, <code>onPrimary</code> to tone 20, etc. This is why one LLM call produces both light and dark themes: the same hue and chroma are shared, only the tone mapping changes.</p>
 <h3 id="hct-color-space">HCT Color Space<a class="headerlink" href="#hct-color-space" title="Permanent link">&para;</a></h3>
 <p>Halogen includes a pure Kotlin implementation of the HCT (Hue-Chroma-Tone) color model, ported from Google's <code>material-color-utilities</code>. This avoids a JVM-only dependency and works on all KMP targets.</p>
 <p>The pipeline: <code>ARGB -&gt; XYZ -&gt; CAM16 -&gt; HCT -&gt; TonalPalette -&gt; ARGB</code></p>
@@ -1184,23 +1184,23 @@
 </ul>
 <h3 id="room-persistent-cache-optional">Room Persistent Cache (Optional)<a class="headerlink" href="#room-persistent-cache-optional" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>RoomThemeCache</code>: Persistent cache backed by Room KMP (available via <code>halogen-cache-room</code>)</li>
+<li><code>RoomThemeCache</code>: Persistent cache backed by <a href="https://developer.android.com/kotlin/multiplatform/room">Room KMP</a> (available via <code>halogen-cache-room</code>)</li>
 <li>Survives process death and app restarts</li>
-<li>Available on Android, iOS, and JVM — not wasmJs</li>
+<li>Available on Android, iOS, and JVM - not wasmJs</li>
 <li>Configurable via <code>RoomThemeCacheConfig</code> with <code>maxEntries</code> and <code>maxAge</code> parameters</li>
 <li>On Android, requires <code>HalogenRoomCache.initialize(context)</code> before first use</li>
 <li>Created via <code>HalogenRoomCache.create()</code> factory method</li>
-<li>When used, acts as a persistent layer — themes generated by the LLM are written to Room and survive restarts without re-generation</li>
+<li>When used, acts as a persistent layer: themes generated by the LLM are written to Room and survive restarts without re-generation</li>
 </ul>
 <h3 id="no-op-cache">No-Op Cache<a class="headerlink" href="#no-op-cache" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>HalogenCache.none()</code> disables caching entirely — useful for testing or always-fresh themes</li>
+<li><code>HalogenCache.none()</code> disables caching entirely - useful for testing or always-fresh themes</li>
 </ul>
 <h3 id="cache-flow">Cache Flow<a class="headerlink" href="#cache-flow" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Cache hit</strong> — Return immediately (nanoseconds)</li>
-<li><strong>Cache miss, server hit</strong> — Fetch from server provider, write to cache, return</li>
-<li><strong>Cache miss, server miss</strong> — Generate via LLM, write to cache, return (~1-3s)</li>
+<li><strong>Cache hit</strong> - Return immediately (nanoseconds)</li>
+<li><strong>Cache miss, server hit</strong> - Fetch from server provider, write to cache, return</li>
+<li><strong>Cache miss, server miss</strong> - Generate via LLM, write to cache, return (~1-3s)</li>
 </ol>
 <p>Once a theme is generated, it lives in cache until evicted or the process ends. The LLM is never called again for the same key unless explicitly evicted.</p>
 <hr />

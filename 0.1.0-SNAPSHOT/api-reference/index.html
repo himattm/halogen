@@ -1398,7 +1398,7 @@
 <p>Complete API surface for all five Halogen modules.</p>
 <hr />
 <h2 id="halogen-core">halogen-core<a class="headerlink" href="#halogen-core" title="Permanent link">&para;</a></h2>
-<p>Core primitives and contracts. Pure Kotlin — no platform or LLM dependencies.</p>
+<p>Core primitives and contracts. Pure Kotlin - no platform or LLM dependencies.</p>
 <h3 id="halogenthemespec">HalogenThemeSpec<a class="headerlink" href="#halogenthemespec" title="Permanent link">&para;</a></h3>
 <p>The LLM output contract. One instance represents a complete theme identity (both light and dark modes).</p>
 <div class="language-kotlin highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@Serializable</span>
@@ -1546,10 +1546,10 @@
 <h3 id="color-science">Color Science<a class="headerlink" href="#color-science" title="Permanent link">&para;</a></h3>
 <p>Pure Kotlin implementations in <code>halogen.color</code>:</p>
 <ul>
-<li><code>Cam16</code> — CAM16 color appearance model</li>
-<li><code>ViewingConditions</code> — Standard observer conditions</li>
-<li><code>ColorUtils</code> — ARGB/XYZ/LAB conversions, contrast ratio calculation</li>
-<li><code>MathUtils</code> — Clamping, interpolation utilities</li>
+<li><code>Cam16</code> - CAM16 color appearance model</li>
+<li><code>ViewingConditions</code> - Standard observer conditions</li>
+<li><code>ColorUtils</code> - ARGB/XYZ/LAB conversions, contrast ratio calculation</li>
+<li><code>MathUtils</code> - Clamping, interpolation utilities</li>
 </ul>
 <hr />
 <h2 id="halogen-compose">halogen-compose<a class="headerlink" href="#halogen-compose" title="Permanent link">&para;</a></h2>
@@ -1601,7 +1601,7 @@
 <p>Access via <code>HalogenTheme.extensions</code>.</p>
 <hr />
 <h2 id="halogen-engine">halogen-engine<a class="headerlink" href="#halogen-engine" title="Permanent link">&para;</a></h2>
-<p>Orchestration engine — caching, provider management, prompt construction.</p>
+<p>Orchestration engine: caching, provider management, prompt construction.</p>
 <h3 id="halogenengine">HalogenEngine<a class="headerlink" href="#halogenengine" title="Permanent link">&para;</a></h3>
 <p>The central coordinator. Created via <code>Halogen.Builder</code>.</p>
 <p><strong>Theme resolution:</strong></p>
@@ -1805,7 +1805,7 @@
 </tbody>
 </table>
 <h3 id="roomthemecache">RoomThemeCache<a class="headerlink" href="#roomthemecache" title="Permanent link">&para;</a></h3>
-<p>The <code>ThemeCache</code> implementation backed by Room KMP. Created via <code>HalogenRoomCache.create()</code> — not instantiated directly.</p>
+<p>The <code>ThemeCache</code> implementation backed by Room KMP. Created via <code>HalogenRoomCache.create()</code> - not instantiated directly.</p>
 <p>Implements the full <code>ThemeCache</code> interface (<code>get</code>, <code>put</code>, <code>contains</code>, <code>evict</code>, <code>clear</code>, <code>keys</code>, <code>size</code>, <code>entries</code>, <code>observeChanges</code>). Themes persist across process death and app restarts.</p>
 <hr />
 <h2 id="halogen-provider-nano">halogen-provider-nano<a class="headerlink" href="#halogen-provider-nano" title="Permanent link">&para;</a></h2>

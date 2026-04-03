@@ -921,7 +921,7 @@
 </span></code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Device Requirements</p>
-<p>Gemini Nano requires <strong>Pixel 9+</strong>, <strong>Samsung Galaxy S24+</strong>, or other devices with on-device Gemini support and a locked bootloader. On unsupported devices, <code>availability()</code> returns <code>UNAVAILABLE</code> — pair with a <code>fallbackProvider()</code> for graceful degradation.</p>
+<p>Gemini Nano requires <strong>Pixel 9+</strong>, <strong>Samsung Galaxy S24+</strong>, or other devices with on-device Gemini support and a locked bootloader. On unsupported devices, <code>availability()</code> returns <code>UNAVAILABLE</code> - pair with a <code>fallbackProvider()</code> for graceful degradation.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Warm the model on launch</p>
@@ -929,7 +929,7 @@
 </div>
 <hr />
 <h2 id="2-server-driven-theme-hints">2. Server-Driven Theme Hints<a class="headerlink" href="#2-server-driven-theme-hints" title="Permanent link">&para;</a></h2>
-<p>Your backend sends a natural language hint per screen or section. The app resolves it <strong>once</strong>, caches it, and every subsequent visit is a cache hit — no LLM call, no network.</p>
+<p>Your backend sends a natural language hint per screen or section. The app resolves it <strong>once</strong>, caches it, and every subsequent visit is a cache hit - no LLM call, no network.</p>
 <div class="language-kotlin highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Your API response includes a theme hint</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nd">@Serializable</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">ScreenConfig</span><span class="p">(</span>
@@ -956,10 +956,10 @@
 </span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="n">ScreenContent</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The LLM runs once per unique key. After that, <code>resolve()</code> returns <code>HalogenResult.Cached</code> instantly — even across app restarts if you use a persistent cache.</p>
+<p>The LLM runs once per unique key. After that, <code>resolve()</code> returns <code>HalogenResult.Cached</code> instantly - even across app restarts if you use a persistent cache.</p>
 <hr />
 <h2 id="3-server-provided-complete-themes-no-llm">3. Server-Provided Complete Themes (No LLM)<a class="headerlink" href="#3-server-provided-complete-themes-no-llm" title="Permanent link">&para;</a></h2>
-<p>Skip the LLM entirely. Your backend provides a full <code>HalogenThemeSpec</code> as JSON — a design admin curates themes in a CMS, and the app applies them directly.</p>
+<p>Skip the LLM entirely. Your backend provides a full <code>HalogenThemeSpec</code> as JSON: a design admin curates themes in a CMS, and the app applies them directly.</p>
 <div class="language-kotlin highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// Backend returns complete theme JSON</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">val</span><span class="w"> </span><span class="nv">themeJson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="s">{</span>
@@ -1048,7 +1048,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">Cache keys are your friend</p>
-<p>Each context variant gets its own cache key (<code>weather/sunny</code>, <code>time/night</code>, <code>battery/low</code>). The LLM generates once per variant — after that, context switches are instant cache hits.</p>
+<p>Each context variant gets its own cache key (<code>weather/sunny</code>, <code>time/night</code>, <code>battery/low</code>). The LLM generates once per variant - after that, context switches are instant cache hits.</p>
 </div>
 <hr />
 <h2 id="5-per-content-community-theming">5. Per-Content Community Theming<a class="headerlink" href="#5-per-content-community-theming" title="Permanent link">&para;</a></h2>
@@ -1117,7 +1117,7 @@
 </span></code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">How presets work</p>
-<p>Presets control <strong>chroma caps</strong> — how saturated the expanded M3 palette is allowed to be. The LLM still picks hues and relationships; the preset shapes the final intensity. <code>Vibrant</code> allows primary chroma up to 64, while <code>Muted</code> caps at 36. Each preset also includes <code>promptGuidance</code> that steers the LLM toward style-appropriate color choices.</p>
+<p>Presets control <strong>chroma caps</strong> - how saturated the expanded M3 palette is allowed to be. The LLM still picks hues and relationships; the preset shapes the final intensity. <code>Vibrant</code> allows primary chroma up to 64, while <code>Muted</code> caps at 36. Each preset also includes <code>promptGuidance</code> that steers the LLM toward style-appropriate color choices.</p>
 </div>
 <hr />
 <h2 id="combining-patterns">Combining Patterns<a class="headerlink" href="#combining-patterns" title="Permanent link">&para;</a></h2>

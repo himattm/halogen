@@ -1478,28 +1478,28 @@
 <p>Google's <code>material-color-utilities</code> library provides HCT color space, tonal palettes, and the full Material 3 color derivation pipeline. However, it is a JVM-only Java library. Halogen targets Android, iOS, Desktop, and Web via Kotlin Multiplatform.</p>
 <h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Depend on <code>material-color-utilities</code></strong> — Use Google's library directly. Only works on JVM targets (Android + Desktop). iOS and Web would need a separate implementation or be unsupported.</li>
-<li><strong>Port to pure Kotlin</strong> — Reimplement the core color math (CAM16, HCT, tonal palettes) in Kotlin <code>commonMain</code>. Works on all KMP targets.</li>
-<li><strong>Use <code>expect</code>/<code>actual</code></strong> — Google's library on JVM, a separate port on native/wasm. Doubles maintenance burden.</li>
+<li><strong>Depend on <code>material-color-utilities</code></strong> - Use Google's library directly. Only works on JVM targets (Android + Desktop). iOS and Web would need a separate implementation or be unsupported.</li>
+<li><strong>Port to pure Kotlin</strong> - Reimplement the core color math (<a href="https://material.io/blog/science-of-color-design">CAM16, HCT</a>, tonal palettes) in Kotlin <code>commonMain</code>. Works on all KMP targets.</li>
+<li><strong>Use <code>expect</code>/<code>actual</code></strong> - Google's library on JVM, a separate port on native/wasm. Doubles maintenance burden.</li>
 </ol>
 <h3 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h3>
-<p><strong>Port to pure Kotlin.</strong> The relevant math is well-documented (CAM16 is an international standard) and the implementation is approximately 500 lines of code. The color science is the heart of the library — it should work identically on every platform without expect/actual splits.</p>
+<p><strong>Port to pure Kotlin.</strong> The relevant math is well-documented (CAM16 is an international standard) and the implementation is approximately 500 lines of code. The color science is the heart of the library - it should work identically on every platform without expect/actual splits.</p>
 <h3 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h3>
 <ul>
 <li>All KMP targets share the same color expansion code</li>
 <li>No JVM-only dependency in the critical path</li>
-<li>Slightly more maintenance burden if Google updates their algorithm (unlikely — HCT is stable)</li>
+<li>Slightly more maintenance burden if Google updates their algorithm (unlikely - HCT is stable)</li>
 <li>Smaller dependency footprint for consumers</li>
 </ul>
 <hr />
 <h2 id="adr-2-llm-as-pluggable-provider-not-core-dependency">ADR-2: LLM as Pluggable Provider, Not Core Dependency<a class="headerlink" href="#adr-2-llm-as-pluggable-provider-not-core-dependency" title="Permanent link">&para;</a></h2>
 <h3 id="context_1">Context<a class="headerlink" href="#context_1" title="Permanent link">&para;</a></h3>
-<p>Halogen generates themes using an LLM, but the library should work with any LLM — Gemini Nano, OpenAI, Claude, Ollama, or a custom model. Baking a specific LLM SDK into the core would force all consumers to pull that dependency.</p>
+<p>Halogen generates themes using an LLM, but the library should work with any LLM: Gemini Nano, OpenAI, Claude, Ollama, or a custom model. Baking a specific LLM SDK into the core would force all consumers to pull that dependency.</p>
 <h3 id="options_1">Options<a class="headerlink" href="#options_1" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Bundle Gemini Nano in core</strong> — Every consumer gets on-device inference. But iOS/Desktop/Web users pull an Android-only dependency they can't use.</li>
-<li><strong>Pluggable interface</strong> — Define <code>HalogenLlmProvider</code> in core with zero LLM imports. Ship Nano as a separate artifact.</li>
-<li><strong>No LLM integration</strong> — Just provide the theme expansion pipeline. Let developers handle prompt engineering themselves.</li>
+<li><strong>Bundle Gemini Nano in core</strong> - Every consumer gets on-device inference. But iOS/Desktop/Web users pull an Android-only dependency they can't use.</li>
+<li><strong>Pluggable interface</strong> - Define <code>HalogenLlmProvider</code> in core with zero LLM imports. Ship Nano as a separate artifact.</li>
+<li><strong>No LLM integration</strong> - Just provide the theme expansion pipeline. Let developers handle prompt engineering themselves.</li>
 </ol>
 <h3 id="decision_1">Decision<a class="headerlink" href="#decision_1" title="Permanent link">&para;</a></h3>
 <p><strong>Pluggable interface.</strong> <code>halogen-core</code> defines <code>HalogenLlmProvider</code> as a simple two-method interface. <code>halogen-provider-nano</code> implements it for Gemini Nano. Developers implement it for their preferred cloud LLM. The engine chains multiple providers with automatic failover.</p>
@@ -1508,28 +1508,28 @@
 <li><code>halogen-core</code> has zero LLM dependencies</li>
 <li>A cloud-only developer never pulls ML Kit</li>
 <li>Provider implementation is trivial (~20 lines for most cloud APIs)</li>
-<li>The library cannot guarantee LLM quality — different models produce different results</li>
+<li>The library cannot guarantee LLM quality - different models produce different results</li>
 <li>Fallback chaining handles device/platform heterogeneity</li>
 </ul>
 <hr />
 <h2 id="adr-3-seed-colors-expansion-over-full-palette-generation">ADR-3: Seed Colors + Expansion over Full Palette Generation<a class="headerlink" href="#adr-3-seed-colors-expansion-over-full-palette-generation" title="Permanent link">&para;</a></h2>
 <h3 id="context_2">Context<a class="headerlink" href="#context_2" title="Permanent link">&para;</a></h3>
-<p>A full Material 3 <code>ColorScheme</code> has 49 color roles. The LLM could generate all 49, or it could generate a small number of seed values that the library expands.</p>
+<p>A full <a href="https://m3.material.io">Material 3</a> <code>ColorScheme</code> has 49 color roles. The LLM could generate all 49, or it could generate a small number of seed values that the library expands.</p>
 <h3 id="options_2">Options<a class="headerlink" href="#options_2" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Generate all 49 colors</strong> — The LLM outputs every M3 color role directly. Maximum creative control, but ~300+ output tokens, risk of inconsistent tonal relationships, and high chance of invalid output from smaller models.</li>
-<li><strong>Generate 6 seeds + hints</strong> — The LLM outputs 6 hex colors plus typography/shape hints (~12 fields, ~70 tokens). The library expands seeds into 49 roles using HCT tonal palettes.</li>
-<li><strong>Generate 3 seeds</strong> — Only primary, secondary, tertiary. Minimal token cost but the LLM can't influence neutrals, error color, or typography.</li>
+<li><strong>Generate all 49 colors</strong> - The LLM outputs every M3 color role directly. Maximum creative control, but ~300+ output tokens, risk of inconsistent tonal relationships, and high chance of invalid output from smaller models.</li>
+<li><strong>Generate 6 seeds + hints</strong> - The LLM outputs 6 hex colors plus typography/shape hints (~12 fields, ~70 tokens). The library expands seeds into 49 roles using HCT tonal palettes.</li>
+<li><strong>Generate 3 seeds</strong> - Only primary, secondary, tertiary. Minimal token cost but the LLM can't influence neutrals, error color, or typography.</li>
 </ol>
 <h3 id="decision_2">Decision<a class="headerlink" href="#decision_2" title="Permanent link">&para;</a></h3>
-<p><strong>6 seeds + hints.</strong> The LLM generates <code>primary</code>, <code>secondary</code>, <code>tertiary</code>, <code>neutralLight</code>, <code>neutralDark</code>, and <code>error</code> — enough to define the theme's identity and both light/dark neutral bases. Typography and shape hints (4 fields) let the LLM influence the full M3 surface without generating every value.</p>
+<p><strong>6 seeds + hints.</strong> The LLM generates <code>primary</code>, <code>secondary</code>, <code>tertiary</code>, <code>neutralLight</code>, <code>neutralDark</code>, and <code>error</code> - enough to define the theme's identity and both light/dark neutral bases. Typography and shape hints (4 fields) let the LLM influence the full M3 surface without generating every value.</p>
 <h3 id="consequences_2">Consequences<a class="headerlink" href="#consequences_2" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Output is ~70 tokens — well within Gemini Nano's 256-token limit</li>
+<li>Output is ~70 tokens, well within Gemini Nano's 256-token limit</li>
 <li>Tonal relationships are guaranteed correct by the HCT expansion pipeline</li>
 <li>The LLM focuses on creative decisions (hue, mood, character) rather than mechanical mapping</li>
 <li>Works reliably with small on-device models (Nano) and large cloud models alike</li>
-<li>Light and dark themes are always harmonious — same seeds, different tone mapping</li>
+<li>Light and dark themes are always harmonious: same seeds, different tone mapping</li>
 </ul>
 <hr />
 <h2 id="adr-4-one-llm-call-both-light-and-dark-themes">ADR-4: One LLM Call = Both Light and Dark Themes<a class="headerlink" href="#adr-4-one-llm-call-both-light-and-dark-themes" title="Permanent link">&para;</a></h2>
@@ -1537,16 +1537,16 @@
 <p>Users expect system dark mode to work. A theme library needs both light and dark color schemes.</p>
 <h3 id="options_3">Options<a class="headerlink" href="#options_3" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Two LLM calls</strong> — One for light, one for dark. Doubles latency, token cost, and cache entries. Risk of incoherent theme pairs.</li>
-<li><strong>One call with <code>isDark</code> parameter</strong> — LLM generates one mode per call. Themes are cached separately. Dark mode toggle requires a cache lookup.</li>
-<li><strong>One call, dual neutrals</strong> — LLM generates shared seeds (primary, secondary, tertiary, error) plus two neutral seeds (<code>neutralLight</code>, <code>neutralDark</code>). Library expands both palettes from the same seeds.</li>
+<li><strong>Two LLM calls</strong> - One for light, one for dark. Doubles latency, token cost, and cache entries. Risk of incoherent theme pairs.</li>
+<li><strong>One call with <code>isDark</code> parameter</strong> - LLM generates one mode per call. Themes are cached separately. Dark mode toggle requires a cache lookup.</li>
+<li><strong>One call, dual neutrals</strong> - LLM generates shared seeds (primary, secondary, tertiary, error) plus two neutral seeds (<code>neutralLight</code>, <code>neutralDark</code>). Library expands both palettes from the same seeds.</li>
 </ol>
 <h3 id="decision_3">Decision<a class="headerlink" href="#decision_3" title="Permanent link">&para;</a></h3>
-<p><strong>One call, dual neutrals.</strong> The <code>HalogenThemeSpec</code> includes <code>neuL</code> and <code>neuD</code> — the only fields that differ between modes. Primary, secondary, tertiary, and error seeds are shared because their hue and chroma define the theme identity; only the tone changes between light and dark.</p>
+<p><strong>One call, dual neutrals.</strong> The <code>HalogenThemeSpec</code> includes <code>neuL</code> and <code>neuD</code> - the only fields that differ between modes. Primary, secondary, tertiary, and error seeds are shared because their hue and chroma define the theme identity; only the tone changes between light and dark.</p>
 <h3 id="consequences_3">Consequences<a class="headerlink" href="#consequences_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Single LLM call produces a complete theme identity</li>
-<li>System dark mode toggle is instant — no second LLM call, no cache lookup</li>
+<li>System dark mode toggle is instant - no second LLM call, no cache lookup</li>
 <li>Both schemes are guaranteed harmonious (same hues, different tones)</li>
 <li>Token cost is +1 field (~15 tokens) over a single-mode approach</li>
 <li>Cache stores one entry per key, not two</li>
@@ -1557,19 +1557,19 @@
 <p>Theme generation is expensive (1-3 seconds for on-device, network latency for cloud). Themes should be generated once and reused.</p>
 <h3 id="options_4">Options<a class="headerlink" href="#options_4" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>No caching</strong> — Regenerate on every call. Simple but slow and wasteful.</li>
-<li><strong>Single active theme</strong> — Cache the current theme only. Settings screen replaces it.</li>
-<li><strong>Keyed cache</strong> — Any string maps to a cached theme. Multiple themes coexist. The engine provides in-memory LRU caching by default, with optional persistent caching via a separate module.</li>
+<li><strong>No caching</strong> - Regenerate on every call. Simple but slow and wasteful.</li>
+<li><strong>Single active theme</strong> - Cache the current theme only. Settings screen replaces it.</li>
+<li><strong>Keyed cache</strong> - Any string maps to a cached theme. Multiple themes coexist. The engine provides in-memory LRU caching by default, with optional persistent caching via a separate module.</li>
 </ol>
 <h3 id="decision_4">Decision<a class="headerlink" href="#decision_4" title="Permanent link">&para;</a></h3>
-<p><strong>Keyed cache with optional persistence.</strong> Every <code>resolve(key, hint)</code> call uses the key as a cache identifier. Multiple themes coexist — a user can have different themes for different contexts (routes, categories, brands) and switch between them instantly. The engine ships with <code>MemoryThemeCache</code> (in-memory LRU) by default. Persistent caching via Room/SQLite is available as an optional module (<code>halogen-cache-room</code>) for consumers who need themes to survive process death.</p>
+<p><strong>Keyed cache with optional persistence.</strong> Every <code>resolve(key, hint)</code> call uses the key as a cache identifier. Multiple themes coexist: a user can have different themes for different contexts (routes, categories, brands) and switch between them instantly. The engine ships with <code>MemoryThemeCache</code> (in-memory LRU) by default. Persistent caching via Room/SQLite is available as an optional module (<code>halogen-cache-room</code>) for consumers who need themes to survive process death.</p>
 <h3 id="consequences_4">Consequences<a class="headerlink" href="#consequences_4" title="Permanent link">&para;</a></h3>
 <ul>
 <li>First resolve per key is slow (LLM call). Every subsequent resolve is instant (cache hit).</li>
-<li>In-memory LRU is the default — no database dependencies in <code>halogen-engine</code></li>
-<li>Persistent caching (Room/SQLite) is opt-in via <code>halogen-cache-room</code> — consumers choose whether to include it</li>
+<li>In-memory LRU is the default - no database dependencies in <code>halogen-engine</code></li>
+<li>Persistent caching (Room/SQLite) is opt-in via <code>halogen-cache-room</code> - consumers choose whether to include it</li>
 <li>Without <code>halogen-cache-room</code>, themes are lost on process death and must be re-generated</li>
-<li>Developers control the key namespace — they decide what constitutes a "context"</li>
+<li>Developers control the key namespace: they decide what constitutes a "context"</li>
 <li>Memory LRU prevents unbounded memory growth</li>
 <li>Room cache can be configured with <code>maxEntries</code> and <code>maxAge</code> for eviction control</li>
 </ul>
@@ -1579,19 +1579,19 @@
 <p><code>HalogenTheme</code> needs to apply generated colors, typography, and shapes to the Compose tree. It could replace <code>MaterialTheme</code> entirely or wrap it.</p>
 <h3 id="options_5">Options<a class="headerlink" href="#options_5" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Replace MaterialTheme</strong> — Provide a completely custom theme system. Breaks compatibility with M3 components that read from <code>MaterialTheme</code>.</li>
-<li><strong>Wrap MaterialTheme</strong> — <code>HalogenTheme</code> expands the spec and passes values to <code>MaterialTheme</code>. All standard M3 accessors (<code>MaterialTheme.colorScheme.primary</code>, etc.) work unchanged.</li>
-<li><strong>Parallel system</strong> — Both <code>MaterialTheme</code> and <code>HalogenTheme</code> exist independently. Developers choose which to use.</li>
+<li><strong>Replace MaterialTheme</strong> - Provide a completely custom theme system. Breaks compatibility with M3 components that read from <code>MaterialTheme</code>.</li>
+<li><strong>Wrap MaterialTheme</strong> - <code>HalogenTheme</code> expands the spec and passes values to <code>MaterialTheme</code>. All standard M3 accessors (<code>MaterialTheme.colorScheme.primary</code>, etc.) work unchanged.</li>
+<li><strong>Parallel system</strong> - Both <code>MaterialTheme</code> and <code>HalogenTheme</code> exist independently. Developers choose which to use.</li>
 </ol>
 <h3 id="decision_5">Decision<a class="headerlink" href="#decision_5" title="Permanent link">&para;</a></h3>
 <p><strong>Wrap MaterialTheme.</strong> <code>HalogenTheme</code> is a composable that expands <code>HalogenThemeSpec</code> into <code>ColorScheme</code>, <code>Typography</code>, and <code>Shapes</code>, then passes them to <code>MaterialTheme</code>. All existing M3 components and theme accessors work as expected.</p>
 <h3 id="consequences_5">Consequences<a class="headerlink" href="#consequences_5" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Zero migration cost — drop <code>HalogenTheme</code> around your existing <code>MaterialTheme</code> usage</li>
+<li>Zero migration cost: drop <code>HalogenTheme</code> around your existing <code>MaterialTheme</code> usage</li>
 <li>All M3 components pick up the generated theme automatically</li>
 <li>Standard accessors (<code>MaterialTheme.colorScheme.primary</code>) work unchanged</li>
 <li>Custom extensions are provided via a separate <code>LocalHalogenExtensions</code> composition local</li>
-<li>No reinvention of the theming wheel — Halogen adds generation, not a new theme system</li>
+<li>No reinvention of the theming wheel: Halogen adds generation, not a new theme system</li>
 </ul>
 
 

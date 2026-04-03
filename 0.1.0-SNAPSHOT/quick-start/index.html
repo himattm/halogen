@@ -885,7 +885,7 @@
 
 
 <h1 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h1>
-<p>Add Halogen to your Compose Multiplatform project and generate your first LLM-powered theme.</p>
+<p>Add Halogen to your <a href="https://www.jetbrains.com/compose-multiplatform/">Compose Multiplatform</a> project and generate your first LLM-powered theme.</p>
 <hr />
 <h2 id="1-add-dependencies">1. Add Dependencies<a class="headerlink" href="#1-add-dependencies" title="Permanent link">&para;</a></h2>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Android (Gemini Nano)</label><label for="__tabbed_1_2">Multiplatform (Cloud)</label></div>
@@ -970,9 +970,9 @@
 </span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">App</span><span class="p">()</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
 </span></code></pre></div>
-<p><code>HalogenTheme</code> wraps <code>MaterialTheme</code> — all standard M3 accessors (<code>MaterialTheme.colorScheme</code>, <code>.typography</code>, <code>.shapes</code>) work as expected. When a theme is generated, the entire tree recomposes with the new values.</p>
+<p><code>HalogenTheme</code> wraps <code>MaterialTheme</code> - all standard M3 accessors (<code>MaterialTheme.colorScheme</code>, <code>.typography</code>, <code>.shapes</code>) work as expected. When a theme is generated, the entire tree recomposes with the new values.</p>
 <h3 id="animated-transitions">Animated Transitions<a class="headerlink" href="#animated-transitions" title="Permanent link">&para;</a></h3>
-<p>Theme changes animate smoothly by default — all 49 M3 color roles and shape corner radii transition with a 400ms tween. No extra code needed.</p>
+<p>Theme changes animate smoothly by default - all 49 M3 color roles and shape corner radii transition with a 400ms tween. No extra code needed.</p>
 <p>To customize the animation:</p>
 <div class="language-kotlin highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Custom spring animation</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">HalogenTheme</span><span class="p">(</span>
@@ -1011,12 +1011,12 @@
 </span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="k">is</span><span class="w"> </span><span class="n">HalogenResult</span><span class="p">.</span><span class="na">QuotaExceeded</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* Rate limited, try later */</span><span class="w"> </span><span class="p">}</span>
 </span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>The <code>key</code> is a cache key — any string you choose. The <code>hint</code> is the natural language prompt sent to the LLM. If the key already exists in cache, the hint is ignored and the cached theme is returned instantly.</p>
+<p>The <code>key</code> is a cache key - any string you choose. The <code>hint</code> is the natural language prompt sent to the LLM. If the key already exists in cache, the hint is ignored and the cached theme is returned instantly.</p>
 <hr />
 <h2 id="5-platform-notes">5. Platform Notes<a class="headerlink" href="#5-platform-notes" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
 <p class="admonition-title">Gemini Nano is Android-only</p>
-<p><code>halogen-provider-nano</code> depends on ML Kit and only works on Android. Supported devices include Pixel 9+ and Samsung Galaxy S24+. On unsupported devices, <code>availability()</code> returns <code>UNAVAILABLE</code>.</p>
+<p><code>halogen-provider-nano</code> depends on <a href="https://developers.google.com/ml-kit">ML Kit</a> and only works on Android. Supported devices include Pixel 9+ and Samsung Galaxy S24+. On unsupported devices, <code>availability()</code> returns <code>UNAVAILABLE</code>.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Use fallback providers for cross-platform</p>
@@ -1024,7 +1024,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">One LLM call = light + dark</p>
-<p>A single theme generation produces both light and dark color schemes. The system dark mode toggle switches between them instantly — no second LLM call, no cache miss.</p>
+<p>A single theme generation produces both light and dark color schemes. The system dark mode toggle switches between them instantly - no second LLM call, no cache miss.</p>
 </div>
 
 
