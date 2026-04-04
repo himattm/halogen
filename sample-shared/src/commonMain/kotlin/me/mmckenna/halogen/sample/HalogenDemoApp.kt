@@ -77,6 +77,7 @@ fun HalogenDemoApp(demoState: HalogenDemoState) {
                     state = playgroundState,
                     engine = engine,
                     isDark = isDark,
+                    providerName = demoState.providerName,
                     onNavigateToSettings = { currentScreen = Screen.Settings },
                     modifier = Modifier.padding(innerPadding),
                 )

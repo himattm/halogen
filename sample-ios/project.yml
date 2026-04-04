@@ -1,0 +1,73 @@
+name: iosApp
+options:
+  bundleIdPrefix: me.mmckenna.halogen.sample
+  deploymentTarget:
+    iOS: "16.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    ENABLE_USER_SCRIPT_SANDBOXING: "NO"
+
+targets:
+  iosApp:
+    type: application
+    platform: iOS
+    supportedDestinations:
+      - iOS
+    sources:
+      - path: iosApp
+        excludes:
+          - "Info.plist"
+    info:
+      path: iosApp/Info.plist
+      properties:
+        CFBundleDisplayName: Halogen Demo
+        CADisableMinimumFrameDurationOnPhone: true
+        LSRequiresIPhoneOS: true
+        OpenAIAPIKey: $(OPENAI_API_KEY)
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    configFiles:
+      Debug: Config.xcconfig
+      Release: Config.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: me.mmckenna.halogen.sample.ios
+        INFOPLIST_FILE: iosApp/Info.plist
+        SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+        SUPPORTS_MACCATALYST: "NO"
+        FRAMEWORK_SEARCH_PATHS:
+          - "$(SRCROOT)/../sample-shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)"
+        OTHER_LINKER_FLAGS:
+          - "-ObjC"
+          - "-lc++"
+          - "-framework"
+          - "HalogenSample"
+        ENABLE_USER_SCRIPT_SANDBOXING: "NO"
+        CODE_SIGNING_ALLOWED: "NO"
+    preBuildScripts:
+      - name: "Build Kotlin Framework"
+        basedOnDependencyAnalysis: false
+        shell: /bin/sh
+        script: |
+          cd "$SRCROOT/.."
+          # Generate Config.xcconfig from local.properties
+          if [ -f local.properties ]; then
+            API_KEY=$(grep "OPENAI_API_KEY" local.properties | cut -d'=' -f2 | xargs)
+            echo "OPENAI_API_KEY = $API_KEY" > "$SRCROOT/Config.xcconfig"
+          fi
+          ./gradlew :sample-shared:embedAndSignAppleFrameworkForXcode
+
+schemes:
+  iosApp:
+    build:
+      targets:
+        iosApp: all
+    run:
+      config: Debug

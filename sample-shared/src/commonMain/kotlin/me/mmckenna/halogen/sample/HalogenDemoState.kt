@@ -12,6 +12,7 @@ import me.mmckenna.halogen.sample.llms.openai.OpenAiProvider
 class HalogenDemoState(
     val engine: HalogenEngine,
     val scope: CoroutineScope,
+    val providerName: String,
 ) {
     private val _darkOverride = MutableStateFlow<Boolean?>(null)
     val darkOverride: StateFlow<Boolean?> = _darkOverride.asStateFlow()
@@ -34,7 +35,13 @@ class HalogenDemoState(
             }
             builder.provider(provider)
 
-            return HalogenDemoState(engine = builder.build(), scope = scope)
+            val providerName = when (provider) {
+                is OpenAiProvider -> "OpenAI"
+                is DemoProvider -> "Demo"
+                else -> "Custom"
+            }
+
+            return HalogenDemoState(engine = builder.build(), scope = scope, providerName = providerName)
         }
     }
 }

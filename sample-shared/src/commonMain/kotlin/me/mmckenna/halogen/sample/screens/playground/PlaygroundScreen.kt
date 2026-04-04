@@ -85,6 +85,7 @@ fun PlaygroundScreen(
     state: PlaygroundState,
     engine: HalogenEngine,
     isDark: Boolean,
+    providerName: String = "",
     onNavigateToSettings: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -104,6 +105,13 @@ fun PlaygroundScreen(
         TopAppBar(
             title = { Text("Playground") },
             actions = {
+                if (providerName.isNotBlank()) {
+                    Text(
+                        text = providerName,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
                 if (themeSpec != null) {
                     IconButton(onClick = { showInspector = true }) {
                         Icon(Icons.Default.Info, contentDescription = "Inspect theme")
