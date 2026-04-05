@@ -2,38 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/api-reference/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/architecture/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/custom-extensions/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/custom-theme-systems/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/design-decisions/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/provider-guide/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/quick-start/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
     <url>
          <loc>https://halogen.mmckenna.me/0.1.0-SNAPSHOT/use-cases/</loc>
-         <lastmod>2026-04-04</lastmod>
+         <lastmod>2026-04-05</lastmod>
     </url>
 </urlset>
