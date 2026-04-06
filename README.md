@@ -10,7 +10,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/me.mmckenna.halogen/halogen-core)](https://central.sonatype.com/namespace/me.mmckenna.halogen)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2-blue.svg?logo=kotlin)](https://kotlinlang.org)
-[![Docs](https://img.shields.io/badge/Docs-halogen.mmckenna.me-blue)](https://halogen.mmckenna.me)
+[![Docs](https://img.shields.io/badge/Docs-halogen.mmckenna.me-blue)](https://halogen.mmckenna.me/latest/)
 
 Halogen turns natural language into complete [Material 3](https://m3.material.io) themes at runtime. Give it a prompt like "warm coffee shop" or "neon cyberpunk" and it generates colors, typography, and shapes, all cached so the LLM only runs once per prompt.
 
@@ -48,7 +48,7 @@ halogen.resolve(key = "coffee", hint = "warm coffee shop vibes")
 HalogenTheme { App() }
 ```
 
-That's three lines to go from a text prompt to a full Material 3 theme. See the [Quick Start guide](https://halogen.mmckenna.me/quick-start/) for setup details.
+That's three lines to go from a text prompt to a full Material 3 theme. See the [Quick Start guide](https://halogen.mmckenna.me/latest/quick-start/) for setup details.
 
 ## Installation
 
@@ -141,15 +141,15 @@ HalogenTheme(
 
 ## Docs
 
-Full documentation at [halogen.mmckenna.me](https://halogen.mmckenna.me):
+Full documentation at [halogen.mmckenna.me](https://halogen.mmckenna.me/latest/):
 
-[Quick Start](https://halogen.mmckenna.me/quick-start/) ·
-[Architecture](https://halogen.mmckenna.me/architecture/) ·
-[Provider Guide](https://halogen.mmckenna.me/provider-guide/) ·
-[Custom Extensions](https://halogen.mmckenna.me/custom-extensions/) ·
-[Custom Theme Systems](https://halogen.mmckenna.me/custom-theme-systems/) ·
-[API Reference](https://halogen.mmckenna.me/api-reference/) ·
-[Design Decisions](https://halogen.mmckenna.me/design-decisions/)
+[Quick Start](https://halogen.mmckenna.me/latest/quick-start/) ·
+[Architecture](https://halogen.mmckenna.me/latest/architecture/) ·
+[Provider Guide](https://halogen.mmckenna.me/latest/provider-guide/) ·
+[Custom Extensions](https://halogen.mmckenna.me/latest/custom-extensions/) ·
+[Custom Theme Systems](https://halogen.mmckenna.me/latest/custom-theme-systems/) ·
+[API Reference](https://halogen.mmckenna.me/latest/api-reference/) ·
+[Design Decisions](https://halogen.mmckenna.me/latest/design-decisions/)
 
 ## Compatibility
 
