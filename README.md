@@ -10,7 +10,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/me.mmckenna.halogen/halogen-core)](https://central.sonatype.com/namespace/me.mmckenna.halogen)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2-blue.svg?logo=kotlin)](https://kotlinlang.org)
-[![Docs](https://img.shields.io/badge/Docs-halogen.mmckenna.me-blue)](https://halogen.mmckenna.me/latest/)
+[![Docs](https://img.shields.io/badge/Docs-halogen.mmckenna.me-blue)](https://halogen.mmckenna.me/latest/) <a href="https://jetc.dev/issues/309.html"><img src="https://img.shields.io/badge/As_Seen_In-jetc.dev_Newsletter_Issue_%23309-blue?logo=Jetpack+Compose&amp;logoColor=white" alt="As Seen In - jetc.dev Newsletter Issue #309"></a>
 
 Halogen turns natural language into complete [Material 3](https://m3.material.io) themes at runtime. Give it a prompt like "warm coffee shop" or "neon cyberpunk" and it generates colors, typography, and shapes, all cached so the LLM only runs once per prompt.
 
