@@ -1,0 +1,50 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <me.mmckenna.halogen:halogen-image>
+final class halogen.image/DominantColors { // halogen.image/DominantColors|null[0]
+    constructor <init>(kotlin.collections/List<halogen.image/QuantizedColor>) // halogen.image/DominantColors.<init>|<init>(kotlin.collections.List<halogen.image.QuantizedColor>){}[0]
+
+    final val colors // halogen.image/DominantColors.colors|{}colors[0]
+        final fun <get-colors>(): kotlin.collections/List<halogen.image/QuantizedColor> // halogen.image/DominantColors.colors.<get-colors>|<get-colors>(){}[0]
+
+    final fun toHint(): kotlin/String // halogen.image/DominantColors.toHint|toHint(){}[0]
+    final fun toSpec(): halogen/HalogenThemeSpec // halogen.image/DominantColors.toSpec|toSpec(){}[0]
+    final fun toString(): kotlin/String // halogen.image/DominantColors.toString|toString(){}[0]
+}
+
+final class halogen.image/QuantizedColor { // halogen.image/QuantizedColor|null[0]
+    constructor <init>(kotlin/Int, kotlin/Double, kotlin/Double, kotlin/Double, kotlin/Double) // halogen.image/QuantizedColor.<init>|<init>(kotlin.Int;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
+
+    final val argb // halogen.image/QuantizedColor.argb|{}argb[0]
+        final fun <get-argb>(): kotlin/Int // halogen.image/QuantizedColor.argb.<get-argb>|<get-argb>(){}[0]
+    final val chroma // halogen.image/QuantizedColor.chroma|{}chroma[0]
+        final fun <get-chroma>(): kotlin/Double // halogen.image/QuantizedColor.chroma.<get-chroma>|<get-chroma>(){}[0]
+    final val hue // halogen.image/QuantizedColor.hue|{}hue[0]
+        final fun <get-hue>(): kotlin/Double // halogen.image/QuantizedColor.hue.<get-hue>|<get-hue>(){}[0]
+    final val population // halogen.image/QuantizedColor.population|{}population[0]
+        final fun <get-population>(): kotlin/Double // halogen.image/QuantizedColor.population.<get-population>|<get-population>(){}[0]
+    final val tone // halogen.image/QuantizedColor.tone|{}tone[0]
+        final fun <get-tone>(): kotlin/Double // halogen.image/QuantizedColor.tone.<get-tone>|<get-tone>(){}[0]
+
+    final fun component1(): kotlin/Int // halogen.image/QuantizedColor.component1|component1(){}[0]
+    final fun component2(): kotlin/Double // halogen.image/QuantizedColor.component2|component2(){}[0]
+    final fun component3(): kotlin/Double // halogen.image/QuantizedColor.component3|component3(){}[0]
+    final fun component4(): kotlin/Double // halogen.image/QuantizedColor.component4|component4(){}[0]
+    final fun component5(): kotlin/Double // halogen.image/QuantizedColor.component5|component5(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ...): halogen.image/QuantizedColor // halogen.image/QuantizedColor.copy|copy(kotlin.Int;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // halogen.image/QuantizedColor.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // halogen.image/QuantizedColor.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // halogen.image/QuantizedColor.toString|toString(){}[0]
+}
+
+final object halogen.image/ImageQuantizer { // halogen.image/ImageQuantizer|null[0]
+    final fun extract(kotlin/IntArray, kotlin/Int, kotlin/Int, kotlin/Int = ..., kotlin/Double = ...): halogen.image/DominantColors // halogen.image/ImageQuantizer.extract|extract(kotlin.IntArray;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Double){}[0]
+}
+
+final suspend fun (halogen.engine/HalogenEngine).halogen.image/resolveImage(kotlin/String, coil3/ImageLoader, coil3/PlatformContext, kotlin/Int = ...): halogen.engine/HalogenResult // halogen.image/resolveImage|resolveImage@halogen.engine.HalogenEngine(kotlin.String;coil3.ImageLoader;coil3.PlatformContext;kotlin.Int){}[0]
+final suspend fun (halogen.engine/HalogenEngine).halogen.image/resolveImage(kotlin/String, kotlin/IntArray, kotlin/Int, kotlin/Int, kotlin/Int = ...): halogen.engine/HalogenResult // halogen.image/resolveImage|resolveImage@halogen.engine.HalogenEngine(kotlin.String;kotlin.IntArray;kotlin.Int;kotlin.Int;kotlin.Int){}[0]
