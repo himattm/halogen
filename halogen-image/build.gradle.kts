@@ -5,6 +5,16 @@ plugins {
 
 kotlin {
     sourceSets {
+        val skikoMain by creating {
+            dependsOn(commonMain.get())
+        }
+
+        jvmMain.get().dependsOn(skikoMain)
+
+        val iosMain by getting {
+            dependsOn(skikoMain)
+        }
+
         commonMain.dependencies {
             api(project(":halogen-core"))
             implementation(project(":halogen-engine"))
