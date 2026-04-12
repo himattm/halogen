@@ -8,15 +8,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
- * Parse a hex color like "#1A73E8" to ARGB int.
- * Local helper since parseHex is internal to halogen-core.
- */
-private fun parseHex(hex: String): Int {
-    val rgb = hex.removePrefix("#").toLong(16).toInt()
-    return rgb or (0xFF shl 24).toInt()
-}
-
-/**
  * Tests for [ImageThemeExtractor] via the public [DominantColors.toSpec] API.
  *
  * ImageThemeExtractor is internal, so we exercise it through DominantColors
