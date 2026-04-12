@@ -186,7 +186,7 @@ class ImageQuantizerTest {
         if (result.colors.isNotEmpty()) {
             val totalPopulation = result.colors.sumOf { it.population }
             assertTrue(
-                abs(totalPopulation - 1.0) < 0.05,
+                abs(totalPopulation - 1.0) < 0.001,
                 "Population fractions should sum to ~1.0, got $totalPopulation",
             )
         }

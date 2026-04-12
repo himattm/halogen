@@ -175,7 +175,7 @@ public object ImageQuantizer {
         val totalPop = clusterPopulations.sum()
 
         // Step 7 & 8: Filter by chroma and build result sorted by population descending
-        val colors = centroids.indices
+        val filtered = centroids.indices
             .filter { centroids[it][1] >= minChroma }
             .map { c ->
                 QuantizedColor(
@@ -187,6 +187,14 @@ public object ImageQuantizer {
                 )
             }
             .sortedByDescending { it.population }
+
+        // Re-normalize populations to sum to 1.0 after chroma filtering
+        val filteredSum = filtered.sumOf { it.population }
+        val colors = if (filteredSum > 0.0 && filteredSum != 1.0) {
+            filtered.map { it.copy(population = it.population / filteredSum) }
+        } else {
+            filtered
+        }
 
         return DominantColors(colors)
     }
