@@ -38,7 +38,9 @@ internal actual suspend fun loadPixels(
             pixels[i] = (a shl 24) or (r shl 16) or (g shl 8) or b
         }
         PixelData(pixels, width, height)
-    } catch (_: Exception) {
+    } catch (_: IllegalStateException) {
+        null
+    } catch (_: UnsupportedOperationException) {
         null
     }
 }
