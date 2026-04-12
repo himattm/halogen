@@ -10,7 +10,7 @@ import halogen.ThemeExpander
  * Provides convenience methods to convert the palette into a [HalogenThemeSpec]
  * or into an enriched LLM prompt hint.
  */
-public class DominantColors(public val colors: List<QuantizedColor>) {
+public data class DominantColors(public val colors: List<QuantizedColor>) {
 
     /**
      * Map the extracted dominant colors to a [HalogenThemeSpec] by assigning
