@@ -5,7 +5,6 @@ import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos
-import kotlin.math.min
 import kotlin.math.sin
 
 /**
@@ -219,13 +218,6 @@ public object ImageQuantizer {
     }
 
     // ---- HCT distance ----
-
-    /**
-     * Shortest angular distance between two hues, wrapping at 360 degrees.
-     */
-    private fun hueDist(h1: Double, h2: Double): Double {
-        return min(abs(h1 - h2), 360.0 - abs(h1 - h2))
-    }
 
     /**
      * Weighted squared distance in HCT space with hue wrapping.

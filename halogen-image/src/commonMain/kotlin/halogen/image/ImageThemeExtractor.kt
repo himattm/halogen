@@ -3,8 +3,6 @@ package halogen.image
 import halogen.HalogenThemeSpec
 import halogen.ThemeExpander
 import halogen.color.Hct
-import kotlin.math.abs
-import kotlin.math.min
 
 /**
  * Maps a list of dominant [QuantizedColor]s extracted from an image to a
@@ -189,10 +187,4 @@ internal object ImageThemeExtractor {
         return ThemeExpander.argbToHex(Hct.from(hue, chroma, tone).toInt())
     }
 
-    /**
-     * Shortest angular distance between two hues (wrapping at 360).
-     */
-    private fun hueDist(h1: Double, h2: Double): Double {
-        return min(abs(h1 - h2), 360.0 - abs(h1 - h2))
-    }
 }
