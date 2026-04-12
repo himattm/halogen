@@ -12,6 +12,10 @@ final class halogen.image/DominantColors { // halogen.image/DominantColors|null[
     final val colors // halogen.image/DominantColors.colors|{}colors[0]
         final fun <get-colors>(): kotlin.collections/List<halogen.image/QuantizedColor> // halogen.image/DominantColors.colors.<get-colors>|<get-colors>(){}[0]
 
+    final fun component1(): kotlin.collections/List<halogen.image/QuantizedColor> // halogen.image/DominantColors.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<halogen.image/QuantizedColor> = ...): halogen.image/DominantColors // halogen.image/DominantColors.copy|copy(kotlin.collections.List<halogen.image.QuantizedColor>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // halogen.image/DominantColors.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // halogen.image/DominantColors.hashCode|hashCode(){}[0]
     final fun toHint(): kotlin/String // halogen.image/DominantColors.toHint|toHint(){}[0]
     final fun toSpec(): halogen/HalogenThemeSpec // halogen.image/DominantColors.toSpec|toSpec(){}[0]
     final fun toString(): kotlin/String // halogen.image/DominantColors.toString|toString(){}[0]
