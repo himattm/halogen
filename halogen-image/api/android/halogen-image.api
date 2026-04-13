@@ -12,6 +12,8 @@ public final class halogen/image/DominantColors {
 }
 
 public final class halogen/image/EngineExtensionsKt {
+	public static final fun extractColors (Ljava/lang/String;Lcoil3/ImageLoader;Landroid/content/Context;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun extractColors$default (Ljava/lang/String;Lcoil3/ImageLoader;Landroid/content/Context;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun resolveImage (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Lcoil3/ImageLoader;Landroid/content/Context;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun resolveImage (Lhalogen/engine/HalogenEngine;Ljava/lang/String;[IIIILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun resolveImage$default (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Lcoil3/ImageLoader;Landroid/content/Context;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;

@@ -53,3 +53,27 @@ public suspend fun HalogenEngine.resolveImage(
     val data = loadPixels(url, imageLoader, context) ?: return HalogenResult.Unavailable
     return resolveImage(url, data.pixels, data.width, data.height, maxColors)
 }
+
+/**
+ * Extract dominant colors from an image URL using Coil.
+ *
+ * Uses Coil to load the image and extracts dominant colors via [ImageQuantizer].
+ * Unlike [resolveImage], this does not resolve a theme — it returns the raw
+ * palette for inspection or manual theme construction via [DominantColors.toSpec]
+ * or [DominantColors.toHint].
+ *
+ * @param url         The image URL to load.
+ * @param imageLoader A configured Coil [ImageLoader] instance.
+ * @param context     Platform context.
+ * @param maxColors   Maximum dominant colors to extract (default 6).
+ * @return A [DominantColors] containing the extracted palette, or null if loading fails.
+ */
+public suspend fun extractColors(
+    url: String,
+    imageLoader: ImageLoader,
+    context: PlatformContext,
+    maxColors: Int = 6,
+): DominantColors? {
+    val data = loadPixels(url, imageLoader, context) ?: return null
+    return ImageQuantizer.extract(data.pixels, data.width, data.height, maxColors)
+}
