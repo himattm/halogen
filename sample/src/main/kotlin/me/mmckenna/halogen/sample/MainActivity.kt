@@ -14,7 +14,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             val scope = rememberCoroutineScope()
             val demoState = remember {
-                HalogenDemoState.create(scope)
+                val apiKey = BuildConfig.OPENAI_API_KEY.ifBlank { null }
+                HalogenDemoState.create(scope, openAiApiKey = apiKey)
             }
             HalogenDemoApp(demoState)
         }
