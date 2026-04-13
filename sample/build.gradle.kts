@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":sample-shared"))
     implementation(project(":halogen-core"))
     implementation(project(":halogen-compose"))
     implementation(project(":halogen-engine"))
