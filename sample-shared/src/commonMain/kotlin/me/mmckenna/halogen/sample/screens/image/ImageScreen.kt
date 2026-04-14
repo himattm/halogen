@@ -195,7 +195,7 @@ private fun PresetCard(
         modifier = Modifier.size(width = 110.dp, height = 90.dp),
         shape = RoundedCornerShape(12.dp),
         border = if (isSelected) {
-            BorderStroke(2.dp, Color(0xFF6200EE))
+            BorderStroke(2.dp, MaterialTheme.colorScheme.primary)
         } else {
             null
         },
@@ -233,7 +233,7 @@ private fun PaletteSection(colors: DominantColors) {
         Text("Extracted Palette", style = MaterialTheme.typography.titleSmall)
 
         // Mood descriptor
-        val mood = describeMood(colors)
+        val mood = colors.describeMood().replaceFirstChar { it.uppercase() }
         Text(
             text = "Mood: $mood",
             style = MaterialTheme.typography.bodySmall,
@@ -352,32 +352,4 @@ private fun ComponentShowcase() {
             }
         }
     }
-}
-
-/**
- * Computes a mood descriptor from the dominant colors based on average tone and chroma.
- *
- * Tone buckets: < 40 → "dark", > 60 → "light", else "mid-tone"
- * Chroma buckets: < 20 → "subdued", < 40 → "moderate", else "vibrant"
- */
-private fun describeMood(colors: DominantColors): String {
-    if (colors.colors.isEmpty()) return "Neutral"
-
-    val totalPop = colors.colors.sumOf { it.population }
-    val avgTone = colors.colors.sumOf { it.tone * it.population } / totalPop
-    val avgChroma = colors.colors.sumOf { it.chroma * it.population } / totalPop
-
-    val toneDesc = when {
-        avgTone < 40.0 -> "Dark"
-        avgTone > 60.0 -> "Light"
-        else -> "Mid-tone"
-    }
-
-    val chromaDesc = when {
-        avgChroma < 20.0 -> "subdued"
-        avgChroma < 40.0 -> "moderate"
-        else -> "vibrant"
-    }
-
-    return "$toneDesc, $chromaDesc"
 }

@@ -25,6 +25,15 @@ internal object ImageThemeExtractor {
     /** Minimum hue separation between tertiary and primary. */
     private const val TERTIARY_HUE_GAP = 30.0
 
+    // v1: Fixed typography and shape values. Future versions may derive these
+    // from palette mood (e.g., dark/vibrant -> bolder weight, angular corners).
+    private const val DEFAULT_FONT_MOOD = "modern"
+    private const val DEFAULT_HEADING_WEIGHT = 600
+    private const val DEFAULT_BODY_WEIGHT = 400
+    private const val DEFAULT_TIGHT_LETTER_SPACING = false
+    private const val DEFAULT_CORNER_STYLE = "rounded"
+    private const val DEFAULT_CORNER_SCALE = 1.0f
+
     /**
      * Map a list of extracted dominant colors to a [HalogenThemeSpec].
      *
@@ -119,12 +128,12 @@ internal object ImageThemeExtractor {
             neutralLight = hctToHex(hue, 4.0, 96.0),
             neutralDark = hctToHex(hue, 4.0, 8.0),
             error = ERROR_HEX,
-            fontMood = "modern",
-            headingWeight = 600,
-            bodyWeight = 400,
-            tightLetterSpacing = false,
-            cornerStyle = "rounded",
-            cornerScale = 1.0f,
+            fontMood = DEFAULT_FONT_MOOD,
+            headingWeight = DEFAULT_HEADING_WEIGHT,
+            bodyWeight = DEFAULT_BODY_WEIGHT,
+            tightLetterSpacing = DEFAULT_TIGHT_LETTER_SPACING,
+            cornerStyle = DEFAULT_CORNER_STYLE,
+            cornerScale = DEFAULT_CORNER_SCALE,
         )
     }
 
@@ -171,12 +180,12 @@ internal object ImageThemeExtractor {
             neutralLight = neuLHex,
             neutralDark = neuDHex,
             error = ERROR_HEX,
-            fontMood = "modern",
-            headingWeight = 600,
-            bodyWeight = 400,
-            tightLetterSpacing = false,
-            cornerStyle = "rounded",
-            cornerScale = 1.0f,
+            fontMood = DEFAULT_FONT_MOOD,
+            headingWeight = DEFAULT_HEADING_WEIGHT,
+            bodyWeight = DEFAULT_BODY_WEIGHT,
+            tightLetterSpacing = DEFAULT_TIGHT_LETTER_SPACING,
+            cornerStyle = DEFAULT_CORNER_STYLE,
+            cornerScale = DEFAULT_CORNER_SCALE,
         )
     }
 

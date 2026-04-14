@@ -15,6 +15,10 @@ kotlin {
             dependsOn(skikoMain)
         }
 
+        val wasmJsMain by getting {
+            dependsOn(skikoMain)
+        }
+
         commonMain.dependencies {
             api(project(":halogen-core"))
             api(project(":halogen-engine"))

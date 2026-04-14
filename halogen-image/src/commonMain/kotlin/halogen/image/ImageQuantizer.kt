@@ -78,8 +78,9 @@ public object ImageQuantizer {
         // Step 2: Build 15-bit histogram, skipping transparent pixels
         val histogram = HashMap<Int, Int>(256)
         var sampledCount = 0
+        val pixelCount = width * height
         var i = 0
-        while (i < pixels.size) {
+        while (i < pixelCount) {
             val argb = pixels[i]
             val alpha = (argb ushr 24) and 0xFF
             if (alpha >= 128) {

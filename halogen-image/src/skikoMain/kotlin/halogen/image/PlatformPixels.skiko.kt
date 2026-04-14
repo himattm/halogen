@@ -20,21 +20,27 @@ internal actual suspend fun loadPixels(
     val result = imageLoader.execute(request)
     if (result !is SuccessResult) return null
 
-    val bitmap = result.image.toBitmap()
-    val width = bitmap.width
-    val height = bitmap.height
-    val info = ImageInfo(width, height, ColorType.BGRA_8888, ColorAlphaType.UNPREMUL)
-    val bytes = bitmap.readPixels(info, width * 4, 0, 0)
-        ?: return null
+    return try {
+        val bitmap = result.image.toBitmap()
+        val width = bitmap.width
+        val height = bitmap.height
+        val info = ImageInfo(width, height, ColorType.BGRA_8888, ColorAlphaType.UNPREMUL)
+        val bytes = bitmap.readPixels(info, width * 4, 0, 0)
+            ?: return null
 
-    val pixels = IntArray(width * height)
-    for (i in pixels.indices) {
-        val offset = i * 4
-        val b = bytes[offset].toInt() and 0xFF
-        val g = bytes[offset + 1].toInt() and 0xFF
-        val r = bytes[offset + 2].toInt() and 0xFF
-        val a = bytes[offset + 3].toInt() and 0xFF
-        pixels[i] = (a shl 24) or (r shl 16) or (g shl 8) or b
+        val pixels = IntArray(width * height)
+        for (i in pixels.indices) {
+            val offset = i * 4
+            val b = bytes[offset].toInt() and 0xFF
+            val g = bytes[offset + 1].toInt() and 0xFF
+            val r = bytes[offset + 2].toInt() and 0xFF
+            val a = bytes[offset + 3].toInt() and 0xFF
+            pixels[i] = (a shl 24) or (r shl 16) or (g shl 8) or b
+        }
+        PixelData(pixels, width, height)
+    } catch (_: IllegalStateException) {
+        null
+    } catch (_: UnsupportedOperationException) {
+        null
     }
-    return PixelData(pixels, width, height)
 }

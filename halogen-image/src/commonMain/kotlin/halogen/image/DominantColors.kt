@@ -72,7 +72,7 @@ public data class DominantColors(public val colors: List<QuantizedColor>) {
      * - Tone < 40 = "dark", > 60 = "light", else "mid-tone"
      * - Chroma < 20 = "subdued", < 40 = "moderate", else "vibrant"
      */
-    private fun describeMood(): String {
+    public fun describeMood(): String {
         if (colors.isEmpty()) return "Neutral"
 
         val totalPop = colors.sumOf { it.population }
