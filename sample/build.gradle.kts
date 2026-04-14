@@ -16,6 +16,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val apiKey = providers.gradleProperty("OPENAI_API_KEY")
+            .orElse(providers.environmentVariable("OPENAI_API_KEY"))
+            .getOrElse("")
+        buildConfigField("String", "OPENAI_API_KEY", "\"$apiKey\"")
     }
 
     buildTypes {
@@ -39,10 +44,13 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+
 }
 
 dependencies {
+    implementation(project(":sample-shared"))
     implementation(project(":halogen-core"))
     implementation(project(":halogen-compose"))
     implementation(project(":halogen-engine"))

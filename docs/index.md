@@ -53,19 +53,22 @@ That's three lines to go from a text prompt to a full Material 3 theme. See the 
 Most apps need three modules:
 
 ```kotlin
-implementation("me.mmckenna.halogen:halogen-core:0.1.0")
-implementation("me.mmckenna.halogen:halogen-compose:0.1.0")
-implementation("me.mmckenna.halogen:halogen-engine:0.1.0")
+implementation("me.mmckenna.halogen:halogen-core:0.2.0")
+implementation("me.mmckenna.halogen:halogen-compose:0.2.0")
+implementation("me.mmckenna.halogen:halogen-engine:0.2.0")
 ```
 
 Then add a provider and optionally a persistent cache:
 
 ```kotlin
 // Gemini Nano on-device provider (Android only, min SDK 26)
-implementation("me.mmckenna.halogen:halogen-provider-nano:0.1.0")
+implementation("me.mmckenna.halogen:halogen-provider-nano:0.2.0")
 
 // Room KMP persistent cache (Android, iOS, JVM - not wasmJs)
-implementation("me.mmckenna.halogen:halogen-cache-room:0.1.0")
+implementation("me.mmckenna.halogen:halogen-cache-room:0.2.0")
+
+// Image-to-theme color extraction (all platforms)
+implementation("me.mmckenna.halogen:halogen-image:0.2.0")
 ```
 
 ---

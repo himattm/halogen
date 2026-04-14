@@ -21,6 +21,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import halogen.compose.HalogenTheme
 import me.mmckenna.halogen.sample.screens.Screen
+import me.mmckenna.halogen.sample.screens.image.ImageScreen
+import me.mmckenna.halogen.sample.screens.image.ImageState
 import me.mmckenna.halogen.sample.screens.playground.PlaygroundScreen
 import me.mmckenna.halogen.sample.screens.playground.PlaygroundState
 import me.mmckenna.halogen.sample.screens.settings.SettingsScreen
@@ -30,7 +32,7 @@ import me.mmckenna.halogen.sample.screens.testharness.ThemeTestHarnessScreen
 import me.mmckenna.halogen.sample.weather.WeatherScreen
 import me.mmckenna.halogen.sample.weather.WeatherState
 
-private val bottomNavScreens = listOf(Screen.Playground, Screen.Weather, Screen.Test, Screen.Settings)
+private val bottomNavScreens = listOf(Screen.Playground, Screen.Weather, Screen.Image, Screen.Test, Screen.Settings)
 
 @Composable
 fun HalogenDemoApp(demoState: HalogenDemoState) {
@@ -48,6 +50,7 @@ fun HalogenDemoApp(demoState: HalogenDemoState) {
     val weatherState = remember { WeatherState(engine, scope) }
     val testHarnessState = remember { TestHarnessState(engine, scope) }
     val settingsState = remember { SettingsState(engine, scope) }
+    val imageState = remember { ImageState(engine, scope) }
 
     HalogenTheme(spec = themeSpec, darkTheme = isDark, config = engine.config) {
         Scaffold(
@@ -84,6 +87,12 @@ fun HalogenDemoApp(demoState: HalogenDemoState) {
                 Screen.Weather -> WeatherScreen(
                     state = weatherState,
                     engine = engine,
+                    modifier = Modifier.padding(innerPadding),
+                )
+                Screen.Image -> ImageScreen(
+                    state = imageState,
+                    engine = engine,
+                    isDark = isDark,
                     modifier = Modifier.padding(innerPadding),
                 )
                 Screen.Test -> ThemeTestHarnessScreen(

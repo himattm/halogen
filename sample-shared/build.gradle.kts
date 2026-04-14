@@ -51,6 +51,9 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(project(":halogen-image"))
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
         }
 
         jvmMain.dependencies {

@@ -1,0 +1,48 @@
+public final class halogen/image/DominantColors {
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lhalogen/image/DominantColors;
+	public static synthetic fun copy$default (Lhalogen/image/DominantColors;Ljava/util/List;ILjava/lang/Object;)Lhalogen/image/DominantColors;
+	public final fun describeMood ()Ljava/lang/String;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColors ()Ljava/util/List;
+	public fun hashCode ()I
+	public final fun toHint ()Ljava/lang/String;
+	public final fun toSpec ()Lhalogen/HalogenThemeSpec;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class halogen/image/EngineExtensionsKt {
+	public static final fun extractColors (Ljava/lang/String;Lcoil3/ImageLoader;Lcoil3/PlatformContext;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun extractColors$default (Ljava/lang/String;Lcoil3/ImageLoader;Lcoil3/PlatformContext;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun resolveImage (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Lcoil3/ImageLoader;Lcoil3/PlatformContext;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun resolveImage (Lhalogen/engine/HalogenEngine;Ljava/lang/String;[IIIILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun resolveImage$default (Lhalogen/engine/HalogenEngine;Ljava/lang/String;Lcoil3/ImageLoader;Lcoil3/PlatformContext;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun resolveImage$default (Lhalogen/engine/HalogenEngine;Ljava/lang/String;[IIIILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class halogen/image/ImageQuantizer {
+	public static final field INSTANCE Lhalogen/image/ImageQuantizer;
+	public final fun extract ([IIIID)Lhalogen/image/DominantColors;
+	public static synthetic fun extract$default (Lhalogen/image/ImageQuantizer;[IIIIDILjava/lang/Object;)Lhalogen/image/DominantColors;
+}
+
+public final class halogen/image/QuantizedColor {
+	public fun <init> (IDDDD)V
+	public final fun component1 ()I
+	public final fun component2 ()D
+	public final fun component3 ()D
+	public final fun component4 ()D
+	public final fun component5 ()D
+	public final fun copy (IDDDD)Lhalogen/image/QuantizedColor;
+	public static synthetic fun copy$default (Lhalogen/image/QuantizedColor;IDDDDILjava/lang/Object;)Lhalogen/image/QuantizedColor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getArgb ()I
+	public final fun getChroma ()D
+	public final fun getHue ()D
+	public final fun getPopulation ()D
+	public final fun getTone ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+

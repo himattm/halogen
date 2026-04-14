@@ -44,7 +44,7 @@ The provider is intentionally simple: it receives a fully-formed prompt and retu
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("me.mmckenna.halogen:halogen-provider-nano:0.1.0")
+    implementation("me.mmckenna.halogen:halogen-provider-nano:0.2.0")
 }
 ```
 
