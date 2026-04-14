@@ -1,6 +1,6 @@
 # API Reference
 
-Complete API surface for all five Halogen modules.
+Complete API surface for all six Halogen modules.
 
 ---
 
@@ -297,7 +297,7 @@ interface ThemeCache {
 Optional persistent cache backed by Room KMP. Requires the `halogen-cache-room` dependency:
 
 ```kotlin
-implementation("me.mmckenna.halogen:halogen-cache-room:0.1.0")
+implementation("me.mmckenna.halogen:halogen-cache-room:0.2.0")
 ```
 
 Available on Android, iOS, and JVM. Not available on wasmJs.
@@ -337,6 +337,123 @@ data class RoomThemeCacheConfig(
 The `ThemeCache` implementation backed by Room KMP. Created via `HalogenRoomCache.create()` - not instantiated directly.
 
 Implements the full `ThemeCache` interface (`get`, `put`, `contains`, `evict`, `clear`, `keys`, `size`, `entries`, `observeChanges`). Themes persist across process death and app restarts.
+
+---
+
+## halogen-image
+
+Optional image-to-theme extraction. Extracts dominant colors from images and converts them to Halogen themes. Requires the `halogen-image` dependency:
+
+```kotlin
+implementation("me.mmckenna.halogen:halogen-image:0.2.0")
+```
+
+Available on all platforms (Android, iOS, JVM, wasmJs).
+
+### ImageQuantizer
+
+Extracts dominant colors from raw ARGB pixel data using histogram bucketing and k-means clustering in HCT color space.
+
+```kotlin
+object ImageQuantizer {
+    fun extract(
+        pixels: IntArray,
+        width: Int,
+        height: Int,
+        maxColors: Int = 6,
+        minChroma: Double = 8.0,
+    ): DominantColors
+}
+```
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `pixels` | -- | ARGB-packed pixel array in row-major order |
+| `width` | -- | Image width in pixels |
+| `height` | -- | Image height in pixels |
+| `maxColors` | 6 | Maximum number of dominant colors to extract |
+| `minChroma` | 8.0 | Minimum HCT chroma to keep a color (filters near-gray) |
+
+The algorithm subsamples large images to 16K pixels, builds a 15-bit histogram, takes the top 64 entries, and runs k-means++ clustering in HCT space. Extraction takes ~0.8ms regardless of image size.
+
+### DominantColors
+
+The result of color extraction: a list of `QuantizedColor`s sorted by population.
+
+```kotlin
+data class DominantColors(val colors: List<QuantizedColor>)
+```
+
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `toSpec()` | `HalogenThemeSpec` | Map colors to theme seed roles algorithmically (instant, no LLM) |
+| `toHint()` | `String` | Format palette as an enriched LLM prompt hint with mood descriptors |
+
+`toSpec()` assigns colors to primary/secondary/tertiary/neutral roles based on chroma, tone, and hue distance. Handles edge cases: empty palettes produce a default blue theme, fewer than 3 colors synthesize missing roles via hue shifts.
+
+`toHint()` generates a prompt including the palette with population percentages, a mood descriptor (e.g., "dark, vibrant"), and a one-shot JSON example.
+
+### QuantizedColor
+
+A single dominant color extracted from an image.
+
+```kotlin
+data class QuantizedColor(
+    val argb: Int,
+    val population: Double,
+    val hue: Double,
+    val chroma: Double,
+    val tone: Double,
+)
+```
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `argb` | `Int` | ARGB integer representation |
+| `population` | `Double` | Relative population (0.0 to 1.0), sums to 1.0 across all colors |
+| `hue` | `Double` | HCT hue in degrees (0-360) |
+| `chroma` | `Double` | HCT chroma (colorfulness, typically 0-120) |
+| `tone` | `Double` | HCT tone (lightness, 0-100) |
+
+### Engine Extensions
+
+Extension functions on `HalogenEngine` for image-based theme resolution.
+
+```kotlin
+// Resolve theme from image URL via Coil
+suspend fun HalogenEngine.resolveImage(
+    url: String,
+    imageLoader: ImageLoader,
+    context: PlatformContext,
+    maxColors: Int = 6,
+): HalogenResult
+
+// Resolve theme from raw ARGB pixels (no Coil required)
+suspend fun HalogenEngine.resolveImage(
+    key: String,
+    pixels: IntArray,
+    width: Int,
+    height: Int,
+    maxColors: Int = 6,
+): HalogenResult
+
+// Extract colors without resolving a theme
+suspend fun extractColors(
+    url: String,
+    imageLoader: ImageLoader,
+    context: PlatformContext,
+    maxColors: Int = 6,
+): DominantColors?
+```
+
+| Function | Description |
+|----------|-------------|
+| `resolveImage(url, imageLoader, context)` | Load image via Coil, extract colors, resolve theme via LLM. URL is used as cache key. Returns `HalogenResult.Unavailable` if image fails to load. |
+| `resolveImage(key, pixels, width, height)` | Extract colors from raw pixels and resolve theme via LLM. Pure common code, no Coil dependency. |
+| `extractColors(url, imageLoader, context)` | Load image and extract dominant colors without theme resolution. Use `toSpec()` or `toHint()` on the result for manual theme construction. |
+
+!!! note "Platform pixel extraction"
+    Android uses native `Bitmap.getPixels()`. JVM and iOS use Skia via Skiko. wasmJs uses Skia with defensive error handling for known Skiko resolution issues.
 
 ---
 

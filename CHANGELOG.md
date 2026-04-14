@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - Unreleased
+
+### Added
+- `halogen-image`: Image-to-theme color extraction using histogram bucketing and HCT k-means clustering
+- `halogen-image`: `resolveImage()` engine extensions for URL-based and raw-pixel theme resolution
+- `halogen-image`: `extractColors()` for standalone palette extraction without theme resolution
+- `halogen-image`: Coil 3 integration with platform-specific pixel extraction (Bitmap on Android, Skia on JVM/iOS/wasmJs)
+- `halogen-image`: Algorithmic (`toSpec()`) and LLM-enhanced (`toHint()`) theme generation paths
+
 ## [0.1.0] - Unreleased
 
 ### Added

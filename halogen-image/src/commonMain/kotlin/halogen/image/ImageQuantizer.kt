@@ -277,7 +277,6 @@ public object ImageQuantizer {
 
         for (c in 1 until k) {
             // Update distances: for each entry, find min distance to existing centroids
-            var totalDist = 0.0
             for (idx in entries.indices) {
                 val d = hctDistanceSq(
                     entries[idx].hue, entries[idx].chroma, entries[idx].tone,
@@ -286,7 +285,6 @@ public object ImageQuantizer {
                 if (d < distances[idx]) {
                     distances[idx] = d
                 }
-                totalDist += distances[idx] * entries[idx].count
             }
 
             // Pick next centroid: deterministic -- choose entry with max weighted distance

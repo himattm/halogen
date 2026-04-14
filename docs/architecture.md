@@ -11,6 +11,8 @@ The resolve chain follows a strict priority order: cache, remote themes, LLM pro
 ```mermaid
 flowchart TD
     A["engine.resolve(key, hint)"] --> B{Cache: Memory LRU}
+    Z["engine.resolveImage(url)"] --> Y[Extract dominant colors]
+    Y --> A
     B -->|HIT| C[Return nanoseconds]
     B -->|MISS| F{RemoteThemes?}
     F -->|HIT| G[Write cache, return]
@@ -66,6 +68,13 @@ halogen-cache-room    (depends on engine, optional - Android, iOS, JVM)
   +-- HalogenRoomCache factory
   +-- RoomThemeCache (Room KMP persistence)
   +-- RoomThemeCacheConfig
+  |
+halogen-image         (depends on core + engine, optional - all platforms)
+  |
+  +-- ImageQuantizer: histogram + HCT k-means clustering
+  +-- DominantColors with toSpec() / toHint() conversions
+  +-- Coil 3 integration for URL-based image loading
+  +-- Platform pixel extraction (Bitmap / Skia)
 ```
 
 The key architectural decision: `halogen-core` and `halogen-engine` have **zero LLM imports**. The Nano provider is a separate artifact. A developer using only cloud LLMs never pulls ML Kit.
@@ -176,6 +185,7 @@ Once a theme is generated, it lives in cache until evicted or the process ends. 
 | halogen-compose | Yes | Yes | Yes | Yes |
 | halogen-provider-nano | Yes | -- | -- | -- |
 | halogen-cache-room | Yes | Yes | Yes | -- |
+| halogen-image | Yes | Yes | Yes | Yes |
 | On-device LLM | Gemini Nano | -- | -- | -- |
 | Cloud LLM | Any | Any | Any | Any |
 | Cache (Memory LRU) | Yes | Yes | Yes | Yes |
