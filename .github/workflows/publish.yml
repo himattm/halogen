@@ -16,7 +16,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest :halogen-cache-room:jvmTest :halogen-provider-nano:testDebugUnitTest apiCheck
+      - run: ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest :halogen-cache-room:jvmTest :halogen-image:jvmTest :halogen-provider-nano:testDebugUnitTest apiCheck
 
   ios-tests:
     name: iOS Tests
@@ -82,6 +82,14 @@ jobs:
 
       - name: Publish halogen-compose
         run: ./gradlew -q --console=plain :halogen-compose:publishAndReleaseToMavenCentral --no-configuration-cache
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Publish halogen-image
+        run: ./gradlew -q --console=plain :halogen-image:publishAndReleaseToMavenCentral --no-configuration-cache
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
