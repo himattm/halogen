@@ -17,7 +17,7 @@ kotlin {
 
         commonMain.dependencies {
             api(project(":halogen-core"))
-            implementation(project(":halogen-engine"))
+            api(project(":halogen-engine"))
             implementation(libs.coil.core)
         }
 

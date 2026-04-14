@@ -161,13 +161,26 @@ class DominantColorsTest {
         )
     }
 
+    // ---- toHint edge cases ----
+
+    @Test
+    fun toHint_allZeroPopulation_doesNotProduceNaN() {
+        val c1 = QuantizedColor(argb = 0xFF0000FF.toInt(), population = 0.0, hue = 240.0, chroma = 80.0, tone = 30.0)
+        val c2 = QuantizedColor(argb = 0xFFFF0000.toInt(), population = 0.0, hue = 0.0, chroma = 80.0, tone = 50.0)
+        val colors = DominantColors(listOf(c1, c2))
+        val hint = colors.toHint()
+
+        assertTrue(!hint.contains("NaN"), "toHint should not contain NaN when all populations are zero")
+        assertTrue(hint.isNotEmpty(), "toHint should still return a non-empty string")
+    }
+
     // ---- toString ----
 
     @Test
     fun toString_showsColorCount() {
         val c1 = colorFromHct(hue = 30.0, chroma = 80.0, tone = 50.0, population = 1.0)
         val colors = DominantColors(listOf(c1))
-        assertTrue(colors.toString().contains("1 colors"), "toString should show color count")
+        assertTrue(colors.toString().contains("1 color"), "toString should show color count")
     }
 
     @Test

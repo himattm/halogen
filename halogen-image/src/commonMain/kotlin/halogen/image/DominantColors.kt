@@ -75,8 +75,11 @@ public data class DominantColors(public val colors: List<QuantizedColor>) {
     private fun describeMood(): String {
         if (colors.isEmpty()) return "Neutral"
 
-        val avgTone = colors.sumOf { it.tone * it.population } / colors.sumOf { it.population }
-        val avgChroma = colors.sumOf { it.chroma * it.population } / colors.sumOf { it.population }
+        val totalPop = colors.sumOf { it.population }
+        if (totalPop == 0.0) return "Neutral"
+
+        val avgTone = colors.sumOf { it.tone * it.population } / totalPop
+        val avgChroma = colors.sumOf { it.chroma * it.population } / totalPop
 
         val toneDesc = when {
             avgTone < 40.0 -> "dark"
@@ -93,5 +96,8 @@ public data class DominantColors(public val colors: List<QuantizedColor>) {
         return "$toneDesc, $chromaDesc"
     }
 
-    override fun toString(): String = "DominantColors(${colors.size} colors)"
+    override fun toString(): String {
+        val label = if (colors.size == 1) "color" else "colors"
+        return "DominantColors(${colors.size} $label)"
+    }
 }
