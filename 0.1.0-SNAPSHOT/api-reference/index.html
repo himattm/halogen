@@ -965,6 +965,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#halogen-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        halogen-image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="halogen-image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imagequantizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ImageQuantizer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dominantcolors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DominantColors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantizedcolor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QuantizedColor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engine-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#halogen-provider-nano" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1364,6 +1425,67 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#halogen-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        halogen-image
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="halogen-image">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#imagequantizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ImageQuantizer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dominantcolors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DominantColors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantizedcolor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        QuantizedColor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#engine-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Engine Extensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#halogen-provider-nano" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1417,7 +1539,7 @@
 
 
 <h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
-<p>Complete API surface for all five Halogen modules.</p>
+<p>Complete API surface for all six Halogen modules.</p>
 <hr />
 <h2 id="halogen-core">halogen-core<a class="headerlink" href="#halogen-core" title="Permanent link">&para;</a></h2>
 <p>Core primitives and contracts. Pure Kotlin - no platform or LLM dependencies.</p>
@@ -1836,13 +1958,194 @@
 <p>The <code>ThemeCache</code> implementation backed by Room KMP. Created via <code>HalogenRoomCache.create()</code> - not instantiated directly.</p>
 <p>Implements the full <code>ThemeCache</code> interface (<code>get</code>, <code>put</code>, <code>contains</code>, <code>evict</code>, <code>clear</code>, <code>keys</code>, <code>size</code>, <code>entries</code>, <code>observeChanges</code>). Themes persist across process death and app restarts.</p>
 <hr />
+<h2 id="halogen-image">halogen-image<a class="headerlink" href="#halogen-image" title="Permanent link">&para;</a></h2>
+<p>Optional image-to-theme extraction. Extracts dominant colors from images and converts them to Halogen themes. Requires the <code>halogen-image</code> dependency:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.mmckenna.halogen:halogen-image:0.2.0&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Available on all platforms (Android, iOS, JVM, wasmJs).</p>
+<h3 id="imagequantizer">ImageQuantizer<a class="headerlink" href="#imagequantizer" title="Permanent link">&para;</a></h3>
+<p>Extracts dominant colors from raw ARGB pixel data using histogram bucketing and k-means clustering in HCT color space.</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kd">object</span><span class="w"> </span><span class="nc">ImageQuantizer</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="kd">fun</span><span class="w"> </span><span class="nf">extract</span><span class="p">(</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">        </span><span class="n">pixels</span><span class="p">:</span><span class="w"> </span><span class="n">IntArray</span><span class="p">,</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">        </span><span class="n">width</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">        </span><span class="n">height</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">        </span><span class="n">maxColors</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">        </span><span class="n">minChroma</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8.0</span><span class="p">,</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">    </span><span class="p">):</span><span class="w"> </span><span class="n">DominantColors</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pixels</code></td>
+<td>--</td>
+<td>ARGB-packed pixel array in row-major order</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td>--</td>
+<td>Image width in pixels</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>--</td>
+<td>Image height in pixels</td>
+</tr>
+<tr>
+<td><code>maxColors</code></td>
+<td>6</td>
+<td>Maximum number of dominant colors to extract</td>
+</tr>
+<tr>
+<td><code>minChroma</code></td>
+<td>8.0</td>
+<td>Minimum HCT chroma to keep a color (filters near-gray)</td>
+</tr>
+</tbody>
+</table>
+<p>The algorithm subsamples large images to 16K pixels, builds a 15-bit histogram, takes the top 64 entries, and runs k-means++ clustering in HCT space. Extraction takes ~0.8ms regardless of image size.</p>
+<h3 id="dominantcolors">DominantColors<a class="headerlink" href="#dominantcolors" title="Permanent link">&para;</a></h3>
+<p>The result of color extraction: a list of <code>QuantizedColor</code>s sorted by population.</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">DominantColors</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="nv">colors</span><span class="p">:</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">QuantizedColor</span><span class="o">&gt;</span><span class="p">)</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Returns</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>toSpec()</code></td>
+<td><code>HalogenThemeSpec</code></td>
+<td>Map colors to theme seed roles algorithmically (instant, no LLM)</td>
+</tr>
+<tr>
+<td><code>toHint()</code></td>
+<td><code>String</code></td>
+<td>Format palette as an enriched LLM prompt hint with mood descriptors</td>
+</tr>
+</tbody>
+</table>
+<p><code>toSpec()</code> assigns colors to primary/secondary/tertiary/neutral roles based on chroma, tone, and hue distance. Handles edge cases: empty palettes produce a default blue theme, fewer than 3 colors synthesize missing roles via hue shifts.</p>
+<p><code>toHint()</code> generates a prompt including the palette with population percentages, a mood descriptor (e.g., "dark, vibrant"), and a one-shot JSON example.</p>
+<h3 id="quantizedcolor">QuantizedColor<a class="headerlink" href="#quantizedcolor" title="Permanent link">&para;</a></h3>
+<p>A single dominant color extracted from an image.</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kd">data</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">QuantizedColor</span><span class="p">(</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">argb</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">population</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">hue</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">chroma</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="kd">val</span><span class="w"> </span><span class="nv">tone</span><span class="p">:</span><span class="w"> </span><span class="kt">Double</span><span class="p">,</span>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="p">)</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>argb</code></td>
+<td><code>Int</code></td>
+<td>ARGB integer representation</td>
+</tr>
+<tr>
+<td><code>population</code></td>
+<td><code>Double</code></td>
+<td>Relative population (0.0 to 1.0), sums to 1.0 across all colors</td>
+</tr>
+<tr>
+<td><code>hue</code></td>
+<td><code>Double</code></td>
+<td>HCT hue in degrees (0-360)</td>
+</tr>
+<tr>
+<td><code>chroma</code></td>
+<td><code>Double</code></td>
+<td>HCT chroma (colorfulness, typically 0-120)</td>
+</tr>
+<tr>
+<td><code>tone</code></td>
+<td><code>Double</code></td>
+<td>HCT tone (lightness, 0-100)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="engine-extensions">Engine Extensions<a class="headerlink" href="#engine-extensions" title="Permanent link">&para;</a></h3>
+<p>Extension functions on <code>HalogenEngine</code> for image-based theme resolution.</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">// Resolve theme from image URL via Coil</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="n">HalogenEngine</span><span class="p">.</span><span class="nf">resolveImage</span><span class="p">(</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="n">imageLoader</span><span class="p">:</span><span class="w"> </span><span class="n">ImageLoader</span><span class="p">,</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">PlatformContext</span><span class="p">,</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span><span class="n">maxColors</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="p">):</span><span class="w"> </span><span class="n">HalogenResult</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="c1">// Resolve theme from raw ARGB pixels (no Coil required)</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="n">HalogenEngine</span><span class="p">.</span><span class="nf">resolveImage</span><span class="p">(</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="w">    </span><span class="n">pixels</span><span class="p">:</span><span class="w"> </span><span class="n">IntArray</span><span class="p">,</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">    </span><span class="n">width</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">    </span><span class="n">height</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="p">,</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="w">    </span><span class="n">maxColors</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="p">):</span><span class="w"> </span><span class="n">HalogenResult</span>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="c1">// Extract colors without resolving a theme</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="kd">suspend</span><span class="w"> </span><span class="kd">fun</span><span class="w"> </span><span class="nf">extractColors</span><span class="p">(</span>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="w">    </span><span class="n">url</span><span class="p">:</span><span class="w"> </span><span class="kt">String</span><span class="p">,</span>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="w">    </span><span class="n">imageLoader</span><span class="p">:</span><span class="w"> </span><span class="n">ImageLoader</span><span class="p">,</span>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="w">    </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">PlatformContext</span><span class="p">,</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="w">    </span><span class="n">maxColors</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">,</span>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="p">):</span><span class="w"> </span><span class="n">DominantColors?</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>resolveImage(url, imageLoader, context)</code></td>
+<td>Load image via Coil, extract colors, resolve theme via LLM. URL is used as cache key. Returns <code>HalogenResult.Unavailable</code> if image fails to load.</td>
+</tr>
+<tr>
+<td><code>resolveImage(key, pixels, width, height)</code></td>
+<td>Extract colors from raw pixels and resolve theme via LLM. Pure common code, no Coil dependency.</td>
+</tr>
+<tr>
+<td><code>extractColors(url, imageLoader, context)</code></td>
+<td>Load image and extract dominant colors without theme resolution. Use <code>toSpec()</code> or <code>toHint()</code> on the result for manual theme construction.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Platform pixel extraction</p>
+<p>Android uses native <code>Bitmap.getPixels()</code>. JVM and iOS use Skia via Skiko. wasmJs uses Skia with defensive error handling for known Skiko resolution issues.</p>
+</div>
+<hr />
 <h2 id="halogen-provider-nano">halogen-provider-nano<a class="headerlink" href="#halogen-provider-nano" title="Permanent link">&para;</a></h2>
 <p>Gemini Nano on-device AI provider. Android only.</p>
 <h3 id="gemininanoprovider">GeminiNanoProvider<a class="headerlink" href="#gemininanoprovider" title="Permanent link">&para;</a></h3>
-<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kd">class</span><span class="w"> </span><span class="nc">GeminiNanoProvider</span><span class="p">(</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">temperature</span><span class="p">:</span><span class="w"> </span><span class="kt">Float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2f</span><span class="p">,</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">topK</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">HalogenLlmProvider</span>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="kd">class</span><span class="w"> </span><span class="nc">GeminiNanoProvider</span><span class="p">(</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="n">temperature</span><span class="p">:</span><span class="w"> </span><span class="kt">Float</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2f</span><span class="p">,</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="n">topK</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">HalogenLlmProvider</span>
 </span></code></pre></div>
 <table>
 <thead>

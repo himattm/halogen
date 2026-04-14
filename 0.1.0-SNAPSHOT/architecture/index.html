@@ -1057,6 +1057,8 @@
 <p>The resolve chain follows a strict priority order: cache, remote themes, LLM provider, default.</p>
 <pre class="mermaid"><code>flowchart TD
     A["engine.resolve(key, hint)"] --&gt; B{Cache: Memory LRU}
+    Z["engine.resolveImage(url)"] --&gt; Y[Extract dominant colors]
+    Y --&gt; A
     B --&gt;|HIT| C[Return nanoseconds]
     B --&gt;|MISS| F{RemoteThemes?}
     F --&gt;|HIT| G[Write cache, return]
@@ -1106,6 +1108,13 @@
 </span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>  +-- HalogenRoomCache factory
 </span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>  +-- RoomThemeCache (Room KMP persistence)
 </span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>  +-- RoomThemeCacheConfig
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>  |
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>halogen-image         (depends on core + engine, optional - all platforms)
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>  |
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  +-- ImageQuantizer: histogram + HCT k-means clustering
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>  +-- DominantColors with toSpec() / toHint() conversions
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>  +-- Coil 3 integration for URL-based image loading
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>  +-- Platform pixel extraction (Bitmap / Skia)
 </span></code></pre></div>
 <p>The key architectural decision: <code>halogen-core</code> and <code>halogen-engine</code> have <strong>zero LLM imports</strong>. The Nano provider is a separate artifact. A developer using only cloud LLMs never pulls ML Kit.</p>
 <hr />
@@ -1250,6 +1259,13 @@
 <td>Yes</td>
 <td>Yes</td>
 <td>--</td>
+</tr>
+<tr>
+<td>halogen-image</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td>On-device LLM</td>

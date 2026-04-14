@@ -900,7 +900,10 @@
 </span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
 </span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="c1">// Optional: persistent cache that survives process death</span>
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.mmckenna.halogen:halogen-cache-room:0.1.0&quot;</span><span class="p">)</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="c1">// Optional: extract themes from images</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.mmckenna.halogen:halogen-image:0.2.0&quot;</span><span class="p">)</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">}</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -912,7 +915,10 @@
 </span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="c1">// Optional: persistent cache that survives process death (Android, iOS, JVM — not wasmJs)</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.mmckenna.halogen:halogen-cache-room:0.1.0&quot;</span><span class="p">)</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="c1">// Optional: extract themes from images (all platforms)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="n">implementation</span><span class="p">(</span><span class="s">&quot;me.mmckenna.halogen:halogen-image:0.2.0&quot;</span><span class="p">)</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
 </span></code></pre></div>
 </div>
 </div>
@@ -1003,6 +1009,17 @@
 </span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>The <code>key</code> is a cache key - any string you choose. The <code>hint</code> is the natural language prompt sent to the LLM. If the key already exists in cache, the hint is ignored and the cached theme is returned instantly.</p>
+<div class="admonition tip">
+<p class="admonition-title">Image-based themes</p>
+<p>With <code>halogen-image</code>, you can generate themes directly from images:</p>
+<div class="language-kotlin highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// One call: load image, extract colors, resolve theme</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">engine</span><span class="p">.</span><span class="na">resolveImage</span><span class="p">(</span><span class="n">albumArtUrl</span><span class="p">,</span><span class="w"> </span><span class="n">imageLoader</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">// Or skip the LLM entirely with algorithmic extraction</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kd">val</span><span class="w"> </span><span class="nv">colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extractColors</span><span class="p">(</span><span class="n">imageUrl</span><span class="p">,</span><span class="w"> </span><span class="n">imageLoader</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="kd">val</span><span class="w"> </span><span class="nv">spec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">colors</span><span class="o">?.</span><span class="na">toSpec</span><span class="p">()</span><span class="w">  </span><span class="c1">// instant, no LLM needed</span>
+</span></code></pre></div>
+</div>
 <hr />
 <h2 id="5-platform-notes">5. Platform Notes<a class="headerlink" href="#5-platform-notes" title="Permanent link">&para;</a></h2>
 <div class="admonition info">

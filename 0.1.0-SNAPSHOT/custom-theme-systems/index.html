@@ -994,6 +994,10 @@
 <td><code>halogen-core</code> + <code>halogen-engine</code> + <code>halogen-compose</code></td>
 </tr>
 <tr>
+<td>Image-based theming</td>
+<td><code>halogen-core</code> + <code>halogen-engine</code> + <code>halogen-image</code></td>
+</tr>
+<tr>
 <td>Non-Compose (raw theme data)</td>
 <td><code>halogen-core</code> + <code>halogen-engine</code></td>
 </tr>
@@ -1003,6 +1007,7 @@
 </tr>
 </tbody>
 </table>
+<p><code>halogen-image</code> adds image color extraction. It depends on <code>halogen-engine</code> for theme resolution but does not require <code>halogen-compose</code> — use it in non-Compose apps that need image-derived themes.</p>
 <p><code>halogen-compose</code> is needed even for custom themes if you want the <code>HalogenTheme</code> composable with <code>themeWrapper</code>. If you're building outside Compose entirely, use <code>halogen-core</code> + <code>halogen-engine</code> and consume <code>ExpandedTheme</code> directly.</p>
 
 
