@@ -32,5 +32,8 @@ include(
     ":halogen-chromecast",
     ":sample",
     ":sample-shared",
-    ":sample-chromecast-sender",
+    // :sample-chromecast-sender is intentionally omitted. It lives in the repo
+    // as reference source and depends on the Google Cast SDK; consumers copy it
+    // into their own app rather than building it from this repo, which avoids
+    // requiring play-services-cast-framework on every CI run.
 )

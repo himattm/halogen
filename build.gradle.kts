@@ -33,7 +33,7 @@ apiValidation {
     // TODO(chromecast): run `./gradlew :halogen-chromecast:apiDump`, commit the
     // generated api/ files, and drop "halogen-chromecast" from this list before
     // the 0.2.0 release so binary compatibility is tracked.
-    ignoredProjects += listOf("sample", "sample-shared", "sample-chromecast-sender", "halogen-chromecast")
+    ignoredProjects += listOf("sample", "sample-shared", "halogen-chromecast")
     @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
     klib {
         enabled = true

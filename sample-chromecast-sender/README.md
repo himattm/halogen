@@ -1,33 +1,34 @@
 # Halogen Cast Demo — Sender
 
-Android app that exercises `halogen-chromecast` end-to-end with five hand-picked
-palettes. Tapping a swatch applies the theme locally and (when a Cast session is
-active) migrates it to the receiver.
+Android reference source that exercises `halogen-chromecast` end-to-end with
+five hand-picked palettes. Tapping a swatch applies the theme locally and
+(when a Cast session is active) migrates it to the receiver.
 
-## Build
+## How to use this sample
 
-```
-./gradlew :samples:chromecast-sender:installDebug
-```
+This directory is **reference code**, not a registered Gradle project in this
+repo (to avoid requiring every CI run to resolve the Google Cast SDK). To run
+it:
 
-## Wire up your Cast receiver
+1. Create a new Android app module in your own project.
+2. Copy the Kotlin sources from `src/main/kotlin/` and the manifest from
+   `src/main/AndroidManifest.xml` into it.
+3. Add these dependencies:
 
-The sample ships with Google's default media receiver (`CC1AD845`) as a
-placeholder — it will accept the connection but won't render the Halogen
-palette. To see the full palette end-to-end:
-
-1. Register a receiver application in the
-   [Google Cast SDK Developer Console](https://cast.google.com/publish/).
-2. Host the `samples/chromecast-receiver/` static site over HTTPS (e.g.
-   GitHub Pages, Firebase Hosting) and set that URL as your receiver's URL.
-3. Rebuild with the App ID wired in:
-
-   ```
-   ./gradlew :samples:chromecast-sender:installDebug \
-       -PHALOGEN_CAST_APP_ID=ABCDEF12
+   ```kotlin
+   implementation("me.mmckenna.halogen:halogen-core:0.2.0")
+   implementation("me.mmckenna.halogen:halogen-engine:0.2.0")
+   implementation("me.mmckenna.halogen:halogen-chromecast:0.2.0")
+   implementation("com.google.android.gms:play-services-cast-framework:21.4.0")
+   implementation("androidx.mediarouter:mediarouter:1.7.0")
+   // + Compose BOM / material3 / activity-compose / lifecycle-runtime-ktx
    ```
 
-   Or export `HALOGEN_CAST_APP_ID` as an environment variable.
+4. Register a receiver application in the
+   [Google Cast SDK Developer Console](https://cast.google.com/publish/) and
+   point your `CastOptionsProvider` at the App ID.
+5. Host the companion `sample-chromecast-receiver/` static site over HTTPS
+   (e.g. GitHub Pages, Firebase Hosting) and set it as your receiver's URL.
 
 ## What the app shows
 
