@@ -36,7 +36,7 @@ public class TonalPalette private constructor(
     /** The key color is the color that best represents the hue and chroma of this palette. */
     public val keyColor: Hct get() = keyColorProvider.value
 
-    private val cache: MutableMap<Int, Int> = mutableMapOf()
+    private val cache: IntArray = IntArray(101)
 
     /**
      * Returns the ARGB color for a given tone in this palette.
@@ -45,9 +45,12 @@ public class TonalPalette private constructor(
      * @return ARGB representation of a color with that tone.
      */
     public fun tone(tone: Int): Int {
-        return cache.getOrPut(tone) {
-            Hct.from(hue, chroma, tone.toDouble()).toInt()
+        var color = cache[tone]
+        if (color == 0) {
+            color = Hct.from(hue, chroma, tone.toDouble()).toInt()
+            cache[tone] = color
         }
+        return color
     }
 
     /**
