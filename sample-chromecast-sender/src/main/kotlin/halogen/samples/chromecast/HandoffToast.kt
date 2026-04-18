@@ -31,7 +31,7 @@ import halogen.chromecast.HandoffState
 import kotlinx.coroutines.delay
 
 /**
- * One-shot "Now playing on [device]" toast that pulses once on every transition to
+ * One-shot "Theme sent to [device]" toast that pulses once on every transition to
  * [HandoffState.Acknowledged] and auto-dismisses after [autoDismissMs] milliseconds.
  */
 @Composable
@@ -47,18 +47,18 @@ fun HandoffToast(
     LaunchedEffect(state) {
         when (state) {
             is HandoffState.Acknowledged -> {
-                message = "Now playing on ${state.deviceName}"
+                message = "Theme sent to ${state.deviceName}"
                 visible = true
                 pulseTrigger++
                 delay(autoDismissMs)
                 visible = false
             }
             is HandoffState.Sending -> {
-                message = "Casting theme…"
+                message = "Sending theme…"
                 visible = true
             }
             is HandoffState.Failed -> {
-                message = "Couldn't cast theme"
+                message = "Couldn't send theme"
                 visible = true
                 delay(autoDismissMs)
                 visible = false

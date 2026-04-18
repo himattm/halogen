@@ -19,7 +19,7 @@ public sealed class HandoffState {
     /** A theme message is in flight; waiting for [Ack]. */
     public data class Sending(val key: String, val label: String?) : HandoffState()
 
-    /** Receiver confirmed the last theme. Phone UI can render the "Now playing on X" moment. */
+    /** Receiver confirmed the last theme. Phone UI can render the "Theme sent to X" moment. */
     public data class Acknowledged(
         val deviceName: String,
         val key: String,

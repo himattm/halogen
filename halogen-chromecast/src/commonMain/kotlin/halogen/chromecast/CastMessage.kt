@@ -61,7 +61,7 @@ public data class Handshake(
  *
  * @property key Theme identifier (track id, URL, category, etc.) — echoed in the receiver's UI and [Ack].
  * @property primary Required hex seed color (e.g. `#E53935`). Used to derive missing neighbors.
- * @property label Optional human-readable label (e.g. `"Now playing: …"`).
+ * @property label Optional human-readable label describing the theme (e.g. `"Coffee Shop"`).
  * @property sender Optional sender metadata.
  * @property extensions Opaque `Map<String,String>` passthrough for app-specific data.
  */

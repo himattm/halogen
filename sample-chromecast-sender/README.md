@@ -35,7 +35,7 @@ it:
 - Grid of 5 named palettes. Tap one to `engine.apply(...)` it.
 - The `handoffToChromecast` extension forwards every `activeTheme` change on
   `autoSend = true`; no explicit send call is needed.
-- A one-shot "Now playing on *device*" pulse toast appears whenever
+- A one-shot "Theme sent to *device*" pulse toast appears whenever
   `HandoffState` transitions to `Acknowledged`.
 
 The Compose toast implementation lives in `HandoffToast.kt` — it's intentionally

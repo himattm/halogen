@@ -50,7 +50,7 @@ class MyActivity : ComponentActivity() {
 ```
 
 `handoff.state` is a `StateFlow<HandoffState>` you can observe in Compose to
-render the "Now playing on *device*" confirmation moment.
+render the "Theme sent to *device*" confirmation moment.
 
 ## Namespace
 

@@ -20,7 +20,7 @@ import kotlinx.coroutines.withTimeout
  * Use [HalogenCastSession.sendTheme] to ship a new palette to the receiver, or
  * have the engine integration (`HalogenEngine.handoffToChromecast`) auto-send
  * every `activeTheme` emission. Observe [state] to drive the phone-side
- * "Now playing on [device]" confirmation.
+ * "Theme sent to [device]" confirmation.
  *
  * Call [close] when finished (e.g. ViewModel.onCleared) to cancel the internal
  * coroutines that watch the transport for acks.
