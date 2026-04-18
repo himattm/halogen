@@ -32,5 +32,5 @@ include(
     ":halogen-chromecast",
     ":sample",
     ":sample-shared",
-    ":samples:chromecast-sender",
+    ":sample-chromecast-sender",
 )

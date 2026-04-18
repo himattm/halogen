@@ -102,12 +102,12 @@ A Halogen-aware CAF receiver must:
 
 A reference implementation that expands the compact spec into the full 49-role
 M3 palette and renders it on-screen lives in
-[`samples/chromecast-receiver`](https://github.com/himattm/halogen/tree/main/samples/chromecast-receiver).
+[`sample-chromecast-receiver`](https://github.com/himattm/halogen/tree/main/sample-chromecast-receiver).
 
 ## End-to-end demo
 
-See [`samples/chromecast-sender`](https://github.com/himattm/halogen/tree/main/samples/chromecast-sender)
+See [`sample-chromecast-sender`](https://github.com/himattm/halogen/tree/main/sample-chromecast-sender)
 for an Android app with five hand-picked palettes wired into a real
 `CastContext`, and
-[`samples/chromecast-receiver`](https://github.com/himattm/halogen/tree/main/samples/chromecast-receiver)
+[`sample-chromecast-receiver`](https://github.com/himattm/halogen/tree/main/sample-chromecast-receiver)
 for the companion web receiver.

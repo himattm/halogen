@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `halogen-chromecast`: New KMP module adding a lightweight wire protocol and `HalogenCastSession` orchestrator for migrating palettes from phone to a Chromecast receiver. SDK-free — consumers plug in their Cast session via `CastMessageTransport`
 - `halogen-chromecast`: `HalogenEngine.handoffToChromecast(...)` extension that auto-forwards `activeTheme` changes when `autoSend = true`
 - `halogen-chromecast`: Versioned envelope (`CastMessage`) with `Handshake` / `ThemePayload` / `Ack` / `ClearTheme` variants; `ThemePayload` requires only `key` + `primary`, all other palette fields optional
-- Samples: `samples/chromecast-sender` (Android) and `samples/chromecast-receiver` (static CAF receiver rendering the full expanded M3 palette)
+- Samples: `sample-chromecast-sender` (Android) and `sample-chromecast-receiver` (static CAF receiver rendering the full expanded M3 palette)
 
 ## [0.1.0] - Unreleased
 

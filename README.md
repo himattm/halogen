@@ -76,8 +76,8 @@ implementation("me.mmckenna.halogen:halogen-image:0.2.0")
 implementation("me.mmckenna.halogen:halogen-chromecast:0.2.0")
 ```
 
-See [`samples/chromecast-sender`](samples/chromecast-sender) and
-[`samples/chromecast-receiver`](samples/chromecast-receiver) for a working
+See [`sample-chromecast-sender`](sample-chromecast-sender) and
+[`sample-chromecast-receiver`](sample-chromecast-receiver) for a working
 end-to-end cast handoff demo.
 
 ## How It Works
