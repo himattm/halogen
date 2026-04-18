@@ -1,0 +1,3 @@
+## 2024-04-18 - Zero-Allocation Cache for Tones
+**Learning:** Using an `IntArray` for tone caching (values strictly bounded 0..100) instead of a `MutableMap<Int, Int>` completely eliminates boxing overhead and `HashMap` instantiation. This is exceptionally safe because ARGB colors returned are always opaque (alpha = `0xFF`), ensuring no valid color will ever evaluate to `0`, making `0` a perfect uninitialized marker.
+**Action:** Always prefer bounded primitive arrays (like `IntArray`) over maps for caching strictly bounded, non-zero primitive results to avoid object allocation and boxing overhead.
