@@ -29,6 +29,8 @@ include(
     ":halogen-cache-room",
     ":halogen-image",
     ":halogen-provider-nano",
+    ":halogen-chromecast",
     ":sample",
     ":sample-shared",
+    ":samples:chromecast-sender",
 )

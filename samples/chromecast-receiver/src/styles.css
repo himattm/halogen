@@ -1,0 +1,147 @@
+:root {
+  /* These are overwritten at runtime from each theme message. */
+  --halogen-surface: #ffffff;
+  --halogen-on-surface: #111111;
+  --halogen-surface-container: #f5f5f5;
+  --halogen-primary: #6750a4;
+  --halogen-on-primary: #ffffff;
+  --halogen-primary-container: #eaddff;
+  --halogen-on-primary-container: #21005d;
+  --halogen-secondary: #625b71;
+  --halogen-on-secondary: #ffffff;
+  --halogen-secondary-container: #e8def8;
+  --halogen-on-secondary-container: #1d192b;
+  --halogen-tertiary: #7d5260;
+  --halogen-on-tertiary: #ffffff;
+  --halogen-outline: #79747e;
+  --halogen-error: #b3261e;
+  --halogen-on-error: #ffffff;
+  --halogen-corner: 16px;
+  --halogen-heading-weight: 600;
+  --halogen-body-weight: 400;
+  --halogen-letter-spacing: normal;
+  --halogen-font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: var(--halogen-font-family);
+  letter-spacing: var(--halogen-letter-spacing);
+  font-weight: var(--halogen-body-weight);
+  background: var(--halogen-surface);
+  color: var(--halogen-on-surface);
+  overflow: hidden;
+}
+
+main {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  padding: 32px;
+  gap: 24px;
+}
+
+#app-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: var(--halogen-heading-weight);
+  color: var(--halogen-primary);
+}
+
+.subtitle {
+  font-size: 22px;
+  color: var(--halogen-on-surface);
+  opacity: 0.85;
+}
+
+.sender-meta {
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(56px, 1fr);
+  gap: 6px;
+  overflow: hidden;
+  border-radius: calc(var(--halogen-corner) / 1.5);
+}
+
+.role-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px 10px;
+  font-size: 11px;
+  border-radius: calc(var(--halogen-corner) / 2);
+}
+
+.role-cell .name { font-weight: 600; opacity: 0.95; }
+.role-cell .hex { font-family: monospace; opacity: 0.8; }
+
+.sample-strip {
+  display: flex;
+  justify-content: center;
+}
+
+.sample-card {
+  background: var(--halogen-surface-container);
+  color: var(--halogen-on-surface);
+  padding: 24px 28px;
+  border-radius: var(--halogen-corner);
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid var(--halogen-outline);
+}
+
+.sample-card h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: var(--halogen-heading-weight);
+  color: var(--halogen-primary);
+}
+
+.sample-card p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--halogen-corner);
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn.filled { background: var(--halogen-primary); color: var(--halogen-on-primary); }
+.btn.tonal { background: var(--halogen-secondary-container); color: var(--halogen-on-secondary-container); }
+.btn.outlined {
+  background: transparent;
+  color: var(--halogen-primary);
+  border: 1px solid var(--halogen-outline);
+}
+
+@keyframes halogen-pulse {
+  0%   { transform: scale(1);    opacity: 0.85; }
+  45%  { transform: scale(1.015); opacity: 1.0; }
+  100% { transform: scale(1);    opacity: 1.0; }
+}
+
+.pulse { animation: halogen-pulse 650ms ease-in-out 1 both; }

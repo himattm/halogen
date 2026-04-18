@@ -71,7 +71,14 @@ implementation("me.mmckenna.halogen:halogen-cache-room:0.2.0")
 
 // Image-to-theme color extraction (all platforms)
 implementation("me.mmckenna.halogen:halogen-image:0.2.0")
+
+// Chromecast palette handoff — sender-side protocol + orchestration (all platforms)
+implementation("me.mmckenna.halogen:halogen-chromecast:0.2.0")
 ```
+
+See [`samples/chromecast-sender`](samples/chromecast-sender) and
+[`samples/chromecast-receiver`](samples/chromecast-receiver) for a working
+end-to-end cast handoff demo.
 
 ## How It Works
 

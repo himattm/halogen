@@ -40,6 +40,7 @@ nav:
   - Provider Guide: provider-guide.md
   - Custom Extensions: custom-extensions.md
   - Custom Theme Systems: custom-theme-systems.md
+  - Chromecast: chromecast.md
   - API Reference: api-reference.md
   - Design Decisions: design-decisions.md
 

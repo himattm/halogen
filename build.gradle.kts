@@ -26,10 +26,11 @@ dependencies {
     dokka(project(":halogen-compose"))
     dokka(project(":halogen-image"))
     dokka(project(":halogen-provider-nano"))
+    dokka(project(":halogen-chromecast"))
 }
 
 apiValidation {
-    ignoredProjects += listOf("sample", "sample-shared")
+    ignoredProjects += listOf("sample", "sample-shared", "chromecast-sender")
     @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
     klib {
         enabled = true
