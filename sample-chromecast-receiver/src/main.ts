@@ -49,6 +49,7 @@ bus.addEventListener(
         reply(event.senderId, ack(parsed.v, parsed.id, true));
         break;
       case 'clear':
+        stopLightDarkCycle();
         renderClearState();
         reply(event.senderId, ack(parsed.v, parsed.id, true));
         break;
@@ -58,16 +59,32 @@ bus.addEventListener(
   },
 );
 
+let cycleTimer: ReturnType<typeof setInterval> | null = null;
+
 function applyTheme(payload: ThemePayload): void {
   const { light, dark } = expandPalette(payload);
-  // Start on the light scheme; toggle to dark on a 6s interval to showcase both.
   renderTheme(light, payload);
+  startLightDarkCycle(light, dark, payload);
+}
+
+function startLightDarkCycle(
+  light: ReturnType<typeof expandPalette>['light'],
+  dark: ReturnType<typeof expandPalette>['dark'],
+  payload: ThemePayload,
+): void {
+  stopLightDarkCycle();
   let showingDark = false;
-  clearInterval((applyTheme as any)._t);
-  (applyTheme as any)._t = setInterval(() => {
+  cycleTimer = setInterval(() => {
     showingDark = !showingDark;
     renderTheme(showingDark ? dark : light, payload);
   }, 6_000);
+}
+
+function stopLightDarkCycle(): void {
+  if (cycleTimer !== null) {
+    clearInterval(cycleTimer);
+    cycleTimer = null;
+  }
 }
 
 function ack(v: number, id: string, ok: boolean, error?: string): Ack {
