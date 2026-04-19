@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Halogen Cast Receiver</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+  </head>
+  <body>
+    <main id="app">
+      <header id="app-header">
+        <div class="title">Halogen</div>
+        <div class="subtitle" id="subtitle">Waiting for a theme…</div>
+        <div class="sender-meta" id="sender-meta"></div>
+      </header>
+      <section id="role-grid" class="role-grid" aria-label="Material 3 role palette"></section>
+      <section id="sample-strip" class="sample-strip" aria-label="Sample UI components">
+        <div class="sample-card">
+          <h2>Headline</h2>
+          <p>The quick brown fox jumps over the lazy dog.</p>
+          <div class="buttons">
+            <button class="btn filled">Primary</button>
+            <button class="btn tonal">Tonal</button>
+            <button class="btn outlined">Outlined</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

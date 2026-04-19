@@ -1,0 +1,19 @@
+{
+  "name": "halogen-chromecast-receiver-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reference Chromecast CAF receiver that renders a full Material 3 palette from a Halogen cast message.",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --outfile=dist/main.js --target=es2020 --minify && cp index.html dist/index.html && cp src/styles.css dist/styles.css",
+    "watch": "esbuild src/main.ts --bundle --outfile=dist/main.js --target=es2020 --watch",
+    "serve": "npx --yes http-server dist -p 8080 --ssl",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@material/material-color-utilities": "^0.3.0"
+  }
+}

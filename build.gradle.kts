@@ -26,6 +26,7 @@ dependencies {
     dokka(project(":halogen-compose"))
     dokka(project(":halogen-image"))
     dokka(project(":halogen-provider-nano"))
+    dokka(project(":halogen-chromecast"))
 }
 
 apiValidation {
