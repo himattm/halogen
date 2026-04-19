@@ -1,0 +1,3 @@
+## 2024-05-18 - Avoid redundant JSON parsing in wasmJs LocalStorage caching
+**Learning:** In the `wasmJs` target, the `LocalStorageThemeCache` previously parsed the JSON manifest array from `localStorage` on every operation (e.g. `size()`, `keys()`, `put()`, `evict()`), which is very expensive when done repeatedly. Caching the manifest array in memory significantly reduces overhead while still maintaining correctness for concurrent UI operations within a single session.
+**Action:** Always consider the cost of JSON parsing in browser environments, particularly for frequently accessed metadata. Add a lightweight in-memory caching layer on top of `localStorage` to memoize the deserialized state when it is safe to do so within the bounds of a single user session.
