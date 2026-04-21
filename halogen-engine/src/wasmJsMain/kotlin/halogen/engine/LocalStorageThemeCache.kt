@@ -49,9 +49,13 @@ public class LocalStorageThemeCache(
     private val json = Json { ignoreUnknownKeys = true }
     private val manifestKey = "${prefix}__keys__"
 
+    // Cache the manifest in-memory to prevent repeated JSON decoding on every operation.
+    // Lazy load the manifest once, then keep it in sync.
+    private val manifestCache: MutableSet<String> by lazy { loadManifest() }
+
     // ── Manifest helpers ────────────────────────────────────────────────
 
-    private fun readManifest(): MutableSet<String> {
+    private fun loadManifest(): MutableSet<String> {
         val raw = jsGetItem(manifestKey.toJsString())?.toString() ?: return mutableSetOf()
         return try {
             json.decodeFromString<Set<String>>(raw).toMutableSet()
@@ -110,9 +114,8 @@ public class LocalStorageThemeCache(
             sizeBytes = specJson.encodeToByteArray().size,
         )
         writeEntry(storageKey, entry)
-        val manifest = readManifest()
-        manifest.add(key)
-        writeManifest(manifest)
+        manifestCache.add(key)
+        writeManifest(manifestCache)
         _changes.tryEmit(CacheEvent.Inserted(key, source))
     }
 
@@ -124,9 +127,8 @@ public class LocalStorageThemeCache(
         val storageKey = "$prefix$key"
         val existed = readEntry(storageKey) != null
         removeEntry(storageKey)
-        val manifest = readManifest()
-        manifest.remove(key)
-        writeManifest(manifest)
+        manifestCache.remove(key)
+        writeManifest(manifestCache)
         if (existed) {
             _changes.tryEmit(CacheEvent.Evicted(key))
         }
@@ -134,37 +136,35 @@ public class LocalStorageThemeCache(
 
     override suspend fun evict(keys: Set<String>) {
         val removed = mutableSetOf<String>()
-        val manifest = readManifest()
         for (k in keys) {
             val storageKey = "$prefix$k"
             if (readEntry(storageKey) != null) {
                 removeEntry(storageKey)
-                manifest.remove(k)
+                manifestCache.remove(k)
                 removed.add(k)
             }
         }
-        writeManifest(manifest)
+        writeManifest(manifestCache)
         if (removed.isNotEmpty()) {
             _changes.tryEmit(CacheEvent.EvictedBatch(removed))
         }
     }
 
     override suspend fun clear() {
-        val manifest = readManifest()
-        for (key in manifest) {
+        for (key in manifestCache) {
             removeEntry("$prefix$key")
         }
+        manifestCache.clear()
         jsRemoveItem(manifestKey.toJsString())
         _changes.tryEmit(CacheEvent.Cleared)
     }
 
-    override suspend fun keys(): Set<String> = readManifest()
+    override suspend fun keys(): Set<String> = manifestCache.toSet()
 
-    override suspend fun size(): Int = readManifest().size
+    override suspend fun size(): Int = manifestCache.size
 
     override suspend fun entries(): List<ThemeCacheEntry> {
-        val manifest = readManifest()
-        return manifest.mapNotNull { key ->
+        return manifestCache.mapNotNull { key ->
             val entry = readEntry("$prefix$key") ?: return@mapNotNull null
             ThemeCacheEntry(
                 key = key,
