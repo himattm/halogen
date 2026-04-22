@@ -49,18 +49,23 @@ public class LocalStorageThemeCache(
     private val json = Json { ignoreUnknownKeys = true }
     private val manifestKey = "${prefix}__keys__"
 
+    // Memory cache for manifest to avoid JSON decoding on every operation
+    private var manifestCache: MutableSet<String>? = null
+
     // ── Manifest helpers ────────────────────────────────────────────────
 
     private fun readManifest(): MutableSet<String> {
-        val raw = jsGetItem(manifestKey.toJsString())?.toString() ?: return mutableSetOf()
+        manifestCache?.let { return it }
+        val raw = jsGetItem(manifestKey.toJsString())?.toString() ?: return mutableSetOf<String>().also { manifestCache = it }
         return try {
-            json.decodeFromString<Set<String>>(raw).toMutableSet()
+            json.decodeFromString<Set<String>>(raw).toMutableSet().also { manifestCache = it }
         } catch (_: Exception) {
-            mutableSetOf()
+            mutableSetOf<String>().also { manifestCache = it }
         }
     }
 
     private fun writeManifest(keys: Set<String>) {
+        manifestCache = keys.toMutableSet()
         val encoded = json.encodeToString(keys)
         jsSetItem(manifestKey.toJsString(), encoded.toJsString())
     }
