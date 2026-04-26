@@ -1,0 +1,3 @@
+## 2024-05-18 - WasmJs ThemeCache Optimization
+**Learning:** JSON decoding in Kotlin Multiplatform for WasmJs targets carries significant overhead. The existing LocalStorageThemeCache reads from `localStorage` and decodes a JSON manifest of strings every time `readManifest()` is called. This is a very common operation because it's called on almost every write and cache query operation (`put`, `evict`, `clear`, `keys`, `size`, `entries`).
+**Action:** Implement an in-memory `manifestCache: MutableSet<String>?` initialized via `lazy` or checked and set so we don't have to parse JSON from localStorage every time.
