@@ -1,0 +1,1 @@
+## 2024-04-27 - Regex Performance on Large Strings\n**Learning:** Regexes with `[\s\S]*?` (like for Markdown code fences) can have significant overhead and backtracking on large JSON strings returned by LLMs.\n**Action:** Use manual string extraction (`indexOf`, `substring`) when parsing structured data from LLMs instead of regex.
