@@ -17,10 +17,6 @@ public object SchemaParser {
 
     private val HEX_COLOR_REGEX: Regex = Regex("^#[0-9A-Fa-f]{6}$")
 
-    private val CODE_FENCE_REGEX: Regex = Regex(
-        """```(?:json)?\s*\n?([\s\S]*?)\n?\s*```""",
-    )
-
     /**
      * Parse a JSON string (potentially wrapped in markdown code fences) into
      * a validated [HalogenThemeSpec].
@@ -41,8 +37,21 @@ public object SchemaParser {
     }
 
     private fun stripCodeFences(input: String): String {
-        val match = CODE_FENCE_REGEX.find(input)
-        return match?.groupValues?.get(1)?.trim() ?: input
+        val startFence = "```"
+        val firstIndex = input.indexOf(startFence)
+        if (firstIndex == -1) return input
+
+        var contentStart = firstIndex + startFence.length
+
+        // Skip "json" if it appears right after the fence
+        if (contentStart + 4 <= input.length && input.substring(contentStart, contentStart + 4).lowercase() == "json") {
+            contentStart += 4
+        }
+
+        val nextFenceIndex = input.indexOf(startFence, contentStart)
+        if (nextFenceIndex == -1) return input
+
+        return input.substring(contentStart, nextFenceIndex).trim()
     }
 
     private fun validate(spec: HalogenThemeSpec): Result<HalogenThemeSpec> {
