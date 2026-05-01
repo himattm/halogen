@@ -10,7 +10,8 @@ import kotlinx.coroutines.sync.withLock
 /**
  * In-memory LRU cache for [HalogenThemeSpec] instances.
  *
- * Uses a [MutableMap] with manual LRU eviction tracking via access timestamps.
+ * Uses a [LinkedHashMap] in access-order so the head of the iteration is always
+ * the least-recently-used entry — eviction is O(1) instead of an O(n) scan.
  */
 internal class MemoryThemeCache(private val maxEntries: Int = 20) : ThemeCache {
 
@@ -23,7 +24,7 @@ internal class MemoryThemeCache(private val maxEntries: Int = 20) : ThemeCache {
     )
 
     private val mutex = Mutex()
-    private val store = mutableMapOf<String, Entry>()
+    private val store = LinkedHashMap<String, Entry>(maxEntries, 0.75f, /* accessOrder = */ true)
 
     private val _changes = MutableSharedFlow<CacheEvent>(extraBufferCapacity = 64)
 
@@ -44,9 +45,10 @@ internal class MemoryThemeCache(private val maxEntries: Int = 20) : ThemeCache {
             sizeBytes = 0,
         )
 
-        // Evict LRU entries if over capacity
+        // Evict LRU entries if over capacity. With accessOrder=true, the
+        // first key in iteration order is always least-recently-used.
         while (store.size > maxEntries) {
-            val eldestKey = store.minBy { it.value.lastAccessedAt }.key
+            val eldestKey = store.keys.first()
             store.remove(eldestKey)
             _changes.tryEmit(CacheEvent.Evicted(eldestKey))
         }

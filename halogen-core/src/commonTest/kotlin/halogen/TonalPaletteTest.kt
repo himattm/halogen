@@ -73,6 +73,18 @@ class TonalPaletteTest {
     }
 
     @Test
+    fun outOfRangeTones_returnConsistentValues() {
+        val palette = TonalPalette.fromInt(seedArgb)
+        // The cache is an IntArray indexed 0..100; out-of-range tones bypass
+        // the cache entirely and recompute on every call. They should still
+        // be stable across calls and produce valid ARGB.
+        assertEquals(palette.tone(-1), palette.tone(-1))
+        assertEquals(palette.tone(150), palette.tone(150))
+        assertNotEquals(0, palette.tone(-1))
+        assertNotEquals(0, palette.tone(150))
+    }
+
+    @Test
     fun differentSeeds_produceDifferentPalettes() {
         val palette1 = TonalPalette.fromInt(0xFFFF0000.toInt()) // Red
         val palette2 = TonalPalette.fromInt(0xFF0000FF.toInt()) // Blue
