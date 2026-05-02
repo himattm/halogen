@@ -1,0 +1,3 @@
+## 2024-06-25 - Regex Backtracking on LLM Output
+**Learning:** Using `[\s\S]*?` in regular expressions to extract markdown code fences from large LLM JSON outputs can cause severe backtracking and performance overhead. The regex engine evaluates character by character, leading to O(N) or even worse degradation depending on engine implementation and input size.
+**Action:** When extracting chunks (like code fences) from large blocks of text, bypass regex entirely and use explicit string operations (`indexOf`, `substring`). Use `indexOf` with a `startIndex` parameter to safely emulate lazy matching.
