@@ -1,0 +1,3 @@
+## 2025-02-18 - Avoid [\s\S]*? Regex for LLM Markdown Parsing
+**Learning:** Parsing large structures like Markdown code fences or LLM outputs using lazy matching like `[\s\S]*?` in Regex introduces significant performance overhead due to backtracking. In Kotlin Multiplatform across targets like wasmJs and JVM, this parsing approach isn't needed and causes unnecessary CPU load.
+**Action:** Always use raw string operations (`indexOf`, `substring`) to parse known delimiters (e.g. "```json" or "```") instead of relying on complex Regex, specifically when processing long strings like structured outputs from large language models.
