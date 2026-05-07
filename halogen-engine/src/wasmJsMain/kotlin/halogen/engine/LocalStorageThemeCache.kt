@@ -48,19 +48,28 @@ public class LocalStorageThemeCache(
     private val _changes = MutableSharedFlow<CacheEvent>(extraBufferCapacity = 64)
     private val json = Json { ignoreUnknownKeys = true }
     private val manifestKey = "${prefix}__keys__"
+    private var manifestCache: MutableSet<String>? = null
 
     // ── Manifest helpers ────────────────────────────────────────────────
 
     private fun readManifest(): MutableSet<String> {
-        val raw = jsGetItem(manifestKey.toJsString())?.toString() ?: return mutableSetOf()
-        return try {
-            json.decodeFromString<Set<String>>(raw).toMutableSet()
-        } catch (_: Exception) {
+        manifestCache?.let { return it }
+        val raw = jsGetItem(manifestKey.toJsString())?.toString()
+        val parsed = if (raw == null) {
             mutableSetOf()
+        } else {
+            try {
+                json.decodeFromString<Set<String>>(raw).toMutableSet()
+            } catch (_: Exception) {
+                mutableSetOf()
+            }
         }
+        manifestCache = parsed
+        return parsed
     }
 
     private fun writeManifest(keys: Set<String>) {
+        manifestCache = keys.toMutableSet()
         val encoded = json.encodeToString(keys)
         jsSetItem(manifestKey.toJsString(), encoded.toJsString())
     }
@@ -154,6 +163,7 @@ public class LocalStorageThemeCache(
         for (key in manifest) {
             removeEntry("$prefix$key")
         }
+        manifestCache = mutableSetOf()
         jsRemoveItem(manifestKey.toJsString())
         _changes.tryEmit(CacheEvent.Cleared)
     }
