@@ -36,7 +36,10 @@ public class TonalPalette private constructor(
     /** The key color is the color that best represents the hue and chroma of this palette. */
     public val keyColor: Hct get() = keyColorProvider.value
 
-    private val cache: MutableMap<Int, Int> = mutableMapOf()
+    // Tones are 0..100; valid ARGB output always has alpha=0xFF, so 0 is a safe
+    // "not computed" sentinel and we can avoid HashMap node and Integer-boxing
+    // overhead. See engineering.block.xyz/blog/18mb-of-hashmap-overhead.
+    private val cache: IntArray = IntArray(101)
 
     /**
      * Returns the ARGB color for a given tone in this palette.
@@ -45,9 +48,14 @@ public class TonalPalette private constructor(
      * @return ARGB representation of a color with that tone.
      */
     public fun tone(tone: Int): Int {
-        return cache.getOrPut(tone) {
-            Hct.from(hue, chroma, tone.toDouble()).toInt()
+        if (tone < 0 || tone > 100) {
+            return Hct.from(hue, chroma, tone.toDouble()).toInt()
         }
+        val cached = cache[tone]
+        if (cached != 0) return cached
+        val computed = Hct.from(hue, chroma, tone.toDouble()).toInt()
+        cache[tone] = computed
+        return computed
     }
 
     /**
