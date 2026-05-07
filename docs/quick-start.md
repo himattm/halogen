@@ -11,13 +11,16 @@ Add Halogen to your [Compose Multiplatform](https://www.jetbrains.com/compose-mu
     ```kotlin
     // build.gradle.kts
     dependencies {
-        implementation("me.mmckenna.halogen:halogen-core:0.1.0")
-        implementation("me.mmckenna.halogen:halogen-compose:0.1.0")
-        implementation("me.mmckenna.halogen:halogen-engine:0.1.0")
-        implementation("me.mmckenna.halogen:halogen-provider-nano:0.1.0")
+        implementation("me.mmckenna.halogen:halogen-core:0.2.0")
+        implementation("me.mmckenna.halogen:halogen-compose:0.2.0")
+        implementation("me.mmckenna.halogen:halogen-engine:0.2.0")
+        implementation("me.mmckenna.halogen:halogen-provider-nano:0.2.0")
 
         // Optional: persistent cache that survives process death
-        implementation("me.mmckenna.halogen:halogen-cache-room:0.1.0")
+        implementation("me.mmckenna.halogen:halogen-cache-room:0.2.0")
+
+        // Optional: extract themes from images
+        implementation("me.mmckenna.halogen:halogen-image:0.2.0")
     }
     ```
 
@@ -26,12 +29,15 @@ Add Halogen to your [Compose Multiplatform](https://www.jetbrains.com/compose-mu
     ```kotlin
     // build.gradle.kts (commonMain)
     commonMain.dependencies {
-        implementation("me.mmckenna.halogen:halogen-core:0.1.0")
-        implementation("me.mmckenna.halogen:halogen-compose:0.1.0")
-        implementation("me.mmckenna.halogen:halogen-engine:0.1.0")
+        implementation("me.mmckenna.halogen:halogen-core:0.2.0")
+        implementation("me.mmckenna.halogen:halogen-compose:0.2.0")
+        implementation("me.mmckenna.halogen:halogen-engine:0.2.0")
 
         // Optional: persistent cache that survives process death (Android, iOS, JVM — not wasmJs)
-        implementation("me.mmckenna.halogen:halogen-cache-room:0.1.0")
+        implementation("me.mmckenna.halogen:halogen-cache-room:0.2.0")
+
+        // Optional: extract themes from images (all platforms)
+        implementation("me.mmckenna.halogen:halogen-image:0.2.0")
     }
     ```
 
@@ -142,6 +148,18 @@ when (result) {
 ```
 
 The `key` is a cache key - any string you choose. The `hint` is the natural language prompt sent to the LLM. If the key already exists in cache, the hint is ignored and the cached theme is returned instantly.
+
+!!! tip "Image-based themes"
+    With `halogen-image`, you can generate themes directly from images:
+
+    ```kotlin
+    // One call: load image, extract colors, resolve theme
+    engine.resolveImage(albumArtUrl, imageLoader, context)
+
+    // Or skip the LLM entirely with algorithmic extraction
+    val colors = extractColors(imageUrl, imageLoader, context)
+    val spec = colors?.toSpec()  // instant, no LLM needed
+    ```
 
 ---
 

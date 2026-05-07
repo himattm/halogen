@@ -36,7 +36,7 @@ Welcome, and thanks for your interest in contributing to Halogen! Whether you're
 - **Write tests** for any new features or bug fixes.
 - Run the full test suite before submitting a pull request:
   ```bash
-  ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest
+  ./gradlew -q --console=plain :halogen-core:allTests :halogen-engine:jvmTest :halogen-compose:jvmTest :halogen-image:jvmTest
   ```
 - Tests live alongside the module they cover, in the appropriate source set (`commonTest`, `jvmTest`, etc.).
 - Aim for deterministic tests. Avoid flaky timing-dependent assertions.

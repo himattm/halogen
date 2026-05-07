@@ -24,6 +24,7 @@ dependencies {
     dokka(project(":halogen-engine"))
     dokka(project(":halogen-cache-room"))
     dokka(project(":halogen-compose"))
+    dokka(project(":halogen-image"))
     dokka(project(":halogen-provider-nano"))
 }
 

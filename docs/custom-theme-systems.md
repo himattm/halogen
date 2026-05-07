@@ -138,7 +138,10 @@ val accent = HalogenTheme.extensions["brandAccent"]?.toColor()
 |----------|---------|
 | Material 3 theme (standard) | `halogen-core` + `halogen-engine` + `halogen-compose` |
 | Custom theme system in Compose | `halogen-core` + `halogen-engine` + `halogen-compose` |
+| Image-based theming | `halogen-core` + `halogen-engine` + `halogen-image` |
 | Non-Compose (raw theme data) | `halogen-core` + `halogen-engine` |
 | Color science only | `halogen-core` |
+
+`halogen-image` adds image color extraction. It depends on `halogen-engine` for theme resolution but does not require `halogen-compose` — use it in non-Compose apps that need image-derived themes.
 
 `halogen-compose` is needed even for custom themes if you want the `HalogenTheme` composable with `themeWrapper`. If you're building outside Compose entirely, use `halogen-core` + `halogen-engine` and consume `ExpandedTheme` directly.

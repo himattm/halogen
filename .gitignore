@@ -26,3 +26,6 @@ Config.xcconfig
 
 # Video assets (hosted externally)
 assets/videos/
+
+# Superpowers plans/specs
+docs/superpowers/

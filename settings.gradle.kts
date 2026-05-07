@@ -27,6 +27,7 @@ include(
     ":halogen-compose",
     ":halogen-engine",
     ":halogen-cache-room",
+    ":halogen-image",
     ":halogen-provider-nano",
     ":sample",
     ":sample-shared",

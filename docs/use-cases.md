@@ -1,6 +1,6 @@
 # Use Cases
 
-Six real-world scenarios showing what you can build with Halogen.
+Seven real-world scenarios showing what you can build with Halogen.
 
 ---
 
@@ -283,3 +283,73 @@ val engine = Halogen.Builder()
 // Remote themes + on-device generation + prefetching
 communities.forEach { engine.prefetch("c/${it.id}", it.themeHint) }
 ```
+
+---
+
+## 7. Image-Based Theming
+
+Theme your app based on visual content — album art, profile photos, product images, or any URL.
+
+### One-Line URL Resolution
+
+The simplest path: load an image, extract colors, and resolve a theme in one call.
+
+```kotlin
+val engine = Halogen.Builder()
+    .provider(OpenAiProvider(apiKey = BuildConfig.OPENAI_KEY))
+    .cache(HalogenCache.memory())
+    .build()
+
+// Album art URL → full Material 3 theme
+val result = engine.resolveImage(
+    url = album.artUrl,
+    imageLoader = imageLoader,
+    context = context,
+)
+```
+
+The URL acts as the cache key, so subsequent calls for the same image return instantly.
+
+### Algorithmic (No LLM)
+
+For instant theming without an LLM call, extract colors and convert directly:
+
+```kotlin
+val colors = extractColors(album.artUrl, imageLoader, context)
+if (colors != null) {
+    val spec = colors.toSpec()  // algorithmic — instant
+    engine.apply("album:${album.id}", spec)
+}
+```
+
+`toSpec()` maps extracted colors to theme seed roles based on HCT properties (chroma for vibrancy, hue for variety, tone for lightness). No network call, no LLM.
+
+### LLM-Enhanced
+
+For richer results, let the LLM interpret the palette with mood awareness:
+
+```kotlin
+// resolveImage() uses toHint() internally — the LLM sees the palette
+// plus mood descriptors like "dark, vibrant" and picks typography/shapes to match
+engine.resolveImage(album.artUrl, imageLoader, context)
+```
+
+The LLM receives a prompt like:
+> Image palette: #2A1B3D (45%), #E94560 (30%), #533483 (25%). Dark, vibrant mood.
+
+And generates a complete theme with matching typography and corner styles.
+
+### Raw Pixels (Non-Coil)
+
+If you have pixel data from a custom image loader:
+
+```kotlin
+val result = engine.resolveImage(
+    key = "album:${album.id}",
+    pixels = argbPixels,
+    width = imageWidth,
+    height = imageHeight,
+)
+```
+
+This overload is pure common code with no Coil dependency.

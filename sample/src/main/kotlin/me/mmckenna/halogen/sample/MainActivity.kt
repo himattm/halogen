@@ -4,16 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import halogen.cache.room.HalogenRoomCache
-import halogen.cache.room.initialize
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        HalogenRoomCache.initialize(this)
         enableEdgeToEdge()
         setContent {
-            HalogenDemoApp()
+            val scope = rememberCoroutineScope()
+            val demoState = remember {
+                val apiKey = BuildConfig.OPENAI_API_KEY.ifBlank { null }
+                HalogenDemoState.create(scope, openAiApiKey = apiKey)
+            }
+            HalogenDemoApp(demoState)
         }
     }
 }
