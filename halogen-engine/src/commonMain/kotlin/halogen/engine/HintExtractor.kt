@@ -15,6 +15,11 @@ internal object HintExtractor {
     private val ID_PATTERN = Regex("""^[0-9a-f]{8,}$""", RegexOption.IGNORE_CASE)
     private val NUMERIC_ONLY = Regex("""^\d+$""")
 
+    // ⚡ Bolt: Cache regex to prevent recompilation on every extract call.
+    // Expected impact: Eliminates regex allocation/compilation overhead per extraction,
+    // saving memory and execution time in a hot path.
+    private val WHITESPACE = Regex("""\s+""")
+
     fun extract(key: String): String? {
         if (key.isBlank()) return null
 
@@ -36,7 +41,7 @@ internal object HintExtractor {
         cleaned = cleaned.replace('_', ' ').replace('-', ' ')
 
         // Normalize whitespace
-        cleaned = cleaned.trim().replace(Regex("""\s+"""), " ")
+        cleaned = cleaned.trim().replace(WHITESPACE, " ")
 
         if (cleaned.isBlank()) return null
 
