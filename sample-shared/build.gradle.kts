@@ -63,6 +63,7 @@ kotlin {
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(project(":halogen-provider-apple-foundation"))
         }
 
         val wasmJsMain by getting {
