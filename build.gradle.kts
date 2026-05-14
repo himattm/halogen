@@ -29,7 +29,14 @@ dependencies {
 }
 
 apiValidation {
-    ignoredProjects += listOf("sample", "sample-shared")
+    ignoredProjects += listOf(
+        "sample",
+        "sample-shared",
+        // TODO: generate halogen-provider-apple-foundation.klib.api on a macOS
+        // runner via `:halogen-provider-apple-foundation:apiDump` and drop this
+        // ignore before the next release.
+        "halogen-provider-apple-foundation",
+    )
     @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
     klib {
         enabled = true
