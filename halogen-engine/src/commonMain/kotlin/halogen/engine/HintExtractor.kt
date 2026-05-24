@@ -11,10 +11,24 @@ package halogen.engine
 internal object HintExtractor {
 
     private val PREFIX_PATTERN = Regex("""^(?:/r/|/category/|/topic/|/|#)""")
-    private val CAMEL_SPLIT = Regex("""(?<=[a-z])(?=[A-Z])""")
-    private val ID_PATTERN = Regex("""^[0-9a-f]{8,}$""", RegexOption.IGNORE_CASE)
-    private val NUMERIC_ONLY = Regex("""^\d+$""")
-    private val WHITESPACE_PATTERN = Regex("""\s+""")
+
+    private fun isHexId(str: String): Boolean {
+        if (str.length < 8) return false
+        for (i in 0 until str.length) {
+            val c = str[i]
+            if (!(c in '0'..'9' || c in 'a'..'f' || c in 'A'..'F')) return false
+        }
+        return true
+    }
+
+    private fun isNumeric(str: String): Boolean {
+        if (str.isEmpty()) return false
+        for (i in 0 until str.length) {
+            val c = str[i]
+            if (c !in '0'..'9') return false
+        }
+        return true
+    }
 
     fun extract(key: String): String? {
         if (key.isBlank()) return null
@@ -26,26 +40,45 @@ internal object HintExtractor {
         cleaned = cleaned.trim('/')
 
         // Take the last meaningful segment if it looks like a path
-        if ('/' in cleaned) {
-            cleaned = cleaned.substringAfterLast('/')
+        val lastSlash = cleaned.lastIndexOf('/')
+        if (lastSlash != -1) {
+            cleaned = cleaned.substring(lastSlash + 1)
         }
 
-        // Split camelCase
-        cleaned = CAMEL_SPLIT.replace(cleaned, " ")
+        // Fast path for splitting camelCase, snake_case, kebab-case and whitespace normalization
+        val sb = StringBuilder(cleaned.length * 2)
+        var lastWasSpace = true
+        var spaceCount = 0
 
-        // Split snake_case and kebab-case
-        cleaned = cleaned.replace('_', ' ').replace('-', ' ')
+        for (i in 0 until cleaned.length) {
+            val c = cleaned[i]
+            if (c == '_' || c == '-' || c.isWhitespace()) {
+                if (!lastWasSpace) {
+                    sb.append(' ')
+                    lastWasSpace = true
+                    spaceCount++
+                }
+            } else {
+                if (c.isUpperCase() && i > 0 && cleaned[i - 1].isLowerCase()) {
+                    if (!lastWasSpace) {
+                        sb.append(' ')
+                        lastWasSpace = true
+                        spaceCount++
+                    }
+                }
+                sb.append(c.lowercaseChar())
+                lastWasSpace = false
+            }
+        }
 
-        // Normalize whitespace
-        cleaned = cleaned.trim().replace(WHITESPACE_PATTERN, " ")
-
+        cleaned = sb.toString().trim()
         if (cleaned.isBlank()) return null
 
         // Reject things that look like IDs
-        val noSpaces = cleaned.replace(" ", "")
-        if (ID_PATTERN.matches(noSpaces)) return null
-        if (NUMERIC_ONLY.matches(noSpaces)) return null
+        val noSpaces = if (spaceCount > 0) cleaned.replace(" ", "") else cleaned
+        if (isHexId(noSpaces)) return null
+        if (isNumeric(noSpaces)) return null
 
-        return cleaned.lowercase()
+        return cleaned
     }
 }

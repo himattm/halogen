@@ -1,0 +1,3 @@
+## 2024-05-18 - Optimize Regex operations in HintExtractor
+**Learning:** Using regular expressions for splitting camel case (`(?<=[a-z])(?=[A-Z])`) and replacing whitespace in Kotlin incurs a relatively high performance penalty when parsing many strings, mainly due to compilation and complex backtracking.
+**Action:** Replace multiple string-manipulating regular expressions with a single manual character iteration loop. The manual loop approach, tracking character states and appending characters to a StringBuilder, proved to be ~3x faster. Replaced regex checks (`ID_PATTERN` and `NUMERIC_ONLY`) with manual array bound iteration matching (`isHexId` and `isNumeric`) to save even more execution time.
