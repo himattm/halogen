@@ -1,0 +1,3 @@
+## 2024-05-30 - Replace dynamically compiled Regex in SchemaParser with manual iteration loop
+**Learning:** Instantiating and executing `Regex` for hot path validation, particularly simple patterns like checking exactly 7 characters for a hex color string `^#[0-9A-Fa-f]{6}$`, introduces significant unnecessary recompilation and matching overhead.
+**Action:** Replace simple string-validation regular expressions with explicit, manual string iteration functions using native character and length checks, which avoids overhead and measurably improves parser performance without sacrificing correctness.

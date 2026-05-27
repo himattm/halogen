@@ -23,7 +23,17 @@ class ImageThemeExtractorTest {
         return QuantizedColor(argb = argb, population = population, hue = hue, chroma = chroma, tone = tone)
     }
 
-    private val hexPattern = Regex("^#[0-9A-Fa-f]{6}$")
+    private fun isValidHexColor(value: String): Boolean {
+        if (value.length != 7) return false
+        if (value[0] != '#') return false
+        for (i in 1..6) {
+            val c = value[i]
+            if (!(c in '0'..'9' || c in 'A'..'F' || c in 'a'..'f')) {
+                return false
+            }
+        }
+        return true
+    }
 
     // ---- Three colors with clear chroma ordering ----
 
@@ -58,7 +68,7 @@ class ImageThemeExtractorTest {
         // that has tone outside 30-70. But if outOfRange is chosen (highest chroma), that's
         // also valid per the fallback logic.
         assertNotNull(spec.primary, "Primary should not be null")
-        assertTrue(hexPattern.matches(spec.primary), "Primary should be valid hex: ${spec.primary}")
+        assertTrue(isValidHexColor(spec.primary), "Primary should be valid hex: ${spec.primary}")
     }
 
     @Test
@@ -89,12 +99,12 @@ class ImageThemeExtractorTest {
         val spec = colors.toSpec()
 
         assertNotNull(spec)
-        assertTrue(hexPattern.matches(spec.primary), "Primary should be valid hex: ${spec.primary}")
-        assertTrue(hexPattern.matches(spec.secondary), "Secondary should be valid hex: ${spec.secondary}")
-        assertTrue(hexPattern.matches(spec.tertiary), "Tertiary should be valid hex: ${spec.tertiary}")
-        assertTrue(hexPattern.matches(spec.neutralLight), "NeutralLight should be valid hex: ${spec.neutralLight}")
-        assertTrue(hexPattern.matches(spec.neutralDark), "NeutralDark should be valid hex: ${spec.neutralDark}")
-        assertTrue(hexPattern.matches(spec.error), "Error should be valid hex: ${spec.error}")
+        assertTrue(isValidHexColor(spec.primary), "Primary should be valid hex: ${spec.primary}")
+        assertTrue(isValidHexColor(spec.secondary), "Secondary should be valid hex: ${spec.secondary}")
+        assertTrue(isValidHexColor(spec.tertiary), "Tertiary should be valid hex: ${spec.tertiary}")
+        assertTrue(isValidHexColor(spec.neutralLight), "NeutralLight should be valid hex: ${spec.neutralLight}")
+        assertTrue(isValidHexColor(spec.neutralDark), "NeutralDark should be valid hex: ${spec.neutralDark}")
+        assertTrue(isValidHexColor(spec.error), "Error should be valid hex: ${spec.error}")
     }
 
     // ---- Single color ----
@@ -106,9 +116,9 @@ class ImageThemeExtractorTest {
         val spec = colors.toSpec()
 
         assertNotNull(spec)
-        assertTrue(hexPattern.matches(spec.primary), "Primary should be valid hex: ${spec.primary}")
-        assertTrue(hexPattern.matches(spec.secondary), "Secondary should be valid hex: ${spec.secondary}")
-        assertTrue(hexPattern.matches(spec.tertiary), "Tertiary should be valid hex: ${spec.tertiary}")
+        assertTrue(isValidHexColor(spec.primary), "Primary should be valid hex: ${spec.primary}")
+        assertTrue(isValidHexColor(spec.secondary), "Secondary should be valid hex: ${spec.secondary}")
+        assertTrue(isValidHexColor(spec.tertiary), "Tertiary should be valid hex: ${spec.tertiary}")
     }
 
     // ---- Error color is always #BA1A1A ----
@@ -154,7 +164,7 @@ class ImageThemeExtractorTest {
         )
 
         for ((name, hex) in allHexFields) {
-            assertTrue(hexPattern.matches(hex), "$name should match #RRGGBB format, was: $hex")
+            assertTrue(isValidHexColor(hex), "$name should match #RRGGBB format, was: $hex")
         }
     }
 
