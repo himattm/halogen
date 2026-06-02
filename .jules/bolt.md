@@ -1,0 +1,3 @@
+## 2024-05-24 - Manual Parsing Over Regex in Hot Paths
+**Learning:** In Kotlin Multiplatform projects (especially on JVM/WasmJs), string manipulation pipelines using sequential `Regex` objects (`Regex.replace`, `Regex.matches`) introduce significant performance overhead due to recompilation/execution costs and numerous intermediate string allocations.
+**Action:** When working in hot paths like frequent parsers, replace multiple simple regexes (e.g., camelCase splits, whitespace normalization, fixed prefix checking) with a single manual character iteration loop using a `StringBuilder` to eliminate regex state machine overhead and minimize memory allocations.
