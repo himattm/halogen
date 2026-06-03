@@ -10,42 +10,104 @@ package halogen.engine
  */
 internal object HintExtractor {
 
-    private val PREFIX_PATTERN = Regex("""^(?:/r/|/category/|/topic/|/|#)""")
-    private val CAMEL_SPLIT = Regex("""(?<=[a-z])(?=[A-Z])""")
-    private val ID_PATTERN = Regex("""^[0-9a-f]{8,}$""", RegexOption.IGNORE_CASE)
-    private val NUMERIC_ONLY = Regex("""^\d+$""")
-    private val WHITESPACE_PATTERN = Regex("""\s+""")
-
+    // ⚡ Bolt Performance Optimization:
+    // Replaced multiple string-manipulating regular expressions (lookarounds for camel case,
+    // format validation, whitespace normalization) with a single manual character iteration
+    // loop and a StringBuilder. This avoids significant compilation and backtracking overhead
+    // from the Regex state machine in this hot path.
     fun extract(key: String): String? {
         if (key.isBlank()) return null
 
         // Strip common prefixes
-        var cleaned = PREFIX_PATTERN.replace(key.trim(), "")
+        var start = 0
+        var end = key.length - 1
 
-        // Remove leading/trailing slashes
-        cleaned = cleaned.trim('/')
+        while (start <= end && key[start].isWhitespace()) start++
+        while (end >= start && key[end].isWhitespace()) end--
 
-        // Take the last meaningful segment if it looks like a path
-        if ('/' in cleaned) {
-            cleaned = cleaned.substringAfterLast('/')
+        if (start > end) return null
+
+        var tempStr = key.substring(start, end + 1)
+        if (tempStr.startsWith("/r/")) {
+            start += 3
+        } else if (tempStr.startsWith("/category/")) {
+            start += 10
+        } else if (tempStr.startsWith("/topic/")) {
+            start += 7
+        } else if (tempStr.startsWith("/") || tempStr.startsWith("#")) {
+            start += 1
         }
 
-        // Split camelCase
-        cleaned = CAMEL_SPLIT.replace(cleaned, " ")
+        // Remove leading/trailing slashes
+        while (start <= end && key[start] == '/') start++
+        while (end >= start && key[end] == '/') end--
 
-        // Split snake_case and kebab-case
-        cleaned = cleaned.replace('_', ' ').replace('-', ' ')
+        if (start > end) return null
 
-        // Normalize whitespace
-        cleaned = cleaned.trim().replace(WHITESPACE_PATTERN, " ")
+        // Take the last meaningful segment if it looks like a path
+        val lastSlash = key.lastIndexOf('/', end)
+        if (lastSlash >= start) {
+            start = lastSlash + 1
+        }
 
-        if (cleaned.isBlank()) return null
+        // Split camelCase, snake_case, kebab-case, whitespace
+        val sb = StringBuilder()
+        var prevIsLower = false
+        var prevIsSpace = true
+
+        for (i in start..end) {
+            val c = key[i]
+
+            if (c == '_' || c == '-' || c.isWhitespace()) {
+                if (!prevIsSpace) {
+                    sb.append(' ')
+                    prevIsSpace = true
+                }
+                prevIsLower = false
+            } else {
+                val isUpper = c.isUpperCase()
+                if (isUpper && prevIsLower) {
+                    if (!prevIsSpace) {
+                        sb.append(' ')
+                    }
+                }
+
+                sb.append(c.lowercaseChar())
+                prevIsSpace = false
+                prevIsLower = c.isLowerCase()
+            }
+        }
+
+        var cleaned = sb.toString()
+        if (cleaned.endsWith(" ")) {
+            cleaned = cleaned.substring(0, cleaned.length - 1)
+        }
+        if (cleaned.isEmpty()) return null
 
         // Reject things that look like IDs
-        val noSpaces = cleaned.replace(" ", "")
-        if (ID_PATTERN.matches(noSpaces)) return null
-        if (NUMERIC_ONLY.matches(noSpaces)) return null
+        var isAllHex = true
+        var isAllDigits = true
+        var lengthWithoutSpaces = 0
 
-        return cleaned.lowercase()
+        for (i in 0 until cleaned.length) {
+            val c = cleaned[i]
+            if (c != ' ') {
+                lengthWithoutSpaces++
+                if (c in '0'..'9') {
+                    // is digit
+                } else {
+                    isAllDigits = false
+                    if (c !in 'a'..'f') {
+                        isAllHex = false
+                    }
+                }
+            }
+        }
+
+        if (lengthWithoutSpaces == 0) return null
+        if (isAllDigits) return null
+        if (isAllHex && lengthWithoutSpaces >= 8) return null
+
+        return cleaned
     }
 }
