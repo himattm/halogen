@@ -15,8 +15,6 @@ public object SchemaParser {
         isLenient = true
     }
 
-    private val HEX_COLOR_REGEX: Regex = Regex("^#[0-9A-Fa-f]{6}$")
-
     /**
      * Parse a JSON string (potentially wrapped in markdown code fences) into
      * a validated [HalogenThemeSpec].
@@ -67,7 +65,7 @@ public object SchemaParser {
         )
 
         for ((name, value) in colorFields) {
-            if (!HEX_COLOR_REGEX.matches(value)) {
+            if (!isValidHexColor(value)) {
                 return Result.failure(
                     IllegalArgumentException(
                         "Invalid hex color for $name: \"$value\". Expected format: #RRGGBB",
@@ -84,5 +82,14 @@ public object SchemaParser {
         )
 
         return Result.success(clamped)
+    }
+
+    private fun isValidHexColor(value: String): Boolean {
+        if (value.length != 7 || value[0] != '#') return false
+        for (i in 1 until 7) {
+            val c = value[i]
+            if (c !in '0'..'9' && c !in 'a'..'f' && c !in 'A'..'F') return false
+        }
+        return true
     }
 }

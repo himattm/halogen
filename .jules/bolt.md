@@ -1,0 +1,3 @@
+## 2025-02-25 - Avoid leaving random test files when generating patches
+**Learning:** Even when working carefully on isolated performance optimizations using a temporary Gradle setup (`tempTest/`) or ad-hoc scripts (`patch_hint.sh`), it's incredibly important to clean up these files before requesting a code review or submitting a PR. Leaving them pollutes the git working tree, turning an otherwise excellent PR into a blockable state.
+**Action:** Before running `request_code_review` or `submit`, explicitly run a `git status` and actively `rm -rf` all scripts, test files, and temporary directories that are not intended to be part of the final commit.
