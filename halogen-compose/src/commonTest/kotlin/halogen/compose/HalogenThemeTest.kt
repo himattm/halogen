@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.test.ComposeUiTest
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.runComposeUiTest
 import halogen.HalogenConfig
@@ -26,6 +27,17 @@ class HalogenThemeTest {
     private val neonSpec = HalogenThemeSpec.fromJson(
         """{"pri":"#9A6ACD","sec":"#4A8A8A","ter":"#B06B7D","neuL":"#F3F0F6","neuD":"#151018","err":"#93000A","font":"mono","hw":700,"bw":400,"ls":true,"cs":"sharp","cx":0.5}""",
     )
+
+    private fun ComposeUiTest.waitUntilPrimaryChangesFrom(
+        previousPrimary: Color,
+        currentPrimary: () -> Color,
+    ) {
+        waitUntil(timeoutMillis = 5_000) {
+            val primary = currentPrimary()
+            primary != Color.Unspecified && primary != previousPrimary
+        }
+        waitForIdle()
+    }
 
     // ── Config flag tests ───────────────────────────────────────────────
 
@@ -45,7 +57,7 @@ class HalogenThemeTest {
             }
         }
 
-        waitForIdle()
+        waitUntilPrimaryChangesFrom(defaultPrimary) { capturedPrimary }
         assertNotEquals(defaultPrimary, capturedPrimary, "LLM colors should differ from M3 defaults")
     }
 
@@ -103,6 +115,7 @@ class HalogenThemeTest {
             }
         }
 
+        waitUntil(timeoutMillis = 5_000) { capturedMediumShape != defaultMediumShape }
         waitForIdle()
         assertNotEquals(defaultMediumShape, capturedMediumShape, "LLM shapes should differ from M3 defaults")
     }
@@ -113,8 +126,6 @@ class HalogenThemeTest {
     fun colors_animateOverTime() = runComposeUiTest {
         var spec by mutableStateOf(oceanSpec)
         var capturedPrimary = Color.Unspecified
-
-        mainClock.autoAdvance = false
 
         setContent {
             HalogenTheme(
@@ -127,26 +138,13 @@ class HalogenThemeTest {
             }
         }
 
-        // Let initial theme expand and snap
-        mainClock.advanceTimeBy(1000)
+        waitUntilPrimaryChangesFrom(lightColorScheme().primary) { capturedPrimary }
         val oceanPrimary = capturedPrimary
 
-        // Switch to neon spec
         spec = neonSpec
-        mainClock.advanceTimeBy(50) // let expansion start
-        mainClock.advanceTimeBy(50) // expansion should complete
-
-        // mid-animation: color should have started changing but not reached target
-        mainClock.advanceTimeBy(100)
-        val midPrimary = capturedPrimary
-
-        // complete animation
-        mainClock.advanceTimeBy(500)
+        waitUntilPrimaryChangesFrom(oceanPrimary) { capturedPrimary }
         val finalPrimary = capturedPrimary
 
-        // mid-animation should differ from both start and end
-        // (unless expansion is slow, in which case mid == ocean still)
-        // Final should differ from ocean
         assertNotEquals(oceanPrimary, finalPrimary, "Final primary should differ from ocean primary after spec change")
     }
 
@@ -154,8 +152,6 @@ class HalogenThemeTest {
     fun snap_disablesAnimation() = runComposeUiTest {
         var spec by mutableStateOf(oceanSpec)
         var capturedPrimary = Color.Unspecified
-
-        mainClock.autoAdvance = false
 
         setContent {
             HalogenTheme(
@@ -168,13 +164,11 @@ class HalogenThemeTest {
             }
         }
 
-        // Let initial theme expand
-        mainClock.advanceTimeBy(1000)
+        waitUntilPrimaryChangesFrom(lightColorScheme().primary) { capturedPrimary }
         val oceanPrimary = capturedPrimary
 
-        // Switch to neon spec
         spec = neonSpec
-        mainClock.advanceTimeBy(1000) // give expansion time
+        waitUntilPrimaryChangesFrom(oceanPrimary) { capturedPrimary }
 
         val afterSnap = capturedPrimary
 
@@ -187,8 +181,6 @@ class HalogenThemeTest {
         var capturedPrimary = Color.Unspecified
         val defaultPrimary = lightColorScheme().primary
 
-        mainClock.autoAdvance = false
-
         setContent {
             HalogenTheme(
                 spec = oceanSpec,
@@ -200,8 +192,7 @@ class HalogenThemeTest {
             }
         }
 
-        // Advance past expansion time — first theme should snap, not animate
-        mainClock.advanceTimeBy(1000)
+        waitUntilPrimaryChangesFrom(defaultPrimary) { capturedPrimary }
         val firstPrimary = capturedPrimary
 
         // If it animated, we'd still see the default color at frame 0.
