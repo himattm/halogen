@@ -10,41 +10,89 @@ package halogen.engine
  */
 internal object HintExtractor {
 
-    private val PREFIX_PATTERN = Regex("""^(?:/r/|/category/|/topic/|/|#)""")
-    private val CAMEL_SPLIT = Regex("""(?<=[a-z])(?=[A-Z])""")
-    private val ID_PATTERN = Regex("""^[0-9a-f]{8,}$""", RegexOption.IGNORE_CASE)
-    private val NUMERIC_ONLY = Regex("""^\d+$""")
-    private val WHITESPACE_PATTERN = Regex("""\s+""")
+    private val PREFIXES = arrayOf("/r/", "/category/", "/topic/", "/", "#")
+
+    private fun stripPrefix(key: String): String {
+        for (prefix in PREFIXES) {
+            if (key.startsWith(prefix)) {
+                return key.substring(prefix.length)
+            }
+        }
+        return key
+    }
+
+    private fun isHexId(str: String): Boolean {
+        if (str.length < 8) return false
+        for (i in 0 until str.length) {
+            val c = str[i]
+            if (!(c in '0'..'9' || c in 'a'..'f' || c in 'A'..'F')) return false
+        }
+        return true
+    }
+
+    private fun isNumeric(str: String): Boolean {
+        if (str.isEmpty()) return false
+        for (i in 0 until str.length) {
+            if (str[i] !in '0'..'9') return false
+        }
+        return true
+    }
 
     fun extract(key: String): String? {
         if (key.isBlank()) return null
 
-        // Strip common prefixes
-        var cleaned = PREFIX_PATTERN.replace(key.trim(), "")
+        var cleaned = stripPrefix(key.trim())
 
-        // Remove leading/trailing slashes
-        cleaned = cleaned.trim('/')
+        var startIdx = 0
+        while (startIdx < cleaned.length && cleaned[startIdx] == '/') {
+            startIdx++
+        }
+        var endIdx = cleaned.length - 1
+        while (endIdx >= startIdx && cleaned[endIdx] == '/') {
+            endIdx--
+        }
+        if (startIdx > endIdx) return null
+        cleaned = cleaned.substring(startIdx, endIdx + 1)
 
-        // Take the last meaningful segment if it looks like a path
-        if ('/' in cleaned) {
-            cleaned = cleaned.substringAfterLast('/')
+        val lastSlash = cleaned.lastIndexOf('/')
+        if (lastSlash != -1) {
+            cleaned = cleaned.substring(lastSlash + 1)
         }
 
-        // Split camelCase
-        cleaned = CAMEL_SPLIT.replace(cleaned, " ")
+        val sb = StringBuilder(cleaned.length + 5)
+        var lastChar = ' '
+        for (i in 0 until cleaned.length) {
+            val c = cleaned[i]
+            val isUpper = c in 'A'..'Z'
+            val isSymbolOrWhitespace = c == '_' || c == '-' || c.isWhitespace()
 
-        // Split snake_case and kebab-case
-        cleaned = cleaned.replace('_', ' ').replace('-', ' ')
+            if (isUpper && lastChar in 'a'..'z') {
+                sb.append(' ')
+            }
 
-        // Normalize whitespace
-        cleaned = cleaned.trim().replace(WHITESPACE_PATTERN, " ")
+            if (isSymbolOrWhitespace) {
+                if (lastChar != ' ') {
+                    sb.append(' ')
+                    lastChar = ' '
+                }
+            } else {
+                sb.append(c)
+                lastChar = c
+            }
+        }
+
+        cleaned = sb.toString().trim()
 
         if (cleaned.isBlank()) return null
 
-        // Reject things that look like IDs
-        val noSpaces = cleaned.replace(" ", "")
-        if (ID_PATTERN.matches(noSpaces)) return null
-        if (NUMERIC_ONLY.matches(noSpaces)) return null
+        val noSpaces = StringBuilder(cleaned.length)
+        for (i in 0 until cleaned.length) {
+            if (cleaned[i] != ' ') noSpaces.append(cleaned[i])
+        }
+        val noSpacesStr = noSpaces.toString()
+
+        if (isHexId(noSpacesStr)) return null
+        if (isNumeric(noSpacesStr)) return null
 
         return cleaned.lowercase()
     }
