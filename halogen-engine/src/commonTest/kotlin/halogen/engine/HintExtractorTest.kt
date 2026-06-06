@@ -41,4 +41,29 @@ class HintExtractorTest {
     fun extract_pathTakesLastSegment() {
         assertEquals("programming", HintExtractor.extract("/category/tech/programming"))
     }
+
+    @Test
+    fun extract_topicPrefix_strips() {
+        assertEquals("material you", HintExtractor.extract("/topic/material-you"))
+    }
+
+    @Test
+    fun extract_hashPrefix_strips() {
+        assertEquals("dark mode", HintExtractor.extract("#darkMode"))
+    }
+
+    @Test
+    fun extract_repeatedSeparators_normalizesWhitespace() {
+        assertEquals("dark mode", HintExtractor.extract(" dark__-- \t mode "))
+    }
+
+    @Test
+    fun extract_numericOnly_returnsNull() {
+        assertNull(HintExtractor.extract("123456"))
+    }
+
+    @Test
+    fun extract_hexIdWithSeparators_returnsNull() {
+        assertNull(HintExtractor.extract("a1b2-c3d4"))
+    }
 }

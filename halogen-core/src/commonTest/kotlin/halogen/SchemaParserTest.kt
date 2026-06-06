@@ -139,6 +139,13 @@ class SchemaParserTest {
         assertTrue(result.isFailure, "Should fail on short hex color")
     }
 
+    @Test
+    fun parse_hexColorWithoutHash_fails() {
+        val badColor = validJson.replace("#6750A4", "6750A4")
+        val result = SchemaParser.parse(badColor)
+        assertTrue(result.isFailure, "Should fail when hex color is missing leading #")
+    }
+
     // ---- Clamping: weights ----
 
     @Test
