@@ -10,42 +10,79 @@ package halogen.engine
  */
 internal object HintExtractor {
 
-    private val PREFIX_PATTERN = Regex("""^(?:/r/|/category/|/topic/|/|#)""")
-    private val CAMEL_SPLIT = Regex("""(?<=[a-z])(?=[A-Z])""")
-    private val ID_PATTERN = Regex("""^[0-9a-f]{8,}$""", RegexOption.IGNORE_CASE)
-    private val NUMERIC_ONLY = Regex("""^\d+$""")
-    private val WHITESPACE_PATTERN = Regex("""\s+""")
-
     fun extract(key: String): String? {
         if (key.isBlank()) return null
 
-        // Strip common prefixes
-        var cleaned = PREFIX_PATTERN.replace(key.trim(), "")
-
-        // Remove leading/trailing slashes
-        cleaned = cleaned.trim('/')
-
-        // Take the last meaningful segment if it looks like a path
-        if ('/' in cleaned) {
-            cleaned = cleaned.substringAfterLast('/')
+        val trimmed = key.trim()
+        var start = when {
+            trimmed.startsWith("/r/") -> 3
+            trimmed.startsWith("/category/") -> 10
+            trimmed.startsWith("/topic/") -> 7
+            trimmed.startsWith("/") -> 1
+            trimmed.startsWith("#") -> 1
+            else -> 0
         }
 
-        // Split camelCase
-        cleaned = CAMEL_SPLIT.replace(cleaned, " ")
+        // Remove leading/trailing slashes
+        var end = trimmed.length
+        while (start < end && trimmed[start] == '/') start++
+        while (end > start && trimmed[end - 1] == '/') end--
+        if (start >= end) return null
 
-        // Split snake_case and kebab-case
-        cleaned = cleaned.replace('_', ' ').replace('-', ' ')
+        // Take the last meaningful segment if it looks like a path
+        val lastSlash = trimmed.lastIndexOf('/', end - 1)
+        if (lastSlash >= start) {
+            start = lastSlash + 1
+        }
 
-        // Normalize whitespace
-        cleaned = cleaned.trim().replace(WHITESPACE_PATTERN, " ")
+        val builder = StringBuilder(end - start)
+        var previousOutput = ' '
+        var previousOriginal = ' '
+
+        for (index in start until end) {
+            val char = trimmed[index]
+
+            if (char == '_' || char == '-' || char.isWhitespace()) {
+                if (previousOutput != ' ') {
+                    builder.append(' ')
+                    previousOutput = ' '
+                }
+            } else {
+                if (previousOriginal in 'a'..'z' && char in 'A'..'Z' && previousOutput != ' ') {
+                    builder.append(' ')
+                }
+                builder.append(char)
+                previousOutput = char
+            }
+
+            previousOriginal = char
+        }
+
+        val cleaned = builder.toString().trim()
 
         if (cleaned.isBlank()) return null
 
         // Reject things that look like IDs
-        val noSpaces = cleaned.replace(" ", "")
-        if (ID_PATTERN.matches(noSpaces)) return null
-        if (NUMERIC_ONLY.matches(noSpaces)) return null
+        if (looksLikeId(cleaned)) return null
 
         return cleaned.lowercase()
+    }
+
+    private fun looksLikeId(value: String): Boolean {
+        var length = 0
+        var allNumeric = true
+        var allHex = true
+
+        for (char in value) {
+            if (char == ' ') continue
+
+            length++
+            if (char !in '0'..'9') allNumeric = false
+            if (char !in '0'..'9' && char !in 'a'..'f' && char !in 'A'..'F') allHex = false
+
+            if (!allNumeric && !allHex) return false
+        }
+
+        return length > 0 && (allNumeric || (length >= 8 && allHex))
     }
 }
