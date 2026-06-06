@@ -1,3 +1,0 @@
-## 2024-05-19 - Removed HintExtractor Regex Bottleneck
-**Learning:** In hot-path parsing utilities like `HintExtractor` that use multiple regular expressions to sanitize strings (camelCase splitting, validation checks), substituting them with a single manual character iteration loop alongside a `StringBuilder` can yield dramatic performance improvements (benchmarked ~80% reduction in execution time for 100k iterations).
-**Action:** When auditing string parsing/sanitization utilities, look out for consecutive `Regex.replace` and `Regex.matches` usages. Replacing these with `StringBuilder` and inline loop iteration logic can be an easy performance win without changing the API contract.
