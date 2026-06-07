@@ -1,0 +1,3 @@
+## 2024-05-24 - [Hex Color Formatting Performance]
+**Learning:** In Kotlin, formatting an integer to a hex string using `rgb.toString(16).padStart(6, '0').uppercase()` is relatively slow because it allocates multiple intermediate strings and creates unnecessary memory pressure. By manually manipulating characters in a `CharArray`, we can avoid the overhead and run 4-5x faster. Similar with string parsing using `.toLong(16).toInt()`.
+**Action:** When working in hot paths (like color transformations or parsing themes where thousands of conversions happen), prefer manual character extraction and bitwise shifts over built-in general string format/parse routines like `toString(16).padStart()` or `.toLong(16)`.
