@@ -1,0 +1,3 @@
+## 2024-05-18 - Manual parsing avoids allocations
+**Learning:** In Kotlin hot paths, replacing standard library string manipulations (`substring`, `toLong(16)`, `toString(16)`, `padStart`, `uppercase`) with explicit manual character array manipulation avoids intermediate `String` object allocations and measurably improves performance, especially when parsing small fixed-format structures like hex color strings used frequently in theme generation.
+**Action:** Always prefer manual parsing logic that constructs from primitive character arrays or strings directly, instead of using fluent sequence of `String` conversion methods in hot paths like core algorithms.
