@@ -135,7 +135,7 @@ public object ThemeExpander {
             val digit = (rgb shr ((6 - i) * 4)) and 0xF
             chars[i] = if (digit < 10) (digit + 48).toChar() else (digit + 55).toChar()
         }
-        return String(chars)
+        return chars.concatToString()
     }
 
     private fun buildScheme(palette: HalogenPalette, isDark: Boolean): HalogenColorScheme {
