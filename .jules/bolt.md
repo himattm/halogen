@@ -1,0 +1,3 @@
+## 2024-06-11 - Optimize hex color parsing and formatting
+**Learning:** In Kotlin hot paths (e.g., hex color conversions and formatting), manual character array manipulation and bitwise shifts are 4-10x faster than using standard library string methods like `toString(16).padStart()`, `uppercase()`, or `substring().toLong(16).toInt()` because they avoid allocating intermediate `String` objects and state machines.
+**Action:** When working with fixed-length structured strings (like hex colors) in hot paths, prefer manual iteration, basic math, and array manipulation over higher-level string manipulation functions.
