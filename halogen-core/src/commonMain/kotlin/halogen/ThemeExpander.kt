@@ -148,7 +148,7 @@ public object ThemeExpander {
             chars[i] = if (nibble < 10) (nibble + '0'.code).toChar() else (nibble - 10 + 'A'.code).toChar()
             remaining = remaining shr 4
         }
-        return String(chars)
+        return chars.concatToString()
     }
 
     private fun buildScheme(palette: HalogenPalette, isDark: Boolean): HalogenColorScheme {
