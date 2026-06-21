@@ -1,0 +1,3 @@
+## 2025-02-12 - Hex Parsing Optimization
+**Learning:** In Kotlin Multiplatform, manual character array manipulation and bitwise shifts are substantially faster than standard library string methods (like `toString(16).padStart()`, `uppercase()`, or `substring().toLong(16)`) in hot paths like hex color conversions because they avoid allocating intermediate `String` objects.
+**Action:** When optimizing performance-critical data parsing or formatting logic in KMP, strongly consider manual iteration and raw array manipulations over standard library convenience methods that allocate intermediate strings.
