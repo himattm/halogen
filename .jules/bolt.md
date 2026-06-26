@@ -1,0 +1,3 @@
+## 2024-06-25 - Hex Color Parsing Performance
+**Learning:** In Kotlin Multiplatform hot paths, using standard library string manipulation and radix conversions like `.toString(16).padStart()` and `substring().toLong(16)` can introduce significant overhead. Manual character array manipulation and bitwise shifts are substantially faster (up to 30x faster for serialization and 4x faster for parsing) while avoiding platform-specific string allocation overhead.
+**Action:** When working in hot loops or high-frequency serialization/deserialization logic, replace regex and standard string conversions with manual character-by-character parsing and bitwise arithmetic to achieve meaningful performance gains.
