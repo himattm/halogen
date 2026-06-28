@@ -1,0 +1,3 @@
+## 2024-06-28 - KMP Hex String Allocations Bottleneck
+**Learning:** In Kotlin Multiplatform (KMP), standard string manipulations (`substring`, `toLong(16)`, `toString(16)`, `padStart`) inside hot paths like hex color parsing/formatting introduce substantial state machine overhead and cross-platform allocation costs, slowing down operations by up to ~25x compared to raw iteration.
+**Action:** When working in KMP core conversion logic or hot loops, avoid high-level string extensions. Instead, use manual `CharArray` modifications, character iteration (`for (i in 1..6)`), and bitwise operations to bypass allocations entirely.
