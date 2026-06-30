@@ -6,6 +6,16 @@ import kotlin.test.Test
 
 class HctSolverDebugTest {
 
+
+    private fun Int.toHex2(): String {
+        val chars = CharArray(2)
+        for (i in 1 downTo 0) {
+            val v = (this shr ((1 - i) * 4)) and 0xF
+            chars[i] = if (v < 10) (v + '0'.code).toChar() else (v - 10 + 'A'.code).toChar()
+        }
+        return chars.concatToString()
+    }
+
     @Test
     fun debugGrassColors() {
         // Reproduce the "grass" bug: hue 65, chroma 32, various tones
@@ -16,7 +26,7 @@ class HctSolverDebugTest {
             val r = (argb shr 16) and 0xFF
             val g = (argb shr 8) and 0xFF
             val b = argb and 0xFF
-            val hex = "#${r.toString(16).padStart(2, '0').uppercase()}${g.toString(16).padStart(2, '0').uppercase()}${b.toString(16).padStart(2, '0').uppercase()}"
+            val hex = "#${r.toHex2()}${g.toHex2()}${b.toHex2()}"
             println("Tone $tone: $hex (R=$r G=$g B=$b)")
         }
 
@@ -28,7 +38,7 @@ class HctSolverDebugTest {
             val r = (argb shr 16) and 0xFF
             val g = (argb shr 8) and 0xFF
             val b = argb and 0xFF
-            println("Tone $tone: #${r.toString(16).padStart(2, '0').uppercase()}${g.toString(16).padStart(2, '0').uppercase()}${b.toString(16).padStart(2, '0').uppercase()} (R=$r G=$g B=$b)")
+            println("Tone $tone: #${r.toHex2()}${g.toHex2()}${b.toHex2()} (R=$r G=$g B=$b)")
         }
 
         // Direct HCT test
@@ -38,6 +48,6 @@ class HctSolverDebugTest {
         val r = (argb shr 16) and 0xFF
         val g = (argb shr 8) and 0xFF
         val b = argb and 0xFF
-        println("Result: #${r.toString(16).padStart(2, '0').uppercase()}${g.toString(16).padStart(2, '0').uppercase()}${b.toString(16).padStart(2, '0').uppercase()} (R=$r G=$g B=$b) hue=${hct.hue} chroma=${hct.chroma} tone=${hct.tone}")
+        println("Result: #${r.toHex2()}${g.toHex2()}${b.toHex2()} (R=$r G=$g B=$b) hue=${hct.hue} chroma=${hct.chroma} tone=${hct.tone}")
     }
 }

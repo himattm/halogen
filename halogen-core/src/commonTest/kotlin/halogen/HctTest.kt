@@ -8,6 +8,16 @@ import kotlin.test.assertTrue
 
 class HctTest {
 
+
+    private fun Int.toHex8(): String {
+        val chars = CharArray(8)
+        for (i in 7 downTo 0) {
+            val v = (this ushr ((7 - i) * 4)) and 0xF
+            chars[i] = if (v < 10) (v + '0'.code).toChar() else (v - 10 + 'a'.code).toChar()
+        }
+        return chars.concatToString()
+    }
+
     /**
      * Helper: checks that every channel of two ARGB ints differs by at most [tolerance].
      */
@@ -27,8 +37,8 @@ class HctTest {
                 abs(eR - aR) <= tolerance &&
                 abs(eG - aG) <= tolerance &&
                 abs(eB - aB) <= tolerance,
-            "ARGB mismatch: expected 0x${expected.toUInt().toString(16).padStart(8, '0')}, " +
-                "got 0x${actual.toUInt().toString(16).padStart(8, '0')} (tolerance=$tolerance)",
+            "ARGB mismatch: expected 0x${expected.toHex8()}, " +
+                "got 0x${actual.toHex8()} (tolerance=$tolerance)",
         )
     }
 

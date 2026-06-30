@@ -1,0 +1,3 @@
+## 2024-05-24 - Kotlin hex color parsing and serialization overhead
+**Learning:** Standard library methods like `.toLong(16)` and `toString(16).padStart(6, '0').uppercase()` allocate multiple intermediate strings (substrings, padded strings, uppercased strings), causing significant overhead in hot paths for Hex color operations. We can improve this significantly using character array operations and bit shifts, avoiding garbage collection pressure.
+**Action:** Replace `toLong(16)` with a character array loop that does hex digit conversion and bit shifting. Replace `toString(16).padStart...` with a `CharArray(7)` and right shifts, converted back to a string with `concatToString()`.
