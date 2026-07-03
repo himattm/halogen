@@ -112,16 +112,36 @@ public object ThemeExpander {
         require(hex.startsWith("#") && hex.length == 7) {
             "Invalid hex color: \"$hex\". Expected format: #RRGGBB"
         }
-        val rgb = hex.substring(1).toLong(16).toInt()
-        return rgb or (0xFF shl 24).toInt()
+        // ⚡ Bolt: Replaced Regex/String conversions with manual char iteration
+        // and bitwise shifts to eliminate KMP string allocation overhead in hot paths.
+        var rgb = 0
+        for (i in 1..6) {
+            val char = hex[i]
+            val digit = when {
+                char in '0'..'9' -> char - '0'
+                char in 'a'..'f' -> char - 'a' + 10
+                char in 'A'..'F' -> char - 'A' + 10
+                else -> throw IllegalArgumentException("Invalid hex character: $char")
+            }
+            rgb = (rgb shl 4) or digit
+        }
+        return rgb or (0xFF shl 24)
     }
 
     /**
      * Convert an ARGB integer to a hex color string like "#1A73E8".
      */
     public fun argbToHex(argb: Int): String {
-        val rgb = argb and 0xFFFFFF
-        return "#" + rgb.toString(16).padStart(6, '0').uppercase()
+        // ⚡ Bolt: Replaced toString(16).padStart() with manual char array assignment
+        // and concatToString() to prevent slow, platform-dependent string building overhead.
+        val chars = CharArray(7)
+        chars[0] = '#'
+        val rgb2 = argb and 0xFFFFFF
+        for (i in 0..5) {
+            val nibble = (rgb2 ushr ((5 - i) * 4)) and 0xF
+            chars[i + 1] = if (nibble < 10) (nibble + 48).toChar() else (nibble + 55).toChar()
+        }
+        return chars.concatToString()
     }
 
     private fun buildScheme(palette: HalogenPalette, isDark: Boolean): HalogenColorScheme {

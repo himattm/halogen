@@ -1,0 +1,3 @@
+## 2024-06-11 - KMP String Allocation in Hot Paths
+**Learning:** In Kotlin Multiplatform hot paths (like Hex parsing/formatting), relying on standard library string manipulations (`toLong(16)`, `toString(16).padStart()`) incurs massive performance overhead due to cross-platform string allocation and state machine conversions.
+**Action:** When optimizing tight loops or parsing algorithms in KMP, replace standard string functions with manual character iteration, arithmetic, and bitwise shifts. For string building, prefer `CharArray.concatToString()` to bypass unnecessary platform-specific string allocation overhead.
