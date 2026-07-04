@@ -94,7 +94,7 @@ class ImageQuantizerTest {
     @Test
     fun extract_semiTransparentPixels_belowThreshold_areSkipped() {
         // Alpha = 127 (below 128 threshold)
-        val (pixels, w, h) = solidPixels(0x7FFF0000.toInt(), 100)
+        val (pixels, w, h) = solidPixels(0x7FFF0000, 100)
         val result = ImageQuantizer.extract(pixels, w, h)
         assertTrue(result.colors.isEmpty(), "Pixels with alpha < 128 should be skipped")
     }
