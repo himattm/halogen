@@ -1,0 +1,3 @@
+## 2024-05-19 - Optimize hex string manipulation in Kotlin hot paths
+**Learning:** In Kotlin Multiplatform hot paths, using standard library string methods like `toString(16).padStart()`, `uppercase()`, or `substring().toLong(16).toInt()` to handle simple string validation or conversion can incur significant performance overhead due to cross-platform string allocation and regex-like parsing. Manual character array manipulation and bitwise shifts are substantially faster.
+**Action:** When working on frequently accessed functions such as color parsing or serialization in Kotlin, replace multi-step standard library string manipulation with manual loops using `CharArray`, `when`, and bitwise operators, concluding with `.concatToString()`.
