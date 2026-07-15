@@ -107,21 +107,45 @@ public object ThemeExpander {
 
     /**
      * Parse a hex color string like "#1A73E8" to an ARGB integer (0xFF1A73E8).
+     *
+     * Performance optimization (Bolt): Manual array iteration and bitwise shifts are used
+     * instead of string manipulation (like `substring().toLong(16)`) to avoid platform-specific
+     * string allocation overhead in hot paths.
      */
     internal fun parseHexToArgb(hex: String): Int {
-        require(hex.startsWith("#") && hex.length == 7) {
+        require(hex.length == 7 && hex[0] == '#') {
             "Invalid hex color: \"$hex\". Expected format: #RRGGBB"
         }
-        val rgb = hex.substring(1).toLong(16).toInt()
+        var rgb = 0
+        for (i in 1..6) {
+            val c = hex[i]
+            val v = when (c) {
+                in '0'..'9' -> c - '0'
+                in 'A'..'F' -> c - 'A' + 10
+                in 'a'..'f' -> c - 'a' + 10
+                else -> throw IllegalArgumentException("Invalid hex character: $c")
+            }
+            rgb = (rgb shl 4) or v
+        }
         return rgb or (0xFF shl 24).toInt()
     }
 
     /**
      * Convert an ARGB integer to a hex color string like "#1A73E8".
+     *
+     * Performance optimization (Bolt): Manual character array construction and bitwise shifts
+     * are used instead of `toString(16).padStart(6, '0').uppercase()` to avoid significant
+     * string allocation and intermediate object creation overhead.
      */
     public fun argbToHex(argb: Int): String {
         val rgb = argb and 0xFFFFFF
-        return "#" + rgb.toString(16).padStart(6, '0').uppercase()
+        val chars = CharArray(7)
+        chars[0] = '#'
+        for (i in 6 downTo 1) {
+            val v = (rgb ushr ((6 - i) * 4)) and 0xF
+            chars[i] = if (v < 10) (v + '0'.code).toChar() else (v - 10 + 'A'.code).toChar()
+        }
+        return chars.concatToString()
     }
 
     private fun buildScheme(palette: HalogenPalette, isDark: Boolean): HalogenColorScheme {

@@ -1,0 +1,579 @@
+
+> Configure project :
+
+    Thank you for enabling Dokka Gradle plugin V2!
+    To learn about migrating read the migration guide https://kotl.in/dokka-gradle-migration
+
+    We would appreciate your feedback!
+     - Please report any feedback or problems https://kotl.in/dokka-issues
+     - Chat with the community visit #dokka in https://kotlinlang.slack.com/ (To sign up visit https://kotl.in/slack)
+
+    You can suppress this message by adding
+        org.jetbrains.dokka.experimental.gradle.pluginMode.noWarn=true
+    to your project's `gradle.properties` file.
+
+
+> Task :build-logic:convention:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :build-logic:convention:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :build-logic:convention:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :build-logic:convention:compilePluginsBlocks UP-TO-DATE
+> Task :build-logic:convention:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :build-logic:convention:generateScriptPluginAdapters UP-TO-DATE
+> Task :build-logic:convention:compileKotlin UP-TO-DATE
+> Task :build-logic:convention:compileJava NO-SOURCE
+> Task :build-logic:convention:pluginDescriptors UP-TO-DATE
+> Task :build-logic:convention:processResources UP-TO-DATE
+> Task :build-logic:convention:classes UP-TO-DATE
+> Task :build-logic:convention:jar UP-TO-DATE
+
+> Configure project :halogen-cache-room
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-cache-room'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[androidMain, iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest, jvmMain, roomMain]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-compose
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-compose'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-core
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-core'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-engine
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-engine'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-image
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-image'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest, jvmMain, skikoMain, wasmJsMain]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :sample-shared
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':sample-shared'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Task :halogen-cache-room:preBuild UP-TO-DATE
+> Task :halogen-cache-room:preDebugBuild UP-TO-DATE
+> Task :halogen-core:preBuild UP-TO-DATE
+> Task :halogen-core:preDebugBuild UP-TO-DATE
+> Task :halogen-core:writeDebugAarMetadata UP-TO-DATE
+> Task :halogen-engine:preBuild UP-TO-DATE
+> Task :halogen-engine:preDebugBuild UP-TO-DATE
+> Task :halogen-engine:writeDebugAarMetadata UP-TO-DATE
+> Task :halogen-cache-room:checkDebugAarMetadata UP-TO-DATE
+> Task :halogen-cache-room:mergeDebugJniLibFolders UP-TO-DATE
+> Task :halogen-cache-room:mergeDebugNativeLibs NO-SOURCE
+> Task :halogen-cache-room:stripDebugDebugSymbols NO-SOURCE
+> Task :halogen-cache-room:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :halogen-cache-room:kmpPartiallyResolvedDependenciesChecker
+> Task :halogen-cache-room:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-cache-room:generateDebugResValues UP-TO-DATE
+> Task :halogen-cache-room:generateDebugResources UP-TO-DATE
+> Task :halogen-cache-room:packageDebugResources UP-TO-DATE
+> Task :halogen-cache-room:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-cache-room:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-cache-room:generateDebugRFile UP-TO-DATE
+> Task :halogen-core:kmpPartiallyResolvedDependenciesChecker
+> Task :halogen-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-core:generateDebugResValues UP-TO-DATE
+> Task :halogen-core:generateDebugResources UP-TO-DATE
+> Task :halogen-core:packageDebugResources UP-TO-DATE
+> Task :halogen-core:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-core:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-core:generateDebugRFile UP-TO-DATE
+> Task :halogen-core:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-engine:kmpPartiallyResolvedDependenciesChecker
+> Task :halogen-engine:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-engine:generateDebugResValues UP-TO-DATE
+> Task :halogen-engine:generateDebugResources UP-TO-DATE
+> Task :halogen-engine:packageDebugResources UP-TO-DATE
+> Task :halogen-engine:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-engine:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-engine:generateDebugRFile UP-TO-DATE
+> Task :halogen-engine:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-cache-room:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-cache-room:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :halogen-cache-room:mergeDebugShaders UP-TO-DATE
+> Task :halogen-cache-room:compileDebugShaders NO-SOURCE
+> Task :halogen-cache-room:debugAssetsCopyForAGP NO-SOURCE
+> Task :halogen-cache-room:generateDebugAssets UP-TO-DATE
+> Task :halogen-cache-room:mergeDebugAssets UP-TO-DATE
+> Task :halogen-cache-room:prepareDebugArtProfile UP-TO-DATE
+> Task :halogen-cache-room:prepareLintJarForPublish UP-TO-DATE
+> Task :halogen-cache-room:processDebugManifest UP-TO-DATE
+> Task :halogen-cache-room:writeDebugAarMetadata UP-TO-DATE
+> Task :halogen-engine:checkDebugAarMetadata UP-TO-DATE
+> Task :halogen-engine:mergeDebugJniLibFolders UP-TO-DATE
+> Task :halogen-engine:mergeDebugNativeLibs NO-SOURCE
+> Task :halogen-engine:stripDebugDebugSymbols NO-SOURCE
+> Task :halogen-engine:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :halogen-engine:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :halogen-engine:mergeDebugShaders UP-TO-DATE
+> Task :halogen-engine:compileDebugShaders NO-SOURCE
+> Task :halogen-engine:debugAssetsCopyForAGP NO-SOURCE
+> Task :halogen-engine:generateDebugAssets UP-TO-DATE
+> Task :halogen-engine:mergeDebugAssets UP-TO-DATE
+> Task :halogen-engine:prepareDebugArtProfile UP-TO-DATE
+> Task :halogen-engine:prepareLintJarForPublish UP-TO-DATE
+> Task :halogen-engine:processDebugManifest UP-TO-DATE
+> Task :halogen-core:checkDebugAarMetadata UP-TO-DATE
+> Task :halogen-core:mergeDebugJniLibFolders UP-TO-DATE
+> Task :halogen-core:mergeDebugNativeLibs NO-SOURCE
+> Task :halogen-core:stripDebugDebugSymbols NO-SOURCE
+> Task :halogen-core:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :halogen-core:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :halogen-core:mergeDebugShaders UP-TO-DATE
+> Task :halogen-core:compileDebugShaders NO-SOURCE
+> Task :halogen-core:debugAssetsCopyForAGP NO-SOURCE
+> Task :halogen-core:generateDebugAssets UP-TO-DATE
+> Task :halogen-core:mergeDebugAssets UP-TO-DATE
+> Task :halogen-core:prepareDebugArtProfile UP-TO-DATE
+> Task :halogen-core:prepareLintJarForPublish UP-TO-DATE
+> Task :halogen-core:processDebugManifest UP-TO-DATE
+> Task :halogen-cache-room:preDebugAndroidTestBuild UP-TO-DATE
+> Task :halogen-cache-room:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :halogen-cache-room:writeDebugLintModelMetadata UP-TO-DATE
+> Task :halogen-core:writeDebugLintModelMetadata UP-TO-DATE
+> Task :halogen-engine:writeDebugLintModelMetadata UP-TO-DATE
+> Task :halogen-cache-room:extractProguardFiles UP-TO-DATE
+> Task :halogen-core:extractProguardFiles UP-TO-DATE
+> Task :halogen-engine:extractProguardFiles UP-TO-DATE
+> Task :halogen-cache-room:preDebugUnitTestBuild UP-TO-DATE
+> Task :halogen-core:preDebugAndroidTestBuild UP-TO-DATE
+> Task :halogen-core:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :halogen-core:preDebugUnitTestBuild UP-TO-DATE
+> Task :halogen-engine:preDebugAndroidTestBuild UP-TO-DATE
+> Task :halogen-engine:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :halogen-engine:preDebugUnitTestBuild UP-TO-DATE
+> Task :halogen-compose:convertXmlValueResourcesForAndroidDebug NO-SOURCE
+> Task :halogen-compose:copyNonXmlValueResourcesForAndroidDebug NO-SOURCE
+> Task :halogen-compose:prepareComposeResourcesTaskForAndroidDebug NO-SOURCE
+> Task :halogen-compose:convertXmlValueResourcesForAndroidMain NO-SOURCE
+> Task :halogen-compose:copyNonXmlValueResourcesForAndroidMain NO-SOURCE
+> Task :halogen-compose:prepareComposeResourcesTaskForAndroidMain NO-SOURCE
+> Task :halogen-compose:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :halogen-compose:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :halogen-compose:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :halogen-compose:copyDebugComposeResourcesToAndroidAssets UP-TO-DATE
+> Task :halogen-compose:generateResourceAccessorsForAndroidDebug SKIPPED
+> Task :halogen-compose:generateResourceAccessorsForAndroidMain SKIPPED
+> Task :halogen-compose:generateResourceAccessorsForCommonMain SKIPPED
+> Task :halogen-compose:preBuild UP-TO-DATE
+> Task :halogen-compose:preDebugBuild UP-TO-DATE
+> Task :halogen-compose:checkDebugAarMetadata UP-TO-DATE
+> Task :halogen-compose:mergeDebugJniLibFolders UP-TO-DATE
+> Task :halogen-compose:mergeDebugNativeLibs NO-SOURCE
+> Task :halogen-compose:stripDebugDebugSymbols NO-SOURCE
+> Task :halogen-compose:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :halogen-compose:kmpPartiallyResolvedDependenciesChecker
+> Task :halogen-compose:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-compose:generateActualResourceCollectorsForAndroidMain SKIPPED
+> Task :halogen-compose:generateComposeResClass SKIPPED
+> Task :halogen-compose:generateDebugResValues UP-TO-DATE
+> Task :halogen-compose:generateDebugResources UP-TO-DATE
+> Task :halogen-compose:packageDebugResources UP-TO-DATE
+> Task :halogen-compose:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-compose:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-compose:generateDebugRFile UP-TO-DATE
+> Task :halogen-compose:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :halogen-compose:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :halogen-compose:mergeDebugShaders UP-TO-DATE
+> Task :halogen-compose:compileDebugShaders NO-SOURCE
+> Task :halogen-compose:debugAssetsCopyForAGP NO-SOURCE
+> Task :halogen-compose:generateDebugAssets UP-TO-DATE
+> Task :halogen-compose:mergeDebugAssets UP-TO-DATE
+> Task :halogen-compose:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-compose:prepareDebugArtProfile UP-TO-DATE
+> Task :halogen-compose:prepareLintJarForPublish UP-TO-DATE
+> Task :halogen-compose:processDebugManifest UP-TO-DATE
+> Task :halogen-compose:writeDebugAarMetadata UP-TO-DATE
+> Task :halogen-compose:preDebugAndroidTestBuild UP-TO-DATE
+> Task :halogen-compose:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :halogen-compose:writeDebugLintModelMetadata UP-TO-DATE
+> Task :halogen-compose:extractProguardFiles UP-TO-DATE
+> Task :halogen-compose:preDebugUnitTestBuild UP-TO-DATE
+> Task :halogen-image:preBuild UP-TO-DATE
+> Task :halogen-image:preDebugBuild UP-TO-DATE
+> Task :halogen-image:checkDebugAarMetadata UP-TO-DATE
+> Task :halogen-image:mergeDebugJniLibFolders UP-TO-DATE
+> Task :halogen-image:mergeDebugNativeLibs NO-SOURCE
+> Task :halogen-image:stripDebugDebugSymbols NO-SOURCE
+> Task :halogen-image:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :halogen-image:kmpPartiallyResolvedDependenciesChecker
+> Task :halogen-image:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-image:generateDebugResValues UP-TO-DATE
+> Task :halogen-image:generateDebugResources UP-TO-DATE
+> Task :halogen-image:packageDebugResources UP-TO-DATE
+> Task :halogen-image:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-image:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-image:generateDebugRFile UP-TO-DATE
+> Task :halogen-image:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :halogen-image:mergeDebugShaders UP-TO-DATE
+> Task :halogen-image:compileDebugShaders NO-SOURCE
+> Task :halogen-image:debugAssetsCopyForAGP NO-SOURCE
+> Task :halogen-image:generateDebugAssets UP-TO-DATE
+> Task :halogen-image:mergeDebugAssets UP-TO-DATE
+> Task :halogen-image:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-image:prepareDebugArtProfile UP-TO-DATE
+> Task :halogen-image:prepareLintJarForPublish UP-TO-DATE
+> Task :halogen-image:processDebugManifest UP-TO-DATE
+> Task :halogen-image:writeDebugAarMetadata UP-TO-DATE
+> Task :halogen-image:preDebugAndroidTestBuild UP-TO-DATE
+> Task :halogen-image:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :halogen-image:writeDebugLintModelMetadata UP-TO-DATE
+> Task :halogen-image:extractProguardFiles UP-TO-DATE
+> Task :halogen-image:preDebugUnitTestBuild UP-TO-DATE
+> Task :halogen-provider-nano:preBuild UP-TO-DATE
+> Task :halogen-provider-nano:preDebugBuild UP-TO-DATE
+> Task :halogen-provider-nano:checkDebugAarMetadata UP-TO-DATE
+> Task :halogen-provider-nano:mergeDebugJniLibFolders UP-TO-DATE
+> Task :halogen-provider-nano:mergeDebugNativeLibs NO-SOURCE
+> Task :halogen-provider-nano:stripDebugDebugSymbols NO-SOURCE
+> Task :halogen-provider-nano:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :halogen-provider-nano:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-provider-nano:generateDebugResValues UP-TO-DATE
+> Task :halogen-provider-nano:generateDebugResources UP-TO-DATE
+> Task :halogen-provider-nano:packageDebugResources UP-TO-DATE
+> Task :halogen-provider-nano:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-provider-nano:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-provider-nano:generateDebugRFile UP-TO-DATE
+> Task :halogen-provider-nano:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :halogen-provider-nano:mergeDebugShaders UP-TO-DATE
+> Task :halogen-provider-nano:compileDebugShaders NO-SOURCE
+> Task :halogen-provider-nano:generateDebugAssets UP-TO-DATE
+> Task :halogen-provider-nano:mergeDebugAssets UP-TO-DATE
+> Task :halogen-provider-nano:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-provider-nano:prepareDebugArtProfile UP-TO-DATE
+> Task :halogen-provider-nano:prepareLintJarForPublish UP-TO-DATE
+> Task :halogen-provider-nano:processDebugManifest UP-TO-DATE
+> Task :halogen-provider-nano:writeDebugAarMetadata UP-TO-DATE
+> Task :halogen-provider-nano:preDebugAndroidTestBuild UP-TO-DATE
+> Task :halogen-provider-nano:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :halogen-provider-nano:writeDebugLintModelMetadata UP-TO-DATE
+> Task :halogen-provider-nano:extractProguardFiles UP-TO-DATE
+> Task :halogen-provider-nano:preDebugUnitTestBuild UP-TO-DATE
+> Task :sample-shared:preBuild UP-TO-DATE
+> Task :sample-shared:preDebugBuild UP-TO-DATE
+> Task :sample-shared:checkDebugAarMetadata UP-TO-DATE
+> Task :sample-shared:mergeDebugJniLibFolders UP-TO-DATE
+> Task :sample-shared:mergeDebugNativeLibs NO-SOURCE
+> Task :sample-shared:stripDebugDebugSymbols NO-SOURCE
+> Task :sample-shared:copyDebugJniLibsProjectAndLocalJars UP-TO-DATE
+> Task :sample-shared:kmpPartiallyResolvedDependenciesChecker
+> Task :sample-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :sample-shared:convertXmlValueResourcesForAndroidMain NO-SOURCE
+> Task :sample-shared:copyNonXmlValueResourcesForAndroidMain NO-SOURCE
+> Task :sample-shared:prepareComposeResourcesTaskForAndroidMain NO-SOURCE
+> Task :sample-shared:generateResourceAccessorsForAndroidMain SKIPPED
+> Task :sample-shared:convertXmlValueResourcesForCommonMain NO-SOURCE
+> Task :sample-shared:copyNonXmlValueResourcesForCommonMain NO-SOURCE
+> Task :sample-shared:prepareComposeResourcesTaskForCommonMain NO-SOURCE
+> Task :sample-shared:generateResourceAccessorsForCommonMain SKIPPED
+> Task :sample-shared:generateActualResourceCollectorsForAndroidMain SKIPPED
+> Task :sample-shared:generateComposeResClass SKIPPED
+> Task :sample-shared:convertXmlValueResourcesForAndroidDebug NO-SOURCE
+> Task :sample-shared:copyNonXmlValueResourcesForAndroidDebug NO-SOURCE
+> Task :sample-shared:prepareComposeResourcesTaskForAndroidDebug NO-SOURCE
+> Task :sample-shared:copyDebugComposeResourcesToAndroidAssets UP-TO-DATE
+> Task :sample-shared:generateDebugResValues UP-TO-DATE
+> Task :sample-shared:generateDebugResources UP-TO-DATE
+> Task :sample-shared:packageDebugResources UP-TO-DATE
+> Task :sample-shared:processDebugNavigationResources UP-TO-DATE
+> Task :sample-shared:parseDebugLocalResources UP-TO-DATE
+> Task :sample-shared:generateDebugRFile UP-TO-DATE
+> Task :sample-shared:generateExpectResourceCollectorsForCommonMain SKIPPED
+> Task :sample-shared:generateResourceAccessorsForAndroidDebug SKIPPED
+> Task :sample-shared:extractDeepLinksForAarDebug UP-TO-DATE
+> Task :sample-shared:mergeDebugShaders UP-TO-DATE
+> Task :sample-shared:compileDebugShaders NO-SOURCE
+> Task :sample-shared:debugAssetsCopyForAGP NO-SOURCE
+> Task :sample-shared:generateDebugAssets UP-TO-DATE
+> Task :sample-shared:mergeDebugAssets UP-TO-DATE
+> Task :sample-shared:javaPreCompileDebug UP-TO-DATE
+> Task :sample-shared:prepareDebugArtProfile UP-TO-DATE
+> Task :sample-shared:prepareLintJarForPublish UP-TO-DATE
+> Task :sample-shared:processDebugManifest UP-TO-DATE
+> Task :sample-shared:writeDebugAarMetadata UP-TO-DATE
+> Task :sample:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :sample:preBuild UP-TO-DATE
+> Task :sample:preDebugBuild UP-TO-DATE
+> Task :sample:generateDebugBuildConfig UP-TO-DATE
+> Task :halogen-cache-room:compileDebugLibraryResources UP-TO-DATE
+> Task :halogen-compose:compileDebugLibraryResources UP-TO-DATE
+> Task :halogen-core:compileDebugLibraryResources UP-TO-DATE
+> Task :halogen-engine:compileDebugLibraryResources UP-TO-DATE
+> Task :halogen-image:compileDebugLibraryResources UP-TO-DATE
+> Task :halogen-provider-nano:compileDebugLibraryResources UP-TO-DATE
+> Task :sample:checkDebugAarMetadata UP-TO-DATE
+> Task :sample:processDebugNavigationResources UP-TO-DATE
+> Task :sample:compileDebugNavigationResources UP-TO-DATE
+> Task :sample:generateDebugResValues UP-TO-DATE
+> Task :sample:mapDebugSourceSetPaths UP-TO-DATE
+> Task :sample:generateDebugResources UP-TO-DATE
+> Task :sample:mergeDebugResources UP-TO-DATE
+> Task :sample:packageDebugResources UP-TO-DATE
+> Task :sample:parseDebugLocalResources UP-TO-DATE
+> Task :sample:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :halogen-cache-room:extractDeepLinksDebug UP-TO-DATE
+> Task :halogen-compose:extractDeepLinksDebug UP-TO-DATE
+> Task :halogen-core:extractDeepLinksDebug UP-TO-DATE
+> Task :halogen-engine:extractDeepLinksDebug UP-TO-DATE
+> Task :halogen-image:extractDeepLinksDebug UP-TO-DATE
+> Task :halogen-provider-nano:extractDeepLinksDebug UP-TO-DATE
+> Task :sample:extractDeepLinksDebug UP-TO-DATE
+> Task :sample-shared:extractDeepLinksDebug UP-TO-DATE
+> Task :sample:processDebugMainManifest UP-TO-DATE
+> Task :sample:processDebugManifest UP-TO-DATE
+> Task :sample:processDebugManifestForPackage UP-TO-DATE
+> Task :sample-shared:compileDebugLibraryResources UP-TO-DATE
+> Task :sample:processDebugResources UP-TO-DATE
+> Task :sample:javaPreCompileDebug UP-TO-DATE
+> Task :sample:preDebugAndroidTestBuild SKIPPED
+> Task :sample:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :sample-shared:writeDebugLintModelMetadata UP-TO-DATE
+> Task :sample:extractProguardFiles UP-TO-DATE
+> Task :sample-shared:extractProguardFiles UP-TO-DATE
+> Task :sample:preDebugUnitTestBuild UP-TO-DATE
+> Task :sample-shared:preDebugAndroidTestBuild UP-TO-DATE
+> Task :sample-shared:generateDebugAndroidTestResValues UP-TO-DATE
+> Task :sample-shared:preDebugUnitTestBuild UP-TO-DATE
+
+> Task :halogen-core:compileDebugKotlinAndroid
+w: file:///app/halogen-core/src/commonMain/kotlin/halogen/ThemeExpander.kt:130:37 Redundant call of conversion method.
+
+> Task :halogen-core:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-core:bundleLibCompileToJarDebug
+> Task :halogen-core:extractDebugAnnotations
+> Task :halogen-engine:compileDebugKotlinAndroid UP-TO-DATE
+> Task :halogen-engine:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-engine:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :halogen-engine:extractDebugAnnotations
+> Task :halogen-engine:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :halogen-engine:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :halogen-engine:processDebugJavaRes UP-TO-DATE
+> Task :halogen-engine:mergeDebugJavaResource UP-TO-DATE
+> Task :halogen-engine:syncDebugLibJars UP-TO-DATE
+> Task :halogen-engine:bundleDebugLocalLintAar UP-TO-DATE
+> Task :halogen-core:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :halogen-core:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :halogen-core:processDebugJavaRes UP-TO-DATE
+> Task :halogen-core:mergeDebugJavaResource UP-TO-DATE
+> Task :halogen-core:syncDebugLibJars
+> Task :halogen-core:bundleDebugLocalLintAar
+> Task :halogen-core:bundleLibRuntimeToJarDebug
+> Task :halogen-core:createFullJarDebug
+> Task :halogen-engine:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :halogen-engine:createFullJarDebug UP-TO-DATE
+> Task :halogen-core:generateDebugLintModel
+> Task :halogen-engine:generateDebugLintModel
+> Task :halogen-core:generateDebugAndroidTestLintModel
+> Task :halogen-core:generateDebugUnitTestLintModel
+> Task :halogen-cache-room:kspDebugKotlinAndroid
+> Task :halogen-cache-room:compileDebugKotlinAndroid UP-TO-DATE
+> Task :halogen-cache-room:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-cache-room:copyRoomSchemas NO-SOURCE
+> Task :halogen-cache-room:extractDebugAnnotations
+> Task :halogen-cache-room:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :halogen-cache-room:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :halogen-cache-room:processDebugJavaRes UP-TO-DATE
+> Task :halogen-cache-room:mergeDebugJavaResource UP-TO-DATE
+> Task :halogen-cache-room:syncDebugLibJars UP-TO-DATE
+> Task :halogen-core:lintAnalyzeDebugAndroidTest
+> Task :halogen-cache-room:bundleDebugLocalLintAar UP-TO-DATE
+> Task :halogen-cache-room:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :halogen-cache-room:createFullJarDebug UP-TO-DATE
+> Task :halogen-core:lintAnalyzeDebugUnitTest
+> Task :halogen-cache-room:generateDebugAndroidTestLintModel
+> Task :halogen-cache-room:generateDebugLintReportModel
+> Task :halogen-cache-room:generateDebugUnitTestLintModel
+> Task :halogen-engine:generateDebugAndroidTestLintModel
+> Task :halogen-engine:generateDebugUnitTestLintModel
+> Task :halogen-compose:compileDebugKotlinAndroid UP-TO-DATE
+> Task :halogen-compose:extractDebugAnnotations
+> Task :halogen-compose:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-compose:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :halogen-compose:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :halogen-compose:processDebugJavaRes UP-TO-DATE
+> Task :halogen-compose:mergeDebugJavaResource UP-TO-DATE
+> Task :halogen-compose:syncDebugLibJars UP-TO-DATE
+> Task :halogen-compose:bundleDebugLocalLintAar UP-TO-DATE
+> Task :halogen-compose:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :halogen-compose:createFullJarDebug UP-TO-DATE
+> Task :halogen-compose:generateDebugAndroidTestLintModel
+> Task :halogen-core:lintAnalyzeDebug
+> Task :halogen-compose:generateDebugLintReportModel
+> Task :halogen-compose:generateDebugUnitTestLintModel
+> Task :halogen-core:generateDebugLintReportModel
+> Task :halogen-engine:generateDebugLintReportModel
+> Task :halogen-image:compileDebugKotlinAndroid UP-TO-DATE
+> Task :halogen-image:extractDebugAnnotations
+> Task :halogen-image:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-image:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :halogen-image:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :halogen-image:processDebugJavaRes UP-TO-DATE
+> Task :halogen-image:mergeDebugJavaResource UP-TO-DATE
+> Task :halogen-image:syncDebugLibJars UP-TO-DATE
+> Task :halogen-image:bundleDebugLocalLintAar UP-TO-DATE
+> Task :halogen-image:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :halogen-image:createFullJarDebug UP-TO-DATE
+> Task :halogen-image:generateDebugAndroidTestLintModel
+> Task :halogen-image:generateDebugLintReportModel
+> Task :halogen-image:generateDebugUnitTestLintModel
+> Task :halogen-provider-nano:compileDebugKotlin UP-TO-DATE
+> Task :halogen-provider-nano:extractDebugAnnotations
+> Task :halogen-provider-nano:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-provider-nano:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :halogen-provider-nano:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :halogen-provider-nano:processDebugJavaRes UP-TO-DATE
+> Task :halogen-provider-nano:mergeDebugJavaResource UP-TO-DATE
+> Task :halogen-provider-nano:syncDebugLibJars UP-TO-DATE
+> Task :halogen-provider-nano:bundleDebugLocalLintAar UP-TO-DATE
+> Task :halogen-provider-nano:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :halogen-provider-nano:createFullJarDebug UP-TO-DATE
+> Task :halogen-provider-nano:generateDebugAndroidTestLintModel
+> Task :halogen-cache-room:lintAnalyzeDebugAndroidTest
+> Task :halogen-provider-nano:generateDebugLintReportModel
+> Task :halogen-cache-room:lintAnalyzeDebugUnitTest
+> Task :halogen-provider-nano:generateDebugUnitTestLintModel
+> Task :halogen-cache-room:generateDebugLintModel
+> Task :halogen-compose:generateDebugLintModel
+> Task :halogen-image:generateDebugLintModel
+> Task :halogen-provider-nano:generateDebugLintModel
+> Task :halogen-compose:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :halogen-image:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :sample-shared:compileDebugKotlinAndroid UP-TO-DATE
+> Task :sample-shared:extractDebugAnnotations
+> Task :sample-shared:compileDebugJavaWithJavac NO-SOURCE
+> Task :sample-shared:mergeDebugGeneratedProguardFiles UP-TO-DATE
+> Task :sample-shared:mergeDebugConsumerProguardFiles UP-TO-DATE
+> Task :sample-shared:processDebugJavaRes UP-TO-DATE
+> Task :sample-shared:mergeDebugJavaResource UP-TO-DATE
+> Task :sample-shared:syncDebugLibJars UP-TO-DATE
+> Task :sample-shared:bundleDebugLocalLintAar UP-TO-DATE
+> Task :halogen-cache-room:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :halogen-provider-nano:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :sample-shared:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :sample:compileDebugKotlin UP-TO-DATE
+> Task :sample:compileDebugJavaWithJavac UP-TO-DATE
+> Task :sample:bundleDebugClassesToCompileJar UP-TO-DATE
+> Task :sample-shared:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :sample-shared:createFullJarDebug UP-TO-DATE
+> Task :halogen-engine:lintAnalyzeDebugUnitTest
+> Task :sample:generateDebugAndroidTestLintModel
+> Task :halogen-engine:lintAnalyzeDebugAndroidTest
+> Task :sample-shared:generateDebugLintModel
+> Task :sample:generateDebugLintReportModel
+> Task :sample:generateDebugUnitTestLintModel
+> Task :sample-shared:generateDebugAndroidTestLintModel
+> Task :sample-shared:generateDebugUnitTestLintModel
+> Task :sample-shared:generateDebugLintReportModel
+> Task :halogen-compose:lintAnalyzeDebugAndroidTest
+> Task :halogen-engine:lintAnalyzeDebug
+> Task :halogen-compose:lintAnalyzeDebugUnitTest
+
+> Task :halogen-core:lintReportDebug
+Wrote HTML report to file:///app/halogen-core/build/reports/lint-results-debug.html
+
+> Task :halogen-core:lintDebug
+> Task :halogen-core:lint
+> Task :halogen-engine:lintReportDebug
+> Task :halogen-engine:lintDebug
+> Task :halogen-engine:lint
+> Task :halogen-compose:lintAnalyzeDebug
+> Task :halogen-compose:lintReportDebug
+> Task :halogen-compose:lintDebug
+> Task :halogen-compose:lint
+> Task :halogen-image:lintAnalyzeDebugAndroidTest
+> Task :halogen-image:lintAnalyzeDebug
+> Task :halogen-image:lintAnalyzeDebugUnitTest
+> Task :halogen-image:lintReportDebug
+> Task :halogen-image:lintDebug
+> Task :halogen-image:lint
+> Task :halogen-provider-nano:lintAnalyzeDebugAndroidTest
+> Task :halogen-cache-room:lintAnalyzeDebug
+> Task :halogen-cache-room:lintReportDebug
+> Task :halogen-cache-room:lintDebug
+> Task :halogen-cache-room:lint
+> Task :halogen-provider-nano:lintAnalyzeDebugUnitTest
+> Task :halogen-provider-nano:lintAnalyzeDebug
+> Task :sample:lintAnalyzeDebugAndroidTest
+> Task :halogen-provider-nano:lintReportDebug
+> Task :halogen-provider-nano:lintDebug
+> Task :halogen-provider-nano:lint
+> Task :sample:lintAnalyzeDebugUnitTest
+> Task :sample-shared:lintAnalyzeDebugAndroidTest
+> Task :sample-shared:lintAnalyzeDebugUnitTest
+> Task :sample-shared:lintAnalyzeDebug
+> Task :sample-shared:lintReportDebug
+> Task :sample-shared:lintDebug
+> Task :sample-shared:lint
+> Task :sample:lintAnalyzeDebug
+
+> Task :sample:lintReportDebug
+Wrote HTML report to file:///app/sample/build/reports/lint-results-debug.html
+
+> Task :sample:lintDebug
+> Task :sample:lint
+
+[Incubating] Problems report is available at: file:///app/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 25s
+342 actionable tasks: 91 executed, 251 up-to-date
