@@ -109,19 +109,38 @@ public object ThemeExpander {
      * Parse a hex color string like "#1A73E8" to an ARGB integer (0xFF1A73E8).
      */
     internal fun parseHexToArgb(hex: String): Int {
-        require(hex.startsWith("#") && hex.length == 7) {
+        require(hex.length == 7 && hex[0] == '#') {
             "Invalid hex color: \"$hex\". Expected format: #RRGGBB"
         }
-        val rgb = hex.substring(1).toLong(16).toInt()
+        var rgb = 0
+        for (i in 1..6) {
+            val char = hex[i]
+            val value = when {
+                char in '0'..'9' -> char - '0'
+                char in 'a'..'f' -> char - 'a' + 10
+                char in 'A'..'F' -> char - 'A' + 10
+                else -> throw IllegalArgumentException("Invalid hex character: $char in $hex")
+            }
+            rgb = (rgb shl 4) or value
+        }
         return rgb or (0xFF shl 24).toInt()
     }
+
+    private val HEX_CHARS = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F')
 
     /**
      * Convert an ARGB integer to a hex color string like "#1A73E8".
      */
     public fun argbToHex(argb: Int): String {
-        val rgb = argb and 0xFFFFFF
-        return "#" + rgb.toString(16).padStart(6, '0').uppercase()
+        val chars = CharArray(7)
+        chars[0] = '#'
+        chars[1] = HEX_CHARS[(argb shr 20) and 0xF]
+        chars[2] = HEX_CHARS[(argb shr 16) and 0xF]
+        chars[3] = HEX_CHARS[(argb shr 12) and 0xF]
+        chars[4] = HEX_CHARS[(argb shr 8) and 0xF]
+        chars[5] = HEX_CHARS[(argb shr 4) and 0xF]
+        chars[6] = HEX_CHARS[argb and 0xF]
+        return chars.concatToString()
     }
 
     private fun buildScheme(palette: HalogenPalette, isDark: Boolean): HalogenColorScheme {

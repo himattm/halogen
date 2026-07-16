@@ -1,0 +1,164 @@
+
+> Configure project :
+
+    Thank you for enabling Dokka Gradle plugin V2!
+    To learn about migrating read the migration guide https://kotl.in/dokka-gradle-migration
+
+    We would appreciate your feedback!
+     - Please report any feedback or problems https://kotl.in/dokka-issues
+     - Chat with the community visit #dokka in https://kotlinlang.slack.com/ (To sign up visit https://kotl.in/slack)
+
+    You can suppress this message by adding
+        org.jetbrains.dokka.experimental.gradle.pluginMode.noWarn=true
+    to your project's `gradle.properties` file.
+
+
+> Task :build-logic:convention:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :build-logic:convention:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :build-logic:convention:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :build-logic:convention:compilePluginsBlocks UP-TO-DATE
+> Task :build-logic:convention:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :build-logic:convention:generateScriptPluginAdapters UP-TO-DATE
+> Task :build-logic:convention:compileKotlin UP-TO-DATE
+> Task :build-logic:convention:compileJava NO-SOURCE
+> Task :build-logic:convention:pluginDescriptors UP-TO-DATE
+> Task :build-logic:convention:processResources UP-TO-DATE
+> Task :build-logic:convention:classes UP-TO-DATE
+> Task :build-logic:convention:jar UP-TO-DATE
+
+> Configure project :halogen-cache-room
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-cache-room'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[androidMain, iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest, jvmMain, roomMain]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-compose
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-compose'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-core
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-core'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-engine
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-engine'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :halogen-image
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':halogen-image'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest, jvmMain, skikoMain, wasmJsMain]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Configure project :sample-shared
+w: [33m[1m⚠️ Default Kotlin Hierarchy Template Not Applied Correctly[0m[0m
+The Default Kotlin Hierarchy Template was not applied to 'project ':sample-shared'':
+Explicit .dependsOn() edges were configured for the following source sets:
+[iosArm64Main, iosArm64Test, iosMain, iosSimulatorArm64Main, iosSimulatorArm64Test, iosTest]
+
+Consider removing dependsOn-calls or disabling the default template by adding
+    'kotlin.mpp.applyDefaultHierarchyTemplate=false'
+to your gradle.properties
+[32m[1mSolution:[0m[0m
+[32m[3mPlease remove the dependsOn-calls or disable the default template.[0m[0m
+[36mLearn more about hierarchy templates: [0m[34mhttps://kotl.in/hierarchy-template[0m[36m[0m
+
+
+> Task :halogen-core:kmpPartiallyResolvedDependenciesChecker
+> Task :halogen-core:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :halogen-core:preBuild UP-TO-DATE
+> Task :halogen-core:preDebugBuild UP-TO-DATE
+> Task :halogen-core:generateDebugResValues UP-TO-DATE
+> Task :halogen-core:generateDebugResources UP-TO-DATE
+> Task :halogen-core:packageDebugResources UP-TO-DATE
+> Task :halogen-core:processDebugNavigationResources UP-TO-DATE
+> Task :halogen-core:parseDebugLocalResources UP-TO-DATE
+> Task :halogen-core:generateDebugRFile UP-TO-DATE
+> Task :halogen-core:compileDebugKotlinAndroid UP-TO-DATE
+> Task :halogen-core:javaPreCompileDebug UP-TO-DATE
+> Task :halogen-core:compileDebugJavaWithJavac NO-SOURCE
+> Task :halogen-core:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :halogen-core:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :halogen-core:preDebugUnitTestBuild UP-TO-DATE
+> Task :halogen-core:processDebugJavaRes UP-TO-DATE
+> Task :halogen-core:preReleaseBuild UP-TO-DATE
+> Task :halogen-core:javaPreCompileDebugUnitTest
+> Task :halogen-core:generateReleaseResValues
+> Task :halogen-core:generateReleaseResources
+> Task :halogen-core:packageReleaseResources
+> Task :halogen-core:generateDebugUnitTestStubRFile
+> Task :halogen-core:processReleaseNavigationResources
+> Task :halogen-core:preReleaseUnitTestBuild UP-TO-DATE
+> Task :halogen-core:parseReleaseLocalResources
+> Task :halogen-core:javaPreCompileReleaseUnitTest
+> Task :halogen-core:javaPreCompileRelease
+> Task :halogen-core:generateReleaseRFile
+> Task :halogen-core:generateReleaseUnitTestStubRFile
+> Task :halogen-core:compileDebugUnitTestKotlinAndroid
+> Task :halogen-core:compileDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :halogen-core:processDebugUnitTestJavaRes
+
+> Task :halogen-core:compileReleaseKotlinAndroid
+w: file:///app/halogen-core/src/commonMain/kotlin/halogen/ThemeExpander.kt:126:37 Redundant call of conversion method.
+
+> Task :halogen-core:testDebugUnitTest
+> Task :halogen-core:compileReleaseJavaWithJavac NO-SOURCE
+> Task :halogen-core:processReleaseJavaRes
+> Task :halogen-core:bundleLibCompileToJarRelease
+> Task :halogen-core:bundleLibRuntimeToJarRelease
+> Task :halogen-core:compileReleaseUnitTestKotlinAndroid
+> Task :halogen-core:compileReleaseUnitTestJavaWithJavac NO-SOURCE
+> Task :halogen-core:processReleaseUnitTestJavaRes
+> Task :halogen-core:testReleaseUnitTest
+> Task :halogen-core:test
+
+[Incubating] Problems report is available at: file:///app/build/reports/problems/problems-report.html
+
+BUILD SUCCESSFUL in 16s
+42 actionable tasks: 22 executed, 20 up-to-date
