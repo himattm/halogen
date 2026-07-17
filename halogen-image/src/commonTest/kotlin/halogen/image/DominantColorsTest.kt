@@ -8,7 +8,14 @@ import kotlin.test.assertTrue
 
 class DominantColorsTest {
 
-    private val hexPattern = Regex("^#[0-9A-Fa-f]{6}$")
+    private fun isHexPattern(hex: String): Boolean {
+        if (hex.length != 7 || hex[0] != '#') return false
+        for (i in 1..6) {
+            val c = hex[i]
+            if (c !in '0'..'9' && c !in 'a'..'f' && c !in 'A'..'F') return false
+        }
+        return true
+    }
 
     // ---- Helpers ----
 
@@ -30,7 +37,7 @@ class DominantColorsTest {
         // All hex fields should be parseable to ARGB
         val hexFields = listOf(spec.primary, spec.secondary, spec.tertiary, spec.neutralLight, spec.neutralDark, spec.error)
         for (hex in hexFields) {
-            assertTrue(hexPattern.matches(hex), "Hex color should match #RRGGBB: $hex")
+            assertTrue(isHexPattern(hex), "Hex color should match #RRGGBB: $hex")
             // Should not throw
             val argb = parseHex(hex)
             assertNotNull(argb)
@@ -144,7 +151,7 @@ class DominantColorsTest {
         // All hex values should be valid
         val hexFields = listOf(spec.primary, spec.secondary, spec.tertiary, spec.neutralLight, spec.neutralDark, spec.error)
         for (hex in hexFields) {
-            assertTrue(hexPattern.matches(hex), "Hex should match #RRGGBB: $hex")
+            assertTrue(isHexPattern(hex), "Hex should match #RRGGBB: $hex")
         }
 
         // Should expand without error
