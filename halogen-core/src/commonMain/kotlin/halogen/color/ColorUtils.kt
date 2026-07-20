@@ -85,13 +85,17 @@ internal object ColorUtils {
         return 116.0 * labF(y / 100.0) - 16.0
     }
 
-    fun linearized(rgbComponent: Int): Double {
+    private val LINEARIZED_CACHE: DoubleArray = DoubleArray(256) { rgbComponent ->
         val normalized = rgbComponent / 255.0
-        return if (normalized <= 0.040449936) {
+        if (normalized <= 0.040449936) {
             normalized / 12.92 * 100.0
         } else {
             ((normalized + 0.055) / 1.055).pow(2.4) * 100.0
         }
+    }
+
+    fun linearized(rgbComponent: Int): Double {
+        return LINEARIZED_CACHE[rgbComponent]
     }
 
     fun delinearized(rgbComponent: Double): Int {
