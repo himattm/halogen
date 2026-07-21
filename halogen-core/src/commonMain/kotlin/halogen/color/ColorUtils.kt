@@ -85,13 +85,22 @@ internal object ColorUtils {
         return 116.0 * labF(y / 100.0) - 16.0
     }
 
-    fun linearized(rgbComponent: Int): Double {
-        val normalized = rgbComponent / 255.0
-        return if (normalized <= 0.040449936) {
+    private val LINEARIZED_CACHE = DoubleArray(256) { i ->
+        val normalized = i / 255.0
+        if (normalized <= 0.040449936) {
             normalized / 12.92 * 100.0
         } else {
             ((normalized + 0.055) / 1.055).pow(2.4) * 100.0
         }
+    }
+
+    /**
+     * Converts a standard RGB component (0-255) to a linear RGB component.
+     * Uses a cached lookup table for performance as this is called frequently
+     * in color space conversions.
+     */
+    fun linearized(rgbComponent: Int): Double {
+        return LINEARIZED_CACHE[rgbComponent and 255]
     }
 
     fun delinearized(rgbComponent: Double): Int {
