@@ -33,6 +33,15 @@ internal object ColorUtils {
         doubleArrayOf(0.05562093689691305, -0.20395524564742123, 1.0571799111220335),
     )
 
+    private val LINEARIZED_TABLE = DoubleArray(256) { rgbComponent ->
+        val normalized = rgbComponent / 255.0
+        if (normalized <= 0.040449936) {
+            normalized / 12.92 * 100.0
+        } else {
+            ((normalized + 0.055) / 1.055).pow(2.4) * 100.0
+        }
+    }
+
     private val WHITE_POINT_D65: DoubleArray = doubleArrayOf(95.047, 100.0, 108.883)
 
     fun whitePointD65(): DoubleArray = WHITE_POINT_D65
@@ -86,11 +95,18 @@ internal object ColorUtils {
     }
 
     fun linearized(rgbComponent: Int): Double {
-        val normalized = rgbComponent / 255.0
-        return if (normalized <= 0.040449936) {
-            normalized / 12.92 * 100.0
+        // Bolt Optimization: Use a precomputed lookup table (LUT) for sRGB (0-255) to Linear conversions.
+        // This avoids expensive division and .pow() operations on the hot path.
+        // Fallback to original math logic for out-of-bounds values to preserve exact functionality.
+        return if (rgbComponent in 0..255) {
+            LINEARIZED_TABLE[rgbComponent]
         } else {
-            ((normalized + 0.055) / 1.055).pow(2.4) * 100.0
+            val normalized = rgbComponent / 255.0
+            if (normalized <= 0.040449936) {
+                normalized / 12.92 * 100.0
+            } else {
+                ((normalized + 0.055) / 1.055).pow(2.4) * 100.0
+            }
         }
     }
 
