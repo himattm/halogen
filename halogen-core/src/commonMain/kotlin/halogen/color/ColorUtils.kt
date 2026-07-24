@@ -85,7 +85,22 @@ internal object ColorUtils {
         return 116.0 * labF(y / 100.0) - 16.0
     }
 
+    // Bolt Optimization: Pre-computes the expensive `.pow(2.4)` sRGB-to-linear conversion for the
+    // standard 8-bit color range (0-255). This eliminates redundant floating-point math in hot paths
+    // (e.g. HCT conversions), replacing it with a lightning-fast array lookup.
+    private val LINEARIZED_TABLE = DoubleArray(256) { rgbComponent ->
+        val normalized = rgbComponent / 255.0
+        if (normalized <= 0.040449936) {
+            normalized / 12.92 * 100.0
+        } else {
+            ((normalized + 0.055) / 1.055).pow(2.4) * 100.0
+        }
+    }
+
     fun linearized(rgbComponent: Int): Double {
+        if (rgbComponent in 0..255) {
+            return LINEARIZED_TABLE[rgbComponent]
+        }
         val normalized = rgbComponent / 255.0
         return if (normalized <= 0.040449936) {
             normalized / 12.92 * 100.0
