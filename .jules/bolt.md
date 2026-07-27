@@ -1,3 +1,3 @@
-## 2024-07-14 - Optimize Hex Color Parsing and Formatting in KMP Hot Paths
-**Learning:** In Kotlin Multiplatform hot paths (such as hex color serialization and parsing), manual character array manipulation and bitwise shifts are substantially faster (up to 25x faster for serialization and 10x faster for parsing) than using standard library string methods like `toString(16).padStart()`, `uppercase()`, or `substring().toLong(16).toInt()`. This approach avoids platform-specific string allocation overhead.
-**Action:** When working in KMP hot paths, avoid standard library string manipulations that instantiate multiple objects per call. Favor `CharArray`, manual index iteration, bitwise shifts, and `concatToString()` to minimize allocations and latency.
+## 2026-07-27 - [ColorUtils linearization optimization]
+**Learning:** In Kotlin Multiplatform hot paths (such as `ColorUtils.linearized`), mathematical operations (divisions, `.pow()`) that depend strictly on a discrete domain (0-255) can be effectively replaced by a lookup table (LUT) such as a pre-computed `DoubleArray(256)`.
+**Action:** When performing similar mathematical operations that take a discrete 8-bit parameter, consider employing LUTs initialized via array factory functions. Avoid applying LUTs to continuous domains (e.g. `Double`) to prevent precision loss.
