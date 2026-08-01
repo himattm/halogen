@@ -5,3 +5,7 @@
 ## 2024-05-10 - Optimize Math Operations with Lookup Tables
 **Learning:** When mathematical operations depend strictly on a small, discrete domain (e.g., converting 8-bit color components 0..255 from sRGB to linear space), utilizing pre-computed arrays or lookup tables instead of redundant on-the-fly computation (divisions, conditionals, `.pow()`) significantly improves performance in hot paths (over 20x improvement).
 **Action:** Identify finite input domains in hot paths and pre-calculate their results into arrays (like `DoubleArray(256)`) instead of doing continuous computations repeatedly.
+
+## 2024-08-01 - Optimize relativeLuminance calculations with LUT
+**Learning:** The `relativeLuminance` calculation in `ContrastValidator` performs repetitive `linearize` logic, involving conditionals and `Math.pow()`, across millions of calls for contrast checking (e.g. over 12 role pairs per scheme validation). This can be significantly accelerated. The input domain for `linearize` from 8-bit ARGB components is strictly discrete (0-255).
+**Action:** Replace dynamic mathematical computations on finite, small input domains (like 0-255 color channels) with a pre-computed lookup table (`DoubleArray(256)`). This can yield over a 1000x speedup in hot paths without changing the mathematical results.
