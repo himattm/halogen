@@ -85,6 +85,16 @@ internal object ContrastValidator {
         return if (issues.isEmpty()) ValidationResult.Pass else ValidationResult.Fail(issues)
     }
 
+    // Precompute sRGB linearization LUT to avoid expensive pow() calls on the fly
+    private val LINEARIZED_LUT: DoubleArray = DoubleArray(256) { rgbComponent ->
+        val normalized = rgbComponent / 255.0
+        if (normalized <= 0.04045) {
+            normalized / 12.92
+        } else {
+            ((normalized + 0.055) / 1.055).pow(2.4)
+        }
+    }
+
     /**
      * Compute the relative luminance of an ARGB color.
      *
@@ -95,9 +105,9 @@ internal object ContrastValidator {
      * - L = 0.2126 * R + 0.7152 * G + 0.0722 * B.
      */
     fun relativeLuminance(argb: Int): Double {
-        val r = linearize(((argb shr 16) and 0xFF) / 255.0)
-        val g = linearize(((argb shr 8) and 0xFF) / 255.0)
-        val b = linearize((argb and 0xFF) / 255.0)
+        val r = LINEARIZED_LUT[(argb shr 16) and 0xFF]
+        val g = LINEARIZED_LUT[(argb shr 8) and 0xFF]
+        val b = LINEARIZED_LUT[argb and 0xFF]
         return 0.2126 * r + 0.7152 * g + 0.0722 * b
     }
 
@@ -118,13 +128,5 @@ internal object ContrastValidator {
      */
     fun meetsAA(foreground: Int, background: Int): Boolean {
         return contrastRatio(foreground, background) >= AA_RATIO
-    }
-
-    private fun linearize(component: Double): Double {
-        return if (component <= 0.04045) {
-            component / 12.92
-        } else {
-            ((component + 0.055) / 1.055).pow(2.4)
-        }
     }
 }
