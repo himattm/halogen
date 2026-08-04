@@ -95,9 +95,9 @@ internal object ContrastValidator {
      * - L = 0.2126 * R + 0.7152 * G + 0.0722 * B.
      */
     fun relativeLuminance(argb: Int): Double {
-        val r = linearize(((argb shr 16) and 0xFF) / 255.0)
-        val g = linearize(((argb shr 8) and 0xFF) / 255.0)
-        val b = linearize((argb and 0xFF) / 255.0)
+        val r = linearizeInt((argb shr 16) and 0xFF)
+        val g = linearizeInt((argb shr 8) and 0xFF)
+        val b = linearizeInt(argb and 0xFF)
         return 0.2126 * r + 0.7152 * g + 0.0722 * b
     }
 
@@ -120,11 +120,25 @@ internal object ContrastValidator {
         return contrastRatio(foreground, background) >= AA_RATIO
     }
 
-    private fun linearize(component: Double): Double {
-        return if (component <= 0.04045) {
+    /**
+     * Pre-computed Lookup Table (LUT) for sRGB linearization.
+     *
+     * Optimization: The relative luminance calculation requires converting 8-bit color components (0-255)
+     * from sRGB to linear space. Previously, this was done dynamically using floating-point math and expensive
+     * `Double.pow(2.4)` operations. Since the input domain is strictly limited to 256 discrete values,
+     * we can pre-compute all possible results into this array. This reduces the calculation from complex
+     * math to a simple O(1) array lookup, significantly improving performance in this KMP hot path.
+     */
+    private val LINEARIZE_LUT = DoubleArray(256) { i ->
+        val component = i / 255.0
+        if (component <= 0.04045) {
             component / 12.92
         } else {
             ((component + 0.055) / 1.055).pow(2.4)
         }
+    }
+
+    private fun linearizeInt(component: Int): Double {
+        return LINEARIZE_LUT[component and 0xFF]
     }
 }
