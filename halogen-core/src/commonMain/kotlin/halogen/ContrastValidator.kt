@@ -88,16 +88,14 @@ internal object ContrastValidator {
     /**
      * Compute the relative luminance of an ARGB color.
      *
-     * Uses the sRGB linearization formula per WCAG 2.1:
-     * - Normalize each channel to 0.0-1.0.
-     * - Linearize: if value <= 0.04045, divide by 12.92;
-     *   otherwise, ((value + 0.055) / 1.055) ^ 2.4.
-     * - L = 0.2126 * R + 0.7152 * G + 0.0722 * B.
+     * Uses a pre-computed lookup table for the sRGB linearization formula
+     * to significantly improve performance in this hot path by avoiding
+     * repetitive division and Math.pow() calculations.
      */
     fun relativeLuminance(argb: Int): Double {
-        val r = linearize(((argb shr 16) and 0xFF) / 255.0)
-        val g = linearize(((argb shr 8) and 0xFF) / 255.0)
-        val b = linearize((argb and 0xFF) / 255.0)
+        val r = LINEARIZE_LUT[(argb shr 16) and 0xFF]
+        val g = LINEARIZE_LUT[(argb shr 8) and 0xFF]
+        val b = LINEARIZE_LUT[argb and 0xFF]
         return 0.2126 * r + 0.7152 * g + 0.0722 * b
     }
 
@@ -120,8 +118,9 @@ internal object ContrastValidator {
         return contrastRatio(foreground, background) >= AA_RATIO
     }
 
-    private fun linearize(component: Double): Double {
-        return if (component <= 0.04045) {
+    private val LINEARIZE_LUT: DoubleArray = DoubleArray(256) { i ->
+        val component = i / 255.0
+        if (component <= 0.04045) {
             component / 12.92
         } else {
             ((component + 0.055) / 1.055).pow(2.4)
