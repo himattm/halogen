@@ -5,3 +5,6 @@
 ## 2024-05-10 - Optimize Math Operations with Lookup Tables
 **Learning:** When mathematical operations depend strictly on a small, discrete domain (e.g., converting 8-bit color components 0..255 from sRGB to linear space), utilizing pre-computed arrays or lookup tables instead of redundant on-the-fly computation (divisions, conditionals, `.pow()`) significantly improves performance in hot paths (over 20x improvement).
 **Action:** Identify finite input domains in hot paths and pre-calculate their results into arrays (like `DoubleArray(256)`) instead of doing continuous computations repeatedly.
+## 2024-05-24 - [Replace HashMap with primitive arrays for bounded integer histograms]
+**Learning:** In Kotlin Multiplatform hot paths, using a boxed `HashMap<Int, Int>` for tracking frequencies of a bounded integer domain (like a 15-bit color space) introduces significant overhead due to object allocation (boxing) and hash lookups.
+**Action:** When tracking occurrences within a relatively small, known domain (e.g., 15-bit = 32768 possible values), use a flat primitive array like `IntArray` for O(1) unboxed access, and then iterate the array to extract populated entries.
