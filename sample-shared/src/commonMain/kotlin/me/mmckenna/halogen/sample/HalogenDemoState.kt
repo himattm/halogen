@@ -1,6 +1,7 @@
 package me.mmckenna.halogen.sample
 
 import halogen.HalogenDefaults
+import halogen.HalogenLlmProvider
 import halogen.engine.Halogen
 import halogen.engine.HalogenEngine
 import kotlinx.coroutines.CoroutineScope
@@ -22,24 +23,26 @@ class HalogenDemoState(
     }
 
     companion object {
-        fun create(scope: CoroutineScope, openAiApiKey: String? = null): HalogenDemoState {
+        fun create(
+            scope: CoroutineScope,
+            openAiApiKey: String? = null,
+            preferredProvider: HalogenLlmProvider? = null,
+            preferredProviderName: String? = null,
+        ): HalogenDemoState {
             val builder = Halogen.Builder()
                 .defaultTheme(HalogenDefaults.materialYou())
                 .scope(scope)
                 .tokenBudget(Int.MAX_VALUE)
 
-            val provider = if (!openAiApiKey.isNullOrBlank()) {
-                OpenAiProvider(openAiApiKey)
-            } else {
-                DemoProvider()
+            val (provider, providerName) = when {
+                preferredProvider != null ->
+                    preferredProvider to (preferredProviderName ?: "Custom")
+                !openAiApiKey.isNullOrBlank() ->
+                    OpenAiProvider(openAiApiKey) to "OpenAI"
+                else ->
+                    DemoProvider() to "Demo"
             }
             builder.provider(provider)
-
-            val providerName = when (provider) {
-                is OpenAiProvider -> "OpenAI"
-                is DemoProvider -> "Demo"
-                else -> "Custom"
-            }
 
             return HalogenDemoState(engine = builder.build(), scope = scope, providerName = providerName)
         }

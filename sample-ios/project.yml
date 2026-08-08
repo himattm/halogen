@@ -49,6 +49,8 @@ targets:
           - "-lc++"
           - "-framework"
           - "HalogenSample"
+          - "-weak_framework"
+          - "FoundationModels"
         ENABLE_USER_SCRIPT_SANDBOXING: "NO"
         CODE_SIGNING_ALLOWED: "NO"
     preBuildScripts:

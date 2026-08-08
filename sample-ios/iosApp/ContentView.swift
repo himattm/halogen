@@ -4,7 +4,8 @@ import HalogenSample
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        let bridge = AppleFoundationBridgeImpl.makeIfAvailable()
+        return MainViewControllerKt.MainViewController(appleFoundationBridge: bridge)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}

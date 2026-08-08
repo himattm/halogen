@@ -29,6 +29,7 @@ include(
     ":halogen-cache-room",
     ":halogen-image",
     ":halogen-provider-nano",
+    ":halogen-provider-apple-foundation",
     ":sample",
     ":sample-shared",
 )
