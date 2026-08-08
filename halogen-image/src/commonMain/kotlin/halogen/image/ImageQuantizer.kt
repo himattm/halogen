@@ -76,7 +76,9 @@ public object ImageQuantizer {
         }
 
         // Step 2: Build 15-bit histogram, skipping transparent pixels
-        val histogram = HashMap<Int, Int>(256)
+        // A 15-bit color space (5 bits per RGB channel) has 32,768 possible keys.
+        // Using an IntArray instead of HashMap prevents boxing and hash lookup overhead.
+        val histogram = IntArray(32768)
         var sampledCount = 0
         val pixelCount = width * height
         var i = 0
@@ -85,7 +87,7 @@ public object ImageQuantizer {
             val alpha = (argb ushr 24) and 0xFF
             if (alpha >= 128) {
                 val key = bucketKey(argb)
-                histogram[key] = (histogram[key] ?: 0) + 1
+                histogram[key]++
                 sampledCount++
             }
             i += stride
@@ -96,8 +98,15 @@ public object ImageQuantizer {
         }
 
         // Step 3: Take top 64 populated entries
-        val topEntries = histogram.entries
-            .sortedByDescending { it.value }
+        val nonZeroEntries = mutableListOf<Pair<Int, Int>>()
+        for (key in histogram.indices) {
+            val count = histogram[key]
+            if (count > 0) {
+                nonZeroEntries.add(Pair(key, count))
+            }
+        }
+        val topEntries = nonZeroEntries
+            .sortedByDescending { it.second }
             .take(MAX_HISTOGRAM_ENTRIES)
 
         // Step 4: Convert bucket keys to representative ARGB, then to HCT
