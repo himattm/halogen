@@ -62,9 +62,19 @@ internal object MathUtils {
         180.0 - abs(abs(a - b) - 180.0)
 
     fun matrixMultiply(row: DoubleArray, matrix: Array<DoubleArray>): DoubleArray {
-        val a = row[0] * matrix[0][0] + row[1] * matrix[0][1] + row[2] * matrix[0][2]
-        val b = row[0] * matrix[1][0] + row[1] * matrix[1][1] + row[2] * matrix[1][2]
-        val c = row[0] * matrix[2][0] + row[1] * matrix[2][1] + row[2] * matrix[2][2]
+        // Cache array elements in local variables to avoid redundant array bounds checking and
+        // pointer dereferencing in hot paths.
+        val r0 = row[0]
+        val r1 = row[1]
+        val r2 = row[2]
+
+        val m0 = matrix[0]
+        val m1 = matrix[1]
+        val m2 = matrix[2]
+
+        val a = r0 * m0[0] + r1 * m0[1] + r2 * m0[2]
+        val b = r0 * m1[0] + r1 * m1[1] + r2 * m1[2]
+        val c = r0 * m2[0] + r1 * m2[1] + r2 * m2[2]
         return doubleArrayOf(a, b, c)
     }
 }

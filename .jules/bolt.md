@@ -5,3 +5,7 @@
 ## 2024-05-10 - Optimize Math Operations with Lookup Tables
 **Learning:** When mathematical operations depend strictly on a small, discrete domain (e.g., converting 8-bit color components 0..255 from sRGB to linear space), utilizing pre-computed arrays or lookup tables instead of redundant on-the-fly computation (divisions, conditionals, `.pow()`) significantly improves performance in hot paths (over 20x improvement).
 **Action:** Identify finite input domains in hot paths and pre-calculate their results into arrays (like `DoubleArray(256)`) instead of doing continuous computations repeatedly.
+
+## 2024-06-25 - Local variable caching for array lookups in math hotpaths
+**Learning:** In highly mathematical operations (like `matrixMultiply` in `halogen-core`), caching repeated array lookups (e.g. `row[0]`, `matrix[0]`) into local variables noticeably reduces the overhead of bounds-checking and pointer deference.
+**Action:** Unroll fixed-size vector and matrix array accesses into local variables.
